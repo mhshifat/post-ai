@@ -21,10 +21,17 @@ export default function OtpForm({ metadata }: { metadata: SignUpFormSchema & { a
       setActive?.({
         session: res?.createdSessionId,
       });
-      await updateClerkUserDetailsAfterSignUp(metadata);
-      router.push("/dashboard");
+      if (res?.createdUserId) {
+        await updateClerkUserDetailsAfterSignUp({
+          ...metadata,
+          clerkId: res?.createdUserId!
+        });
+        router.push("/dashboard");
+      } else {
+        throw new Error("Something went wrong!");
+      }
     } catch (err) {
-      const message = (err as ClerkAPIResponseError)?.errors?.[0]?.longMessage;
+      const message = (err as ClerkAPIResponseError)?.errors?.[0]?.longMessage || (err as Error)?.message;
       toast.error(message);
     } finally {
       setLoading(false);

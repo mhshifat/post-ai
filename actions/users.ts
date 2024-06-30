@@ -2,7 +2,7 @@
 
 import { db } from "@/db/drizzle";
 import { users } from "@/db/schema";
-import { clerkClient, currentUser } from "@clerk/nextjs/server";
+import { clerkClient } from "@clerk/nextjs/server";
 import { v4 } from 'uuid';
 
 export async function updateClerkUserDetailsAfterSignUp(args: {
@@ -10,14 +10,14 @@ export async function updateClerkUserDetailsAfterSignUp(args: {
   lastName: string,
   accountType: string,
   email: string,
+  clerkId: string,
 }) {
-  const user = await currentUser();
-  if (!user) return;
+  if (!args.clerkId) return;
   const [data] = await db
     .insert(users)
     .values({
       id: v4(),
-      clerkId: user.id,
+      clerkId: args.clerkId,
       firstName: args.firstName,
       lastName: args.lastName,
       email: args.email,
@@ -27,13 +27,14 @@ export async function updateClerkUserDetailsAfterSignUp(args: {
     .returning({ id: users.id })
     .execute();
   if (data.id) {
-    await clerkClient.users.updateUser(user.id, {
+    await clerkClient.users.updateUser(args.clerkId, {
       firstName: args.firstName,
       lastName: args.lastName,
     });
-    await clerkClient.users.updateUserMetadata(user.id, {
+    await clerkClient.users.updateUserMetadata(args.clerkId, {
       privateMetadata: {
-        accountType: args.accountType
+        accountType: args.accountType,
+        userId: data.id,
       }
     });
   }

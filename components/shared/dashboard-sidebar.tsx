@@ -8,6 +8,10 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { useClerk } from "@clerk/nextjs";
+import { useDialog } from "../providers/dialog-provider";
+import CreateDomainForm from "../modules/domain/create-domain-form";
+import { IDomainsWithUserId } from "@/utils/types";
+import Image from "next/image";
 
 type SidebarButtonType = {
   as: "button",
@@ -93,9 +97,11 @@ function SidebarItem({ children, item }: PropsWithChildren<{ item: SidebarLinkTy
   }
 }
 
-export default function DashboardSidebar() {
+export default function DashboardSidebar({ domains }: { domains: IDomainsWithUserId }) {
+  const router = useRouter();
   const pathname = usePathname();
   const { signOut } = useClerk();
+  const { openDialog, closeDialog } = useDialog();
 
   function handleSignOut() {
     signOut({
@@ -124,9 +130,30 @@ export default function DashboardSidebar() {
             </SidebarItem>
           </li>
         ))}
+      </ul>
+
+      <ul className="flex flex-col justify-center items-center gap-5">
         <li className="cursor-pointer group">
-          <CirclePlus className="text-slate-500 group-hover:text-slate-600 transition" />
+          <CirclePlus onClick={() => openDialog({
+            title: "Create a domain",
+            description: "Please fill the necessary information to complete the domain creation",
+            content: <CreateDomainForm onSubmit={() => {
+              closeDialog();
+              router.refresh();
+            }} />
+          })} className="text-slate-500 group-hover:text-slate-600 transition" />
         </li>
+        {domains?.map(domain => (
+          <li key={domain.id}>
+            <Image
+              src={domain.details?.logo || ""}
+              alt={domain.details?.domain || ""}
+              width={30}
+              height={30}
+              className="bg-slate-300 rounded-full cursor-pointer border border-slate-300"
+            />
+          </li>
+        ))}
       </ul>
 
       <ul className="flex flex-col mt-auto justify-center items-center gap-7">
