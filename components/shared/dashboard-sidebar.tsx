@@ -132,7 +132,7 @@ export default function DashboardSidebar({ domains }: { domains: IDomainsWithUse
         ))}
       </ul>
 
-      <ul className="flex flex-col justify-center items-center gap-5">
+      <ul className="flex flex-col justify-center items-center gap-4">
         <li className="cursor-pointer group">
           <CirclePlus onClick={() => openDialog({
             title: "Create a domain",
@@ -150,7 +150,7 @@ export default function DashboardSidebar({ domains }: { domains: IDomainsWithUse
               alt={domain.details?.domain || ""}
               width={30}
               height={30}
-              className="bg-slate-300 rounded-full cursor-pointer border border-slate-300"
+              className="bg-slate-300 rounded-full cursor-pointer border border-slate-300 object-contain"
             />
           </li>
         ))}
