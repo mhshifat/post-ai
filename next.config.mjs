@@ -5,7 +5,11 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "ucarecdn.com"
-      }
+      },
+      {
+        protocol: "https",
+        hostname: "picsum.photos"
+      },
     ]
   }
 };

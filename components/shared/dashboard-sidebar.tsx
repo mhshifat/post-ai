@@ -40,7 +40,7 @@ const DASHBOARD_SIDEBAR_MAIN_LINKS: SidebarLink[] = [
     as: "link",
     icon: MessageCircle,
     title: "Conversations",
-    path: "/"
+    path: "/conversations"
   },
   {
     as: "link",
@@ -145,13 +145,17 @@ export default function DashboardSidebar({ domains }: { domains: IDomainsWithUse
         </li>
         {domains?.map(domain => (
           <li key={domain.id}>
-            <Image
-              src={domain.details?.logo || ""}
-              alt={domain.details?.domain || ""}
-              width={30}
-              height={30}
-              className="bg-slate-300 rounded-full cursor-pointer border border-slate-300 object-contain"
-            />
+            <Link
+              href={`/settings/${domain.id}`}
+            >
+              <Image
+                src={domain.details?.logo || ""}
+                alt={domain.details?.domain || ""}
+                width={30}
+                height={30}
+                className="bg-slate-300 rounded-full cursor-pointer border border-slate-300 object-contain"
+              />
+            </Link>
           </li>
         ))}
       </ul>
