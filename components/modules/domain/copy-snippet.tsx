@@ -11,25 +11,33 @@ export default function CopySnippet() {
     if (typeof window === 'undefined') return;
     return `
       <script defer>
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener("DOMContentLoaded", () => {
           const iframe = document.createElement("iframe");
           const style = document.createElement("style");
-          style.textContent = '
+          style.textContent = "
             .chat-frame {
               position: fixed;
               bottom: 20px;
               right: 20px;
-              border-radius: 50%;
-              overflow: hidden;
-              aspect-ratio: 1/1;
-              width: 60px;
+              border: none;
+              z-index: 99;
             }
-          ';
+          ";
           iframe.classList.add("chat-frame");
-          iframe.src = '${window.location.origin}/chatbot';
+          iframe.src = "${window.location.origin}/chatbot";
           document.head.appendChild(style);
           document.body.appendChild(iframe);
-        })
+
+          window.addEventListener("message", (e) => {
+            const ROOT_ORIGIN = "${window.location.origin}";
+            if (e.origin !== ROOT_ORIGIN) return;
+            const { width, height } = JSON.parse(e.data || "{}");
+            iframe.style.maxWidth = width;
+            iframe.style.width = "100%";
+            iframe.style.maxHeight = height;
+            iframe.style.height = "100%";
+          });
+        });
       </script>
     `;
   }, []);

@@ -19,13 +19,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} h-screen`}>
-        <ClerkProvider>
-          <Toaster />
-          <Providers>
-            {children}
-          </Providers>
-        </ClerkProvider>
+      <body id="AiChatBot" className={`${inter.className} h-screen`}>
+        {children}
       </body>
     </html>
   );
