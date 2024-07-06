@@ -58,7 +58,7 @@ const DASHBOARD_SIDEBAR_MAIN_LINKS: SidebarLink[] = [
     as: "link",
     icon: Headset,
     title: "Appointments",
-    path: "/"
+    path: "/appointments"
   },
   {
     as: "link",

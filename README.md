@@ -9,3 +9,4 @@
   * Chatbot edit form
   * delete domain functionality
   * help desk Q&A and filter Q&N
+  * Make chatbot chat messages connected.

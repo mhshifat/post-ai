@@ -1,10 +1,15 @@
 "use client";
 
 import Accordion from "@/components/ui/accordion";
+import { cn } from "@/lib/utils";
 
-export default function HelpDeskQuestions() {
+interface HelpDeskQuestionsProps {
+  className?: string;
+}
+
+export default function HelpDeskQuestions({ className }: HelpDeskQuestionsProps) {
   return (
-    <Accordion className="pt-10">
+    <Accordion className={cn("pt-10", className)}>
       <Accordion.Item>
         <Accordion.Trigger className="py-2">
           <h3>Question?</h3>

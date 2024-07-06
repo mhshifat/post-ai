@@ -1,15 +1,20 @@
 "use client";
 
 import Spinner from "@/components/shared/spinner";
+import { cn } from "@/lib/utils";
 import { useRef, useState } from "react";
 
-export default function ChatInput() {
+interface ChatInputProps {
+  className?: string;
+}
+
+export default function ChatInput({ className }: ChatInputProps) {
   const inputRef = useRef<HTMLInputElement| null>(null);
   const [loading, setLoading] = useState(false);
 
   function handleSubmit() {}
   return (
-    <div className="mt-auto py-8 px-8">
+    <div className={cn("mt-auto py-8 px-8", className)}>
       <form onSubmit={handleSubmit} className="border border-slate-200 bg-slate-100 min-h-[52px] rounded-full overflow-hidden relative flex">
         <input ref={inputRef} placeholder="Type you message..." type="text" name="content" className="w-full h-auto border-none outline-none bg-transparent px-8 pr-16" />
         <button disabled={loading} className="w-9 h-9 rounded-full absolute right-2 flex items-center justify-center top-1/2 -translate-y-1/2 bg-slate-200" type="submit">

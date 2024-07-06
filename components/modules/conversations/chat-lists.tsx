@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import { BotIcon, User2Icon } from "lucide-react";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -19,9 +20,13 @@ const DUMMY_MESSAGES = [
 	},
 ];
 
-export default function ChatLists() {
+interface ChatListsProps {
+  className?: string;
+}
+
+export default function ChatLists({ className }: ChatListsProps) {
 	return (
-		<ul className="list-none p-8 flex flex-col-reverse gap-8 flex-[1_0_0] overflow-y-auto overflow-x-hidden">
+		<ul className={cn("list-none p-8 flex flex-col-reverse gap-8 flex-[1_0_0] overflow-y-auto overflow-x-hidden", className)}>
 			{DUMMY_MESSAGES.map((item) =>
 				"1" === item.senderId ? (
 					<li key={item.id} className="flex items-start gap-5 max-w-[80%]">

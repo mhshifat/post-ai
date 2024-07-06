@@ -11,7 +11,7 @@ import SettingsLayout from "@/components/shared/settings-layout";
 
 export default function Domain() {
   return (
-    <div className="max-w-[1024px] mx-auto ">
+    <div className="max-w-[1024px] mx-auto">
       <SettingsLayout>
         <SettingsLayout.Left
           title="Domain"
