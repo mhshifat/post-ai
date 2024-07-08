@@ -7,8 +7,9 @@ import ProductsTable from "./products-table";
 import { useDialog } from "@/components/providers/dialog-provider";
 import CreateProductForm from "./create-product-form";
 import { useRouter } from "next/navigation";
+import { IProductsWithDomainId } from "@/utils/types";
 
-export default function Products() {
+export default function Products({ domainId, products }: { domainId: string; products: IProductsWithDomainId }) {
   const router = useRouter();
   const { openDialog, closeDialog } = useDialog();
 
@@ -29,7 +30,7 @@ export default function Products() {
         <Button variant="outline" onClick={() => openDialog({
             title: "Create a product",
             description: "Please fill the necessary information to complete the product creation",
-            content: <CreateProductForm onSubmit={() => {
+            content: <CreateProductForm domainId={domainId} onSubmit={() => {
               closeDialog();
               router.refresh();
             }} />
@@ -43,7 +44,7 @@ export default function Products() {
         <Tab.Content
           className="flex-1 overflow-y-auto"
         >
-          <ProductsTable />
+          <ProductsTable products={products} />
         </Tab.Content>
       </Tab.Item>
       <Tab.Item>
@@ -53,7 +54,7 @@ export default function Products() {
         <Tab.Content
           className="flex-1 overflow-y-auto"
         >
-          <ProductsTable />
+          <ProductsTable products={products} />
         </Tab.Content>
       </Tab.Item>
       <Tab.Item>
@@ -63,7 +64,7 @@ export default function Products() {
         <Tab.Content
           className="flex-1 overflow-y-auto"
         >
-          <ProductsTable />
+          <ProductsTable products={products} />
         </Tab.Content>
       </Tab.Item>
     </Tab>

@@ -1,5 +1,6 @@
 "use client";
 
+import { createProduct } from "@/actions/domains";
 import Uploader from "@/components/shared/uploader";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
@@ -13,12 +14,12 @@ import { z } from "zod";
 const formSchema = z.object({
   title: z.string(),
   image: z.string(),
-  price: z.number(),
+  price: z.string(),
 })
 
 export type CreateProductFormSchema = z.infer<typeof formSchema>;
 
-export default function CreateProductForm({ onSubmit }: { onSubmit?: () => void }) {
+export default function CreateProductForm({ onSubmit, domainId }: { onSubmit?: () => void; domainId: string }) {
   const [loading, setLoading] = useState(false);
   const form = useForm<CreateProductFormSchema>({
     mode: "onChange",
@@ -26,14 +27,19 @@ export default function CreateProductForm({ onSubmit }: { onSubmit?: () => void 
     defaultValues: {
       title: "",
       image: "",
-      price: 0,
+      price: "0",
     }
   });
   
   async function handleSubmit(values: CreateProductFormSchema) {
     setLoading(true);
     try {
-      // TODO:
+      await createProduct({
+        image: values.image,
+        title: values.title,
+        price: values.price,
+        domainId: domainId,
+      })
       toast.success("Successfully created a product");
       onSubmit?.();
     } catch (err) {

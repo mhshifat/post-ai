@@ -1,3 +1,4 @@
+import { getProducts } from "@/actions/domains";
 import ChatbotForm from "@/components/modules/domain/chatbot-form";
 import CopySnippet from "@/components/modules/domain/copy-snippet";
 import CreateDomainForm from "@/components/modules/domain/create-domain-form";
@@ -10,7 +11,9 @@ import Products from "@/components/modules/domain/products";
 import Section from "@/components/shared/section";
 import SettingsLayout from "@/components/shared/settings-layout";
 
-export default function Domain() {
+export default async function Domain({ params }: { params: { domainId: string } }) {
+  const products = await getProducts(params.domainId);
+  
   return (
     <div className="max-w-[1024px] mx-auto">
       <SettingsLayout>
@@ -109,7 +112,7 @@ export default function Domain() {
               </div>
             </Section.Header>
             <Section.Content className="p-5">
-              <Products />
+              <Products domainId={params.domainId} products={products} />
             </Section.Content>
           </Section>
         </SettingsLayout.Right>

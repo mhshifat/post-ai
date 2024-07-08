@@ -43,6 +43,13 @@
       "when": 1720358852398,
       "tag": "0005_silly_bucky",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1720428241480,
+      "tag": "0006_tiresome_squadron_sinister",
+      "breakpoints": true
     }
   ]
 }

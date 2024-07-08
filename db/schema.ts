@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm";
-import { pgTable, text, timestamp, unique } from "drizzle-orm/pg-core";
+import { numeric, pgTable, text, timestamp, unique } from "drizzle-orm/pg-core";
 
 export const users = pgTable("users", {
   id: text("id").primaryKey(),
@@ -26,11 +26,12 @@ export const domains = pgTable("domains", {
   updatedAt: timestamp("updated_at"),
 });
 
-export const domainsRelations = relations(domains, ({ one }) => ({
+export const domainsRelations = relations(domains, ({ one, many }) => ({
   user: one(users, {
     fields: [domains.userId],
     references: [users.id]
-  })
+  }),
+  products: many(products),
 }));
 
 export const connections = pgTable("connections", {
@@ -48,5 +49,22 @@ export const connectionsRelations = relations(connections, ({ one }) => ({
   user: one(users, {
     fields: [connections.userId],
     references: [users.id]
+  })
+}));
+
+export const products = pgTable("products", {
+  id: text("id").primaryKey(),
+  domainId: text("domain_id").notNull(),
+  title: text("title").notNull(),
+  image: text("image").notNull(),
+  price: numeric("price").notNull(),
+  createdAt: timestamp("created_at").notNull(),
+  updatedAt: timestamp("updated_at"),
+});
+
+export const productsRelations = relations(products, ({ one }) => ({
+  domain: one(domains, {
+    fields: [products.domainId],
+    references: [domains.id]
   })
 }));
