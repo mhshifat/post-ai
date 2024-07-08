@@ -6,6 +6,7 @@ import FilterQuestionForm from "@/components/modules/domain/filter-question-form
 import FilterQuestions from "@/components/modules/domain/filter-questions";
 import HelpDeskForm from "@/components/modules/domain/help-desk-form";
 import HelpDeskQuestions from "@/components/modules/domain/help-desk-questions";
+import Products from "@/components/modules/domain/products";
 import Section from "@/components/shared/section";
 import SettingsLayout from "@/components/shared/settings-layout";
 
@@ -91,6 +92,24 @@ export default function Domain() {
             <Section.Content className="p-5">
               <FilterQuestionForm />
               <FilterQuestions />
+            </Section.Content>
+          </Section>
+        </SettingsLayout.Right>
+      </SettingsLayout>
+      <SettingsLayout>
+        <SettingsLayout.Left
+          title="Products"
+          description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa, repellat?"
+        />
+        <SettingsLayout.Right>
+          <Section>
+            <Section.Header className="flex items-start justify-between gap-5 px-5 py-2">
+              <div>
+                <h3 className="text-base capitalize font-medium text-balance">Products</h3>
+              </div>
+            </Section.Header>
+            <Section.Content className="p-5">
+              <Products />
             </Section.Content>
           </Section>
         </SettingsLayout.Right>

@@ -1,9 +1,9 @@
-export default function LogoIcon() {
+export default function LogoIcon({ size }: { size?: number }) {
   return (
     <svg
       id="logo-86"
-      width={30}
-      height={30}
+      width={size || 30}
+      height={size || 30}
       viewBox="0 0 40 40"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

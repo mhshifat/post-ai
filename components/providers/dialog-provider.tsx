@@ -1,9 +1,10 @@
 import { createContext, PropsWithChildren, ReactElement, useCallback, useContext, useState } from "react";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "../ui/dialog";
+import Divider from "../ui/divider";
 
 interface DialogState {
-  title: string;
-  description: string;
+  title?: string;
+  description?: string;
   content: ReactElement;
 }
 
@@ -37,11 +38,16 @@ export default function DialogProvider({ children }: PropsWithChildren) {
         onOpenChange={closeDialog}
       >
         <DialogContent>
-          <DialogHeader>
-            <DialogTitle>{dialogState?.title}</DialogTitle>
-            <DialogDescription>{dialogState?.description}</DialogDescription>
-          </DialogHeader>
-          <div className="flex flex-col gap-4 py-4 border-t border-slate-200">
+          {(dialogState?.title || dialogState?.description) && (
+            <>
+              <DialogHeader>
+                <DialogTitle>{dialogState?.title}</DialogTitle>
+                <DialogDescription>{dialogState?.description}</DialogDescription>
+              </DialogHeader>
+              <Divider />
+            </>
+          )}
+          <div className="flex flex-col gap-4 py-4">
             {dialogState?.content}
           </div>
         </DialogContent>

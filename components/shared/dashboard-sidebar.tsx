@@ -46,7 +46,7 @@ const DASHBOARD_SIDEBAR_MAIN_LINKS: SidebarLink[] = [
     as: "link",
     icon: Workflow,
     title: "Integrations",
-    path: "/"
+    path: "/integrations"
   },
   {
     as: "link",
