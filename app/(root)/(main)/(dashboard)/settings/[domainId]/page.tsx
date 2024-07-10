@@ -40,7 +40,7 @@ export default async function Domain({ params }: { params: { domainId: string } 
           description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa, repellat?"
         />
         <SettingsLayout.Right>
-          <CopySnippet />
+          <CopySnippet domainId={params.domainId} />
         </SettingsLayout.Right>
       </SettingsLayout>
       <SettingsLayout>

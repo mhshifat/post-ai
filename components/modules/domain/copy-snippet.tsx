@@ -6,7 +6,7 @@ import { CopyIcon } from "lucide-react";
 import { useMemo } from "react";
 import { toast } from "sonner";
 
-export default function CopySnippet() {
+export default function CopySnippet({ domainId }: { domainId: string }) {
   const snippet = useMemo(() => {
     if (typeof window === 'undefined') return;
     return `
@@ -36,6 +36,7 @@ export default function CopySnippet() {
             iframe.style.width = "100%";
             iframe.style.maxHeight = height;
             iframe.style.height = "100%";
+            iframe.contentWindow.postMessage("${domainId}", ROOT_ORIGIN)
           });
         });
       </script>

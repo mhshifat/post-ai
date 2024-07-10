@@ -1,7 +1,14 @@
 import { cn } from "@/lib/utils";
 
-export default function Divider({ className }: { className?: string }) {
+interface DividerProps {
+  orientation?: "vertical";
+  className?: string;
+}
+
+export default function Divider({ className, orientation }: DividerProps) {
   return (
-    <hr className={cn("bg-slate-50", className)} />
+    <div className={cn("bg-slate-300", className, {
+      "w-[1px] h-auto flex self-stretch": orientation === 'vertical'
+    })} />
   )
 }

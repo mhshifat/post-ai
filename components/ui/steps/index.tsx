@@ -25,7 +25,7 @@ const StepsCtx = createContext<StepsCtxProps | null>(null);
 
 export default function Steps({ children, className }: PropsWithChildren<StepsProps>) {
   const [steps, setSteps] = useState<Record<string, unknown>>({});
-  const [currentStep, setCurrentStep] = useState(0);
+  const [currentStep, setCurrentStep] = useState(1);
 
   const changeStep = useCallback((args: {
     step: "prev" | "next",
