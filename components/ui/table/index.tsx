@@ -9,6 +9,8 @@ import TableContent from "./table-content";
 
 interface TableProps {
   className?: string;
+  renderPrefix?: (args: { type?: "header" | "body"; }) => JSX.Element;
+  renderSuffix?: (args: { type?: "header" | "body"; }) => JSX.Element;
 }
 
 interface TableCtxProps extends TableProps {
@@ -16,9 +18,11 @@ interface TableCtxProps extends TableProps {
 
 const TableCtx = createContext<TableCtxProps | null>(null);
 
-export default function Table({ children, className }: PropsWithChildren<TableProps>) {
+export default function Table({ children, className, renderPrefix, renderSuffix }: PropsWithChildren<TableProps>) {
   return (
     <TableCtx.Provider value={{
+      renderPrefix,
+      renderSuffix
     }}>
       <div className={className}>
         {children}

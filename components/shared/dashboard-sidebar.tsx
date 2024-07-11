@@ -64,7 +64,7 @@ const DASHBOARD_SIDEBAR_MAIN_LINKS: SidebarLink[] = [
     as: "link",
     icon: Inbox,
     title: "Email Marketing",
-    path: "/"
+    path: "/email-marketing"
   },
 ];
 
