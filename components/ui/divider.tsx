@@ -7,7 +7,7 @@ interface DividerProps {
 
 export default function Divider({ className, orientation }: DividerProps) {
   return (
-    <div className={cn("bg-slate-300", className, {
+    <div className={cn("bg-slate-300 h-[1px]", className, {
       "w-[1px] h-auto flex self-stretch": orientation === 'vertical'
     })} />
   )

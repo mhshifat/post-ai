@@ -1,8 +1,10 @@
+import { useDialog } from "@/components/providers/dialog-provider";
 import { Button } from "@/components/ui/button";
 import Checkbox from "@/components/ui/checkbox";
 import Table from "@/components/ui/table";
 import { cn } from "@/lib/utils";
 import { CheckIcon } from "lucide-react";
+import FilterQuestions from "../domain/filter-questions";
 
 const TABLE_HEADERS = [
   {
@@ -20,6 +22,8 @@ const TABLE_HEADERS = [
 ]
 
 export default function Customers() {
+  const { openDialog } = useDialog();
+
   return (
     <Table
       className="w-full border border-slate-200 rounded-xl overflow-hidden"
@@ -53,7 +57,12 @@ export default function Customers() {
       renderSuffix={({ type }) => (
         <Table.Cell className="py-2 px-3 w-0" align="right">
           <div className="p-0">
-            {type === 'body' && <Button size="sm">View</Button>}
+            {type === 'body' && <Button onClick={() => openDialog({
+              position: "right",
+              title: "Answered Questions",
+              description: "Answers of the filtered Questions",
+              content: <FilterQuestions />
+            })} size="sm">View</Button>}
           </div>
         </Table.Cell>
       )}

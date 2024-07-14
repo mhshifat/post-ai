@@ -8,3 +8,5 @@ export type IProduct = InferSelectModel<typeof products>;
 export type IDomainsWithUserId = Awaited<ReturnType<typeof getDomains>>;
 export type IConnectionsWithUserId = Awaited<ReturnType<typeof getConnections>>;
 export type IProductsWithDomainId = Awaited<ReturnType<typeof getProducts>>;
+export type IPlans = "STANDARD" | "PRO" | "ULTIMATE";
+export type IThemes = "SYSTEM" | "DARK" | "LIGHT";

@@ -1,7 +1,7 @@
-export default function Dashboard() {
+import DashboardPageLayout from "@/components/modules/dashboard";
+
+export default function DashboardPage() {
   return (
-    <div>
-      <p>Welcome</p>
-    </div>
+    <DashboardPageLayout />
   )
 }

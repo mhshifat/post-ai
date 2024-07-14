@@ -29,7 +29,7 @@ type SidebarLink = {
   title: string;
 } & (SidebarLinkType | SidebarButtonType);
 
-const DASHBOARD_SIDEBAR_MAIN_LINKS: SidebarLink[] = [
+export const DASHBOARD_SIDEBAR_MAIN_LINKS: SidebarLink[] = [
   {
     as: "link",
     icon: LayoutDashboardIcon,
@@ -52,7 +52,7 @@ const DASHBOARD_SIDEBAR_MAIN_LINKS: SidebarLink[] = [
     as: "link",
     icon: Settings,
     title: "Settings",
-    path: "/"
+    path: "/settings"
   },
   {
     as: "link",

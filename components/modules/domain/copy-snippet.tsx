@@ -64,7 +64,7 @@ export default function CopySnippet({ domainId }: { domainId: string }) {
       </Section.Header>
       <Section.Content className="flex flex-col px-5 py-2">
         <pre>
-          <code className="text-slate-500">{snippet}</code>
+          <code className="text-slate-500 whitespace-break-spaces">{snippet}</code>
         </pre>
       </Section.Content>
     </Section>

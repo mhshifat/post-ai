@@ -1,4 +1,5 @@
 import { getDomains } from "@/actions/domains";
+import DashboardInfoBar from "@/components/shared/dashboard-info-bar";
 import DashboardSidebar from "@/components/shared/dashboard-sidebar";
 import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
@@ -14,8 +15,11 @@ export default async function Layout({ children }: PropsWithChildren) {
       <DashboardSidebar
         domains={domains}
       />
-      <div className="flex-1 overflow-y-auto">
-        {children}
+      <div className="flex-1 overflow-y-auto flex flex-col">
+        <DashboardInfoBar />
+        <div className="flex-1 py-2">
+          {children}
+        </div>
       </div>
     </main>
   )
