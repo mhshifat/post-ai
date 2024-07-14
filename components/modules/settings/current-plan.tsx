@@ -7,11 +7,22 @@ import Image from "next/image";
 import { plans } from "@/utils/constants";
 import Badge from "@/components/ui/badge";
 import { CheckIcon } from "lucide-react";
+import { useSubscription } from "@/components/providers/subscription-provider";
+import Confirmation from "@/components/shared/confirmation";
+import { cancelOngoingSubscription } from "@/actions/stripe";
+import { useRouter } from "next/navigation";
 
 export default function CurrentPlan() {
-  const { openDialog } = useDialog();
-  const currentPlan = plans[0];
+  const router = useRouter();
+  const { openDialog, closeDialog } = useDialog();
+  const { currentPlan } = useSubscription();
+  const planDetails = plans.find(plan => plan.title === currentPlan);
 
+  async function handleCancelSubscription() {
+    await cancelOngoingSubscription();
+    closeDialog();
+    router.refresh();
+  }
   return (
     <div className="w-full">
       <div className="flex gap-10">
@@ -21,21 +32,31 @@ export default function CurrentPlan() {
 
         <div className="flex-1">
           <h3 className="text-xl uppercase font-semibold flex gap-2">
-            {currentPlan.title}
-            <Badge>{currentPlan.price === 0 ? "FREE" : `$${currentPlan.price}`}</Badge>
+            {planDetails?.title}
+            <Badge>{planDetails?.price === 0 ? "FREE" : `$${planDetails?.price}`}</Badge>
           </h3>
           <ul className="flex flex-col gap-1 mt-5">
-            {currentPlan?.benefits.map((item, idx) => (
+            {planDetails?.benefits.map((item, idx) => (
               <li key={item + idx} className="flex items-start gap-2 text-sm text-slate-500"><CheckIcon className="mt-1 shrink-0 size-4 text-slate-500" /> {item}</li>
             ))}
           </ul>
         </div>
       </div>
-      <Button className="w-full mt-5" onClick={() => openDialog({
-        title: "Select Plan",
-        description: "Please select a plan",
-        content: <SelectPlan />
-      })}>Upgrade plan</Button>
+      <div className="flex items-center gap-5">
+        {(planDetails?.price || 0) > 0 && <Button onClick={() => openDialog({
+          title: "Cancel Plan",
+          description: "Are you sure you want to cancel the subscription?. You will not get refund if you do so",
+          content: <Confirmation
+            onCancel={closeDialog}
+            onOk={handleCancelSubscription}
+          />
+        })} variant="destructive" className="w-full mt-5">Cancel plan</Button>}
+        <Button className="w-full mt-5" onClick={() => openDialog({
+          title: "Select Plan",
+          description: "Please select a plan",
+          content: <SelectPlan />
+        })}>Upgrade plan</Button>
+      </div>
     </div>
   )
 }

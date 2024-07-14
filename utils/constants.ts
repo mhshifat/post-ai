@@ -26,7 +26,7 @@ export const plans = [
   {
     id: "3",
     title: "ULTIMATE",
-    price: 15,
+    price: 30,
     benefits: [
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. At, explicabo!",
       "Lorem ipsum dolor sit amet consectetur!",

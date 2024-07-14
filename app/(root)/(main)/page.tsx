@@ -1,3 +1,5 @@
+import { createCustomerSubscription } from "@/actions/stripe";
+import GetStartedPlanBtn from "@/components/modules/settings/get-started-plan-btn";
 import Logo from "@/components/shared/logo";
 import { Button } from "@/components/ui/button";
 import { plans } from "@/utils/constants";
@@ -11,7 +13,7 @@ export default function Home() {
       <div className="w-full flex items-center gap-5 justify-between p-5">
         <Logo className="h-7 w-max" />
 
-        <Button size="sm">Get Started</Button>
+        <Link href="/sign-up"><Button size="sm">Get Started</Button></Link>
       </div>
 
       <div className="mt-20 flex justify-center items-center flex-col p-5">
@@ -51,7 +53,10 @@ export default function Home() {
                 ))}
               </ul>
 
-              <Link className="w-full mt-10 flex items-center justify-center text-base font-semibold border border-[#007DFC]/50 py-2 px-3 rounded-md bg-[#007DFC]/10" href={`/dashboard?plan=${plan.title}`}>Get Started</Link>
+              <GetStartedPlanBtn
+                name={plan.title}
+                price={plan.price}
+              />
             </div>
           ))}
         </div>

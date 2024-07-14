@@ -118,7 +118,7 @@ export default function DashboardSidebar({ domains }: { domains: IDomainsWithUse
   }
   return (
     <aside className="py-3 px-3 pb-8 bg-slate-100 flex flex-col">
-      <LogoIcon />
+      <Link href="/"><LogoIcon /></Link>
 
       <ul className="my-10 flex flex-col justify-center items-center gap-7">
         {DASHBOARD_SIDEBAR_MAIN_LINKS.map(({ icon: Icon, ...item }) => (
