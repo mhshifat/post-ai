@@ -63,7 +63,7 @@ export default function SettingsPageLayout() {
               </Section.Header>
               <Section.Content>
                 <div className="py-2 px-3">
-                  <ChangePasswordForm onSubmit={() => {}} />
+                  {/* <ChangePasswordForm onSubmit={() => {}} /> */}
                 </div>
               </Section.Content>
             </Section>

@@ -7,6 +7,7 @@ import { currentUser } from "@clerk/nextjs/server";
 import { eq } from "drizzle-orm";
 import { unstable_noStore } from "next/cache";
 import { redirect } from "next/navigation";
+import Stripe from "stripe";
 
 export async function upsertStripeCustomer(args: {
   email: string;
@@ -101,7 +102,7 @@ export async function userOngoingSubscription() {
   const subscription = await ongoingStripeSubscription({
     customer: customer.id
   });
-  if (!subscription) return null;
+  if (!subscription || subscription.status !== "active") return null;
   const product = await stripeClient.products.retrieve((subscription as unknown as { plan: { product: string } }).plan.product)
   return {
     plan: product.name
@@ -161,4 +162,50 @@ export async function cancelOngoingSubscription() {
     customer: customer.id
   });
   await stripeClient.subscriptions.cancel(subscription.id);
+}
+
+export async function createSubscriptionPaymentIntent(args: {
+  product: {
+    name: string;
+    price: number;
+  } 
+}) {
+  const clerk = await currentUser();
+  if (!clerk) throw new Error("Unauthenticated");
+  const [user] = await db
+    .select({
+      id: users.id,
+      email: users.email,
+    })
+    .from(users)
+    .where(
+      eq(users.clerkId, clerk.id)
+    );
+  const customer = await upsertStripeCustomer({
+    email: user.email
+  });
+  if (!customer) throw new Error("Customer not found!");
+  const product = await upsertStripeProduct({
+    name: args.product.name
+  });
+  if (!product) throw new Error("Product not found");
+  const subscription = await stripeClient.subscriptions.create({
+    customer: customer.id,
+    payment_behavior: 'default_incomplete',
+    expand: ['latest_invoice.payment_intent'],
+    items: [
+      {
+        price_data: {
+          product: product.id,
+          unit_amount: args.product.price,
+          currency: "usd",
+          recurring: {
+            interval: "month"
+          } 
+        },
+        quantity: 1,
+      }
+    ],
+  });
+  return (subscription?.latest_invoice as any).payment_intent?.client_secret;
 }

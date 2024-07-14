@@ -8,12 +8,20 @@ import {
 import { FormEvent, useState } from "react";
 import { Button } from '@/components/ui/button';
 import axios from 'axios';
+import Spinner from '@/components/shared/spinner';
 
-export default function StripePaymentForm() {
+interface StripePaymentFormProps {
+  amount: number;
+  product: string;
+  paymentIntentUrl: string;
+  mode?: "subscription" | "payment";
+}
+
+export default function StripePaymentForm(props: StripePaymentFormProps) {
   const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
   const options: StripeElementsOptions = {
-    mode: 'payment' as const,
-    amount: 1099,
+    mode: props.mode,
+    amount: props.amount * 100,
     currency: 'usd',
     // Fully customizable with appearance API.
     appearance: {
@@ -25,12 +33,22 @@ export default function StripePaymentForm() {
 
   return (
     <Elements stripe={stripePromise} options={options}>
-      <StripePaymentForm.Form />
+      <StripePaymentForm.Form
+        paymentIntentUrl={props.paymentIntentUrl}
+        product={{
+          name: props.product,
+          price: props.amount * 100,
+        }}
+      />
     </Elements>
   )
 }
 
-StripePaymentForm.Form = () => {
+StripePaymentForm.Form = ({ paymentIntentUrl, product }: { paymentIntentUrl: string; product: {
+  price: number;
+  name: string;
+} }) => {
+  const [loading, setLoading] = useState(false);
   const stripe = useStripe();
   const elements = useElements();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -40,17 +58,17 @@ StripePaymentForm.Form = () => {
     if (elements == null) {
       return;
     }
-
+    setLoading(true);
+    
     const {error: submitError} = await elements.submit();
     if (submitError) {
       setErrorMessage(submitError?.message || null);
       return;
     }
-
-    // Create the PaymentIntent and obtain clientSecret from your server endpoint
-    // TODO:
-    const { data: { secret } } = await axios('/create-intent', {
+    
+    const { data: { secret } } = await axios(paymentIntentUrl, {
       method: 'POST',
+      data: product
     });
 
     const {error} = await stripe?.confirmPayment({
@@ -77,11 +95,11 @@ StripePaymentForm.Form = () => {
   return (
     <form onSubmit={handleSubmit}>
       <PaymentElement />
-      <Button className='mt-5 w-full' type="submit" disabled={!stripe || !elements}>
-        Pay
+      <Button className='mt-5 w-full' type="submit" disabled={!stripe || !elements || loading}>
+        {loading ? <Spinner /> : "Pay"}
       </Button>
       {/* Show error message to your customers */}
-      {errorMessage && <div>{errorMessage}</div>}
+      {errorMessage && <div className='mt-5 text-sm text-red-500 font-semibold'>{errorMessage}</div>}
     </form>
   )
 }

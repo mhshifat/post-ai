@@ -3,10 +3,15 @@ import { cn } from "@/lib/utils";
 import { IPlans } from "@/utils/types";
 import { ReactNode, useState } from "react";
 import StripePaymentForm from "../appointment/stripe-payment-form";
+import { plans } from "@/utils/constants";
+import { useSubscription } from "@/components/providers/subscription-provider";
 
 export default function SelectPlan() {
+  const { currentPlan } = useSubscription();
   const [selectedPlan, setSelectedPlan] = useState<IPlans>("STANDARD");
 
+  const ongoingPlan = plans.find(p => p.title === currentPlan);
+  const plan = plans.find(p => p.title === selectedPlan);
   return (
     <div>
       <Checkbox
@@ -33,6 +38,7 @@ export default function SelectPlan() {
         onChange={({ checked, item }) => checked && setSelectedPlan(item as IPlans)}
       >
         <Checkbox.Item
+          disabled={ongoingPlan?.title === "STANDARD"}
           title="STANDARD"
           value="STANDARD"
           metadata={{
@@ -41,6 +47,7 @@ export default function SelectPlan() {
           }}
         />
         <Checkbox.Item
+          disabled={ongoingPlan?.title === "PRO"}
           title="PRO"
           value="PRO"
           metadata={{
@@ -49,6 +56,7 @@ export default function SelectPlan() {
           }}
         />
         <Checkbox.Item
+          disabled={ongoingPlan?.title === "ULTIMATE"}
           title="ULTIMATE"
           value="ULTIMATE"
           metadata={{
@@ -60,7 +68,12 @@ export default function SelectPlan() {
 
       {selectedPlan !== 'STANDARD' && (
         <div className="mt-10">
-          <StripePaymentForm />
+          <StripePaymentForm
+            amount={plan?.price || 0}
+            product={plan?.title || ""}
+            paymentIntentUrl="/api/stripe/subscription-payment-intent"
+            mode="subscription"
+          />
         </div>
       )}
     </div>

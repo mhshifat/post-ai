@@ -8,14 +8,17 @@ interface CheckboxItemProps {
   value: string;
   metadata?: Record<string, unknown>;
   className?: string;
+  disabled?: boolean;
 }
 
-export default function CheckboxItem({ title, value, metadata, className }: CheckboxItemProps) {
+export default function CheckboxItem({ title, value, metadata, className, disabled }: CheckboxItemProps) {
   const { type, renderItem, isChecked, toggleCheckbox, identifier } = useCheckbox();
 
   return (
-    <label className={cn("cursor-pointer", className)}>
-      <input type={type} hidden name={identifier} value={value} checked={isChecked(value)} onChange={({ target }) => toggleCheckbox(value, target.checked)} />
+    <label className={cn("cursor-pointer", className, {
+      "opacity-50": disabled
+    })}>
+      <input disabled={disabled} type={type} hidden name={identifier} value={value} checked={isChecked(value)} onChange={({ target }) => toggleCheckbox(value, target.checked)} />
       {renderItem?.({ title, metadata, isChecked: isChecked(value) }) || title}
     </label>
   )
