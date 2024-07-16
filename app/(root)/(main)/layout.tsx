@@ -1,6 +1,9 @@
+import { createStripeCustomer } from "@/actions/stripe";
 import { PropsWithChildren } from "react";
 
-export default function Layout({ children }: PropsWithChildren) {
+export default async function Layout({ children }: PropsWithChildren) {
+  await createStripeCustomer();
+
   return (
     <>
       {children}

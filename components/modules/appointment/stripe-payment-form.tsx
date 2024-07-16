@@ -58,6 +58,7 @@ StripePaymentForm.Form = ({ paymentIntentUrl, product }: { paymentIntentUrl: str
     if (elements == null) {
       return;
     }
+    setErrorMessage(null);
     setLoading(true);
     
     const {error: submitError} = await elements.submit();
@@ -90,6 +91,7 @@ StripePaymentForm.Form = ({ paymentIntentUrl, product }: { paymentIntentUrl: str
       // methods like iDEAL, your customer will be redirected to an intermediate
       // site first to authorize the payment, then redirected to the `return_url`.
     }
+    setLoading(false);
   };
 
   return (

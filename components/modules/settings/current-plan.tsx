@@ -9,8 +9,8 @@ import Badge from "@/components/ui/badge";
 import { CheckIcon } from "lucide-react";
 import { useSubscription } from "@/components/providers/subscription-provider";
 import Confirmation from "@/components/shared/confirmation";
-import { cancelOngoingSubscription } from "@/actions/stripe";
 import { useRouter } from "next/navigation";
+import { cancelOngoingSubscription } from "@/actions/stripe";
 
 export default function CurrentPlan() {
   const router = useRouter();
@@ -25,7 +25,12 @@ export default function CurrentPlan() {
   }
   return (
     <div className="w-full">
-      <div className="flex gap-10">
+      {!currentPlan && (
+        <div className="flex items-center gap-5 justify-center flex-col py-2 px-3 aspect-[3/1] text-center">
+          <p className="max-w-[82%] text-sm font-semibold text-slate-500">You do not have any active subscription, to purchase a subscription please click on the button that says "Purchase Plan" below.</p>
+        </div>
+      )}
+      {currentPlan && <div className="flex gap-10">
         <div className="relative flex-1 rounded-lg overflow-hidden">
           <Image fill className="object-cover" src="https://images.ui8.net/uploads/presentation_1612381616989.png" alt="" />
         </div>
@@ -41,7 +46,7 @@ export default function CurrentPlan() {
             ))}
           </ul>
         </div>
-      </div>
+      </div>}
       <div className="flex items-center gap-5">
         {(planDetails?.price || 0) > 0 && <Button onClick={() => openDialog({
           title: "Cancel Plan",
@@ -55,7 +60,7 @@ export default function CurrentPlan() {
           title: "Select Plan",
           description: "Please select a plan",
           content: <SelectPlan />
-        })}>Upgrade plan</Button>
+        })}>{currentPlan ? "Upgrade plan" : "Purchase Plan"}</Button>
       </div>
     </div>
   )

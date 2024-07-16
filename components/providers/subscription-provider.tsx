@@ -4,7 +4,7 @@ import { IPlans } from "@/utils/types";
 import { createContext, PropsWithChildren, useContext } from "react"
 
 interface SubscriptionProviderProps {
-  currentPlan: IPlans
+  currentPlan?: IPlans
 }
 
 interface SubscriptionCtxProps extends SubscriptionProviderProps {}

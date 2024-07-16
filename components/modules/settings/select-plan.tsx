@@ -8,7 +8,7 @@ import { useSubscription } from "@/components/providers/subscription-provider";
 
 export default function SelectPlan() {
   const { currentPlan } = useSubscription();
-  const [selectedPlan, setSelectedPlan] = useState<IPlans>("STANDARD");
+  const [selectedPlan, setSelectedPlan] = useState<IPlans | null>();
 
   const ongoingPlan = plans.find(p => p.title === currentPlan);
   const plan = plans.find(p => p.title === selectedPlan);
@@ -37,36 +37,21 @@ export default function SelectPlan() {
         )}
         onChange={({ checked, item }) => checked && setSelectedPlan(item as IPlans)}
       >
-        <Checkbox.Item
-          disabled={ongoingPlan?.title === "STANDARD"}
-          title="STANDARD"
-          value="STANDARD"
-          metadata={{
-            description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, accusantium?",
-            price: "0"
-          }}
-        />
-        <Checkbox.Item
-          disabled={ongoingPlan?.title === "PRO"}
-          title="PRO"
-          value="PRO"
-          metadata={{
-            description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, accusantium?",
-            price: "15"
-          }}
-        />
-        <Checkbox.Item
-          disabled={ongoingPlan?.title === "ULTIMATE"}
-          title="ULTIMATE"
-          value="ULTIMATE"
-          metadata={{
-            description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, accusantium?",
-            price: "35"
-          }}
-        />
+        {plans.map(plan => (
+          <Checkbox.Item
+            key={plan.id}
+            disabled={ongoingPlan?.title === plan.title}
+            title={plan.title}
+            value={plan.title}
+            metadata={{
+              description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, accusantium?",
+              price: plan.price
+            }}
+          />
+        ))}
       </Checkbox>
 
-      {selectedPlan !== 'STANDARD' && (
+      {selectedPlan && (
         <div className="mt-10">
           <StripePaymentForm
             amount={plan?.price || 0}

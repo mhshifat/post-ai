@@ -22,7 +22,12 @@ export default function PaymentForm() {
       </div>
       <Divider orientation="vertical" />
       <div className="flex-1">
-        <StripePaymentForm />
+        <StripePaymentForm
+          amount={0}
+          product={""}
+          paymentIntentUrl="/api/stripe/subscription-payment-intent"
+          mode="subscription"
+        />
       </div>
     </div>
   )
