@@ -2,28 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* width */
-::-webkit-scrollbar {
-  width: 2px;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-  background: #f2f2f2;
-  border-radius: 5px;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: #cacaca;
-  border-radius: 5px;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: #555;
-}
-
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -50,4 +28,26 @@
   background-color: hsl(var(--background-secondary)) !important;
   border-color: hsl(var(--border)) !important;
   color: hsl(var(--foreground)) !important;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 2px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: hsl(var(--background-secondary));
+  border-radius: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--background));
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--foreground));
 }

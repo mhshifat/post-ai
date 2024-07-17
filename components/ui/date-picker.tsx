@@ -73,7 +73,7 @@ export default function DatePicker({ enableTimePicker, type }: DatePickerProps) 
           >
             <ChevronLeft className="size-5 text-foreground/50" />
           </DatePicker.Cell>
-          <span className="text-lg font-medium">
+          <span className="text-lg font-medium text-foreground">
             {formatDate(year, month, day, "MMMM yyyy")}
           </span>
           <DatePicker.Cell
@@ -166,7 +166,7 @@ export default function DatePicker({ enableTimePicker, type }: DatePickerProps) 
 							.map((slot) => (
 								<li
 									className={cn(
-										"w-full text-sm font-medium text-foreground/50 hover:text-slate-900 transition",
+										"w-full text-sm font-medium text-foreground/50 hover:text-foreground transition",
 										{
 											"text-slate-300": slot.disabled,
 											"text-primary": slot.selected,
@@ -205,9 +205,9 @@ DatePicker.Cell = ({
 				"border-none outline-none flex justify-center items-center w-10 aspect-square rounded-full relative transition",
 				className,
 				{
-					"hover:bg-slate-200": !readOnly,
-					"text-slate-300": disabled,
-					"bg-primary text-background text-base hover:bg-primary": selected,
+					"hover:bg-foreground/20": !readOnly,
+					"text-foreground/20": disabled,
+					"bg-primary text-primary-foreground text-base hover:bg-primary": selected,
 				}
 			)}
 		>

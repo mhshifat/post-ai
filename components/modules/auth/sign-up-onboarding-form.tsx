@@ -104,7 +104,7 @@ export default function SignUpOnboardingForm() {
       <Steps.Progress
         className="list-none p-0 flex items-center gap-3 mt-auto"
         renderItem={({ currentStep, currentIndex }) => (
-          <span className={cn("cursor-pointer flex-1 h-2 rounded-full bg-slate-300 flex items-center justify-center", {
+          <span className={cn("cursor-pointer flex-1 h-2 rounded-full bg-primary/10 flex items-center justify-center", {
             "bg-primary": currentIndex === currentStep
           })} />
         )}

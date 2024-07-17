@@ -7,11 +7,11 @@ import ChatHelpDesk from "./chat-help-desk";
 export default function ChatTabs({}: {}) {
   return (
     <Tab className="flex flex-col h-full">
-      <div className="py-2 px-3 border-b border-slate-100">
+      <div className="py-2 px-3 border-b border-border">
         <Tab.List
-          className="flex items-center bg-slate-200 rounded-lg p-1 [&>*]:flex-1"
+          className="flex items-center bg-foreground/10 rounded-lg p-1 [&>*]:flex-1"
           renderItem={({ content, isSelected }) => (
-            <span className={cn("w-full flex justify-center items-center font-medium text-slate-600 text-sm gap-1 bg-transparent rounded-md cursor-pointer py-1 px-3", {
+            <span className={cn("w-full flex justify-center items-center font-medium text-foreground text-sm gap-1 bg-transparent rounded-md cursor-pointer py-1 px-3", {
               "bg-background": isSelected
             })}>
               {content}
