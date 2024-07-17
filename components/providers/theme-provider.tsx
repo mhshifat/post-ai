@@ -9,6 +9,7 @@ interface ThemeProviderProps {
 
 interface ThemeCtxProps extends ThemeProviderProps {
   currentTheme: IThemes;
+  mode: IThemes;
   changeTheme: (value: IThemes) => void;
 }
 
@@ -40,7 +41,8 @@ export default function ThemeProvider({ children }: PropsWithChildren<ThemeProvi
   return (
     <ThemeCtx.Provider value={{
       currentTheme,
-      changeTheme
+      changeTheme,
+      mode: systemTheme
     }}>
       {children}
     </ThemeCtx.Provider>

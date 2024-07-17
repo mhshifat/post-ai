@@ -1,3 +1,6 @@
+import { changeClerkUserPassword } from "@/actions/users";
+import { useDialog } from "@/components/providers/dialog-provider";
+import Confirmation from "@/components/shared/confirmation";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -15,11 +18,16 @@ const formSchema = z.object({
   password: z.string(),
   confirmPassword: z.string(),
 })
+.refine((data) => data.password === data.confirmPassword, {
+  message: "Passwords don't match",
+  path: ["confirmPassword"],
+});
 
 export type ChangePasswordFormSchema = z.infer<typeof formSchema>;
 
 export default function ChangePasswordForm({ onSubmit }: { onSubmit: (formValues: ChangePasswordFormSchema) => void }) {
   const [loading, setLoading] = useState(false);
+  const { openDialog, closeDialog } = useDialog();
   const form = useForm<ChangePasswordFormSchema>({
     mode: "onChange",
     resolver: zodResolver(formSchema),
@@ -28,11 +36,25 @@ export default function ChangePasswordForm({ onSubmit }: { onSubmit: (formValues
       confirmPassword: "",
     }
   });
+
+  async function handleChangePassword(values: ChangePasswordFormSchema) {
+    await changeClerkUserPassword(values.password);
+    closeDialog();
+    setLoading(false);
+    toast.success("Successfully changed the password");
+  }
   
-  async function handleSubmit(values: ChangePasswordFormSchema) {
+  function handleSubmit(values: ChangePasswordFormSchema) {
     setLoading(true);
     try {
-      // TODO:
+      openDialog({
+        title: "Are you sure?",
+        description: "Are you sure you want to change the password?",
+        content: <Confirmation
+          onCancel={closeDialog}
+          onOk={() => handleChangePassword(values)}
+        />
+      })
     } catch (err) {
       const message = (err as ClerkAPIResponseError)?.errors?.[0]?.longMessage;
       toast.error(message);

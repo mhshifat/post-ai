@@ -2,7 +2,8 @@
 
 import { db } from "@/db/drizzle";
 import { users } from "@/db/schema";
-import { clerkClient } from "@clerk/nextjs/server";
+import { clerkClient, currentUser } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
 import { v4 } from 'uuid';
 
 export async function updateClerkUserDetailsAfterSignUp(args: {
@@ -38,4 +39,12 @@ export async function updateClerkUserDetailsAfterSignUp(args: {
       }
     });
   }
+}
+
+export async function changeClerkUserPassword(password: string) {
+  const user = await currentUser();
+  if (!user) return redirect("/sign-in");
+  await clerkClient.users.updateUser(user.id, {
+    password
+  });
 }

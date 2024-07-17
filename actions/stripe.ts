@@ -52,7 +52,7 @@ export async function upsertStripeSubscriptionProducts(plans: {
 
 export async function createStripeCustomer() {
   const user = await currentUser();
-  if (!user) return redirect("sign-in");
+  if (!user) return null;
   
   const email = user.emailAddresses?.[0]?.emailAddress;
 
@@ -82,11 +82,15 @@ export async function createStripeCustomer() {
 
 export async function currentSubscriptions() {
   const user = await currentUser();
-  if (!user) return redirect("sign-in");
+  if (!user) return {
+    subscriptions: [],
+    customerId: null,
+    user: null
+  };
   let customerId = user?.privateMetadata?.customer_id as string;
   if (!customerId) {
-    const { id } = await createStripeCustomer();
-    customerId = id;
+    const { id } = await createStripeCustomer() || {};
+    if (id) customerId = id;
   }
   const { data: subscriptions } = await stripeClient.subscriptions.list({
     customer: customerId,
@@ -106,6 +110,7 @@ export async function stripeCheckoutPurchaseSubscription(args: {
   price: number;
 }) {
   const { subscriptions, customerId } = await currentSubscriptions();
+  if (!customerId) return redirect("/settings");
   const isSame = subscriptions.find(sub => sub.plan.nickname === args.name);
   if (isSame || (!isSame && subscriptions.length > 0)) return redirect("/settings");
   const { data: products } = await stripeClient.products.list({
@@ -139,6 +144,9 @@ export async function getPurchaseOrUpgradeSubscriptionPaymentIntentSecret(args: 
 }) {
   try {
     const { subscriptions, customerId } = await currentSubscriptions();
+    if (!customerId) return {
+      secret: ""
+    };
     const isSame = subscriptions.find(sub => sub.plan.nickname === args.name);
     if (isSame) throw new Error("Already subscribed to this plan");
     const { data: products } = await stripeClient.products.list({
