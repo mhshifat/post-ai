@@ -12,7 +12,7 @@ const TABLE_HEADERS = [
         alt={(rowData as { title: string }).title}
         width={40}
         height={40}
-        className="block rounded-md border-2 border-slate-200"
+        className="block rounded-md border-2 border-border"
       />
     )
   },
@@ -32,7 +32,7 @@ const TABLE_HEADERS = [
 export default function ProductsTable({ products }: { products: IProductsWithDomainId }) {
   return (
     <div>
-      <Table className="w-full border border-slate-200 rounded-xl overflow-hidden">
+      <Table className="w-full border border-border rounded-xl overflow-hidden">
         <Table.Content>
           <Table.Row className="bg-slate-300">
             {TABLE_HEADERS.map((header, headerIdx) => (
@@ -42,7 +42,7 @@ export default function ProductsTable({ products }: { products: IProductsWithDom
             ))}
           </Table.Row>
           {products?.map(pro => (
-            <Table.Row key={pro.id} className="bg-white border-t border-slate-200">
+            <Table.Row key={pro.id} className="bg-background border-t border-border">
               {TABLE_HEADERS.map((header, headerIdx) => (
                 <Table.Cell key={header.title} className="py-3 px-3" align={headerIdx === TABLE_HEADERS.length - 1 ? "right" : "left"}>
                   <span className="text-sm font-medium text-slate-500">{header.render ? header.render({

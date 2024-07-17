@@ -134,7 +134,7 @@ export default function DatePicker({ enableTimePicker, type }: DatePickerProps) 
 	return (
 		<div className="w-full flex relative">
 			{loading && (
-				<div className="absolute inset-0 w-full h-full flex justify-center items-center bg-white z-50">
+				<div className="absolute inset-0 w-full h-full flex justify-center items-center bg-background z-50">
 					<Spinner />
 				</div>
 			)}
@@ -169,7 +169,7 @@ export default function DatePicker({ enableTimePicker, type }: DatePickerProps) 
 										"w-full text-sm font-medium text-slate-500 hover:text-slate-900 transition",
 										{
 											"text-slate-300": slot.disabled,
-											"text-[#007DFC]": slot.selected,
+											"text-primary": slot.selected,
 										}
 									)}
 								>
@@ -207,7 +207,7 @@ DatePicker.Cell = ({
 				{
 					"hover:bg-slate-200": !readOnly,
 					"text-slate-300": disabled,
-					"bg-[#007DFC] text-white text-base hover:bg-[#007DFC]": selected,
+					"bg-primary text-background text-base hover:bg-primary": selected,
 				}
 			)}
 		>

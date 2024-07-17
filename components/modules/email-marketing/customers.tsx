@@ -26,18 +26,18 @@ export default function Customers() {
 
   return (
     <Table
-      className="w-full border border-slate-200 rounded-xl overflow-hidden"
+      className="w-full border border-border rounded-xl overflow-hidden"
       renderPrefix={() => (
         <Table.Cell className="py-2 px-3 w-0" align="left">
           <Checkbox
             type="checkbox"
             className="w-full h-full flex items-center"
             renderItem={({ title, metadata, isChecked }) => (
-              <div className={cn("w-full h-full relative border border-slate-200 rounded-sm shadow-inner flex items-center gap-5", {
-                "border-[#007DFC]": isChecked
+              <div className={cn("w-full h-full relative border border-border rounded-sm shadow-inner flex items-center gap-5", {
+                "border-primary": isChecked
               })}>
-                {isChecked && <span className="w-full h-full rounded bg-[#007DFC] flex items-center justify-center">
-                  <CheckIcon className="size-4 text-white" />
+                {isChecked && <span className="w-full h-full rounded bg-primary flex items-center justify-center">
+                  <CheckIcon className="size-4 text-background" />
                 </span>}
               </div>
             )}
@@ -57,42 +57,42 @@ export default function Customers() {
       renderSuffix={({ type }) => (
         <Table.Cell className="py-2 px-3 w-0" align="right">
           <div className="p-0">
-            {type === 'body' && <Button onClick={() => openDialog({
+            {type === 'body' && <Button variant="ghost" onClick={() => openDialog({
               position: "right",
               title: "Answered Questions",
               description: "Answers of the filtered Questions",
               content: <FilterQuestions />
-            })} size="sm">View</Button>}
+            })} size="sm" className="text-foreground">View</Button>}
           </div>
         </Table.Cell>
       )}
     >
       <Table.Content>
-        <Table.Row className="bg-slate-300" type="header">
+        <Table.Row className="bg-background-secondary" type="header">
           {TABLE_HEADERS.map((header) => (
             <Table.Cell key={header.title} className="py-2 px-3">
-              <span className="text-base font-medium">{header.title}</span>
+              <span className="text-base font-medium text-foreground">{header.title}</span>
             </Table.Cell>
           ))}
         </Table.Row>
-        <Table.Row className="bg-white border-t border-slate-200">
+        <Table.Row className="bg-background border-t border-border">
           {TABLE_HEADERS.map((header) => (
             <Table.Cell key={header.title} className="py-3 px-3">
-              <span className="text-sm font-medium text-slate-500">Data</span>
+              <span className="text-sm font-medium text-foreground/50">Data</span>
             </Table.Cell>
           ))}
         </Table.Row>
-        <Table.Row className="bg-white border-t border-slate-200">
+        <Table.Row className="bg-background border-t border-border">
           {TABLE_HEADERS.map((header) => (
             <Table.Cell key={header.title} className="py-3 px-3">
-              <span className="text-sm font-medium text-slate-500">Data</span>
+              <span className="text-sm font-medium text-foreground/50">Data</span>
             </Table.Cell>
           ))}
         </Table.Row>
-        <Table.Row className="bg-white border-t border-slate-200">
+        <Table.Row className="bg-background border-t border-border">
           {TABLE_HEADERS.map((header) => (
             <Table.Cell key={header.title} className="py-3 px-3">
-              <span className="text-sm font-medium text-slate-500">Data</span>
+              <span className="text-sm font-medium text-foreground/50">Data</span>
             </Table.Cell>
           ))}
         </Table.Row>

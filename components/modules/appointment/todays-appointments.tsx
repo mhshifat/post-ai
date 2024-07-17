@@ -5,7 +5,7 @@ export default function TodaysAppointments() {
   return (
     <div className="w-full flex flex-col gap-0 rounded-xl overflow-hidden">
       <div className="grid grid-cols-[20%_1fr] overflow-hidden">
-        <div className="w-full p-3 bg-primary flex justify-center items-center text-white font-semibold text-lg">4:30 PM</div>
+        <div className="w-full p-3 bg-primary flex justify-center items-center text-background font-semibold text-lg">4:30 PM</div>
         <div className="flex flex-col">
           <div className="flex-1 flex items-center justify-between p-3">
             <span className="text-base text-foreground font-medium"><small className="text-sm text-foreground/50">Created</small><br/>18:23PM</span>
@@ -21,7 +21,7 @@ export default function TodaysAppointments() {
         </div>
       </div>
       <div className="grid grid-cols-[20%_1fr] overflow-hidden">
-        <div className="w-full p-3 bg-primary flex justify-center items-center text-white font-semibold text-lg">4:30 PM</div>
+        <div className="w-full p-3 bg-primary flex justify-center items-center text-background font-semibold text-lg">4:30 PM</div>
         <div className="flex flex-col">
           <div className="flex-1 flex items-center justify-between p-3">
             <span className="text-base text-foreground font-medium"><small className="text-sm text-foreground/50">Created</small><br/>18:23PM</span>

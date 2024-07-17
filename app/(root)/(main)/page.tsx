@@ -31,7 +31,7 @@ export default function Home() {
         <div className="mt-10 w-full max-w-[1200px] items-center justify-center flex gap-5 flex-wrap">
           {plans.map(plan => (
             <div key={plan.id} className="border border-border p-5 flex-1 rounded-lg min-w-96">
-              <h3 className="uppercase text-lg font-bold text-[#007DFC]">{plan.title}</h3>
+              <h3 className="uppercase text-lg font-bold text-primary">{plan.title}</h3>
               <p className="text-foreground/70 font-semibold text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
               <h4 className="my-5 text-3xl font-bold text-foreground">
                 <span>${plan.price}</span>

@@ -16,7 +16,7 @@ export default function ThemeSelector() {
       className="flex items-center justify-between gap-5"
       renderItem={({ title, metadata, isChecked }) => (
         <div className={cn("relative border-2 border-transparent flex items-center gap-5 rounded-lg overflow-hidden", {
-          "border-[#007DFC]": isChecked
+          "border-primary": isChecked
         })}>
           {metadata?.svg as ReactNode}
         </div>

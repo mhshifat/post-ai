@@ -12,7 +12,7 @@ export default function ChatTabs({}: {}) {
           className="flex items-center bg-slate-200 rounded-lg p-1 [&>*]:flex-1"
           renderItem={({ content, isSelected }) => (
             <span className={cn("w-full flex justify-center items-center font-medium text-slate-600 text-sm gap-1 bg-transparent rounded-md cursor-pointer py-1 px-3", {
-              "bg-white": isSelected
+              "bg-background": isSelected
             })}>
               {content}
             </span>

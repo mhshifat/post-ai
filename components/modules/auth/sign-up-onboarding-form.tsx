@@ -37,13 +37,13 @@ export default function SignUpOnboardingForm() {
             type="radio"
             className="flex flex-col gap-5"
             renderItem={({ title, metadata, isChecked }) => (
-              <div className={cn("relative p-3 border border-slate-200 rounded-sm shadow-inner flex items-center gap-5", {
-                "border-[#007DFC]": isChecked
+              <div className={cn("relative p-3 border border-border rounded-sm shadow-inner flex items-center gap-5", {
+                "border-primary": isChecked
               })}>
-                {isChecked && <span className="absolute top-3 right-3 w-2 h-2 rounded-full bg-[#007DFC]" />}
+                {isChecked && <span className="absolute top-3 right-3 w-2 h-2 rounded-full bg-primary" />}
 
-                <span className={cn("h-full aspect-square border border-slate-200 rounded-sm flex justify-center items-center p-3", {
-                  "border-[#007DFC]": isChecked
+                <span className={cn("h-full aspect-square border border-border rounded-sm flex justify-center items-center p-3", {
+                  "border-primary": isChecked
                 })}>
                   <User2Icon
                     {...isChecked?{
@@ -105,7 +105,7 @@ export default function SignUpOnboardingForm() {
         className="list-none p-0 flex items-center gap-3 mt-auto"
         renderItem={({ currentStep, currentIndex }) => (
           <span className={cn("cursor-pointer flex-1 h-2 rounded-full bg-slate-300 flex items-center justify-center", {
-            "bg-[#007DFC]": currentIndex === currentStep
+            "bg-primary": currentIndex === currentStep
           })} />
         )}
       />
