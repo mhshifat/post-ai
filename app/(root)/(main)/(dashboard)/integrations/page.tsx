@@ -5,7 +5,7 @@ export default async function Integrations() {
   const connections = await getConnections();
   
   return  (
-    <div className="w-full h-full py-2 px-3 flex flex-col gap-10">
+    <div className="w-full h-full p-5 flex flex-col gap-10 bg-background">
       <IntegrationsList
         connections={connections}
       />

@@ -8,6 +8,7 @@ import Image from "next/image"
 import IntegrationsModalWrapper from "./integrations-modal-wrapper"
 import StripeIntegrationInfo from "./stripe-integration-info";
 import { IConnectionsWithUserId } from "@/utils/types";
+import { cn } from "@/lib/utils";
 
 const INTEGRATIONS = [
   {
@@ -16,19 +17,19 @@ const INTEGRATIONS = [
     title: "Stripe",
     type: "stripe",
     description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque, minus esse! Recusandae fugit magni natus!"
-  }
+  },
 ]
 
 export default function IntegrationsList({ connections }: { connections: IConnectionsWithUserId }) {
   const { openDialog } = useDialog();
 
   return (
-    <div className="w-full flex gap-10 flex-wrap">
+    <div className="w-full grid gap-8 grid-cols-[repeat(auto-fill,minmax(320px,1fr))]">
       {INTEGRATIONS.map(card => {
-        const conn = connections?.find(c => c.type === card.type);
+        const conn = false;
         return (
-          <div key={card.id} className="border border-s-slate-200 px-3 py-2 rounded-lg max-w-[400px]">
-            <div className="flex justify-between items-center gap-5">
+          <div key={card.id} className="border border-border rounded-lg bg-background-secondary">
+            <div className="flex justify-between items-center gap-5 px-3 py-2">
               <Image
                 src={card.logo}
                 alt="stripe logo"
@@ -47,16 +48,20 @@ export default function IntegrationsList({ connections }: { connections: IConnec
                     <StripeIntegrationInfo />
                   </IntegrationsModalWrapper>
                 )
-              })} disabled={!!conn} variant="outline" className="flex items-center gap-2">
-                <CloudIcon />
+              })} disabled={!!conn} variant="outline" className="flex items-center gap-2 border border-border bg-background">
+                <CloudIcon className={cn("size-4 text-foreground", {
+                  "text-foreground/50": conn
+                })} />
   
-                <span>{conn ? `Connected to ${card.title}` : "Connect"}</span>
+                <span className={cn("text-foreground", {
+                  "text-foreground/50": conn
+                })}>{conn ? `Connected to ${card.title}` : "Connect"}</span>
               </Button>
             </div>
-            <Divider className="my-3" />
-            <div>
-              <h3 className="text-lg font-medium">{card.title}</h3>
-              <p className="text-sm font-medium text-slate-500">{card.description}</p>
+            <Divider />
+            <div className="px-3 py-2">
+              <h3 className="text-lg font-medium text-foreground">{card.title}</h3>
+              <p className="text-sm font-medium text-foreground/50 mt-1">{card.description}</p>
             </div>
           </div>
         )
