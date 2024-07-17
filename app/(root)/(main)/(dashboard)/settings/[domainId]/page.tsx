@@ -127,7 +127,9 @@ export default async function Domain({ params }: { params: { domainId: string } 
             description=""
           />
           <SettingsLayout.Right>
-            <DeleteDomainBtn />
+            <div className="flex justify-start">
+              <DeleteDomainBtn />
+            </div>
           </SettingsLayout.Right>
         </SettingsLayout>
       </ClientOnly>

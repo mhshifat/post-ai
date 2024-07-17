@@ -34,7 +34,7 @@ export default function ProductsTable({ products }: { products: IProductsWithDom
     <div>
       <Table className="w-full border border-border rounded-xl overflow-hidden">
         <Table.Content>
-          <Table.Row className="bg-slate-300">
+          <Table.Row className="bg-background-secondary">
             {TABLE_HEADERS.map((header, headerIdx) => (
               <Table.Cell key={header.title} className="py-2 px-3" align={headerIdx === TABLE_HEADERS.length - 1 ? "right" : "left"}>
                 <span className="text-base font-medium">{header.title}</span>
@@ -45,7 +45,7 @@ export default function ProductsTable({ products }: { products: IProductsWithDom
             <Table.Row key={pro.id} className="bg-background border-t border-border">
               {TABLE_HEADERS.map((header, headerIdx) => (
                 <Table.Cell key={header.title} className="py-3 px-3" align={headerIdx === TABLE_HEADERS.length - 1 ? "right" : "left"}>
-                  <span className="text-sm font-medium text-slate-500">{header.render ? header.render({
+                  <span className="text-sm font-medium text-foreground/50">{header.render ? header.render({
                     colData: pro[header.key as keyof typeof pro],
                     rowData: pro
                   }) : pro[header.key as keyof typeof pro]}</span>

@@ -12,18 +12,18 @@ export default function HelpDeskQuestions({ className }: HelpDeskQuestionsProps)
     <Accordion className={cn("pt-10", className)}>
       <Accordion.Item>
         <Accordion.Trigger className="py-2">
-          <h3>Question?</h3>
+          <h3 className="text-base text-foreground font-semibold">Question?</h3>
         </Accordion.Trigger>
         <Accordion.Content>
-          <p>Answer....</p>
+          <p className="text-sm font-semibold text-foreground/50">Answer....</p>
         </Accordion.Content>
       </Accordion.Item>
       <Accordion.Item>
         <Accordion.Trigger className="py-2">
-          <h3>Question 1?</h3>
+          <h3 className="text-base text-foreground font-semibold">Question 1?</h3>
         </Accordion.Trigger>
         <Accordion.Content>
-          <p>Answer 1....</p>
+          <p className="text-sm font-semibold text-foreground/50">Answer 1....</p>
         </Accordion.Content>
       </Accordion.Item>
     </Accordion>

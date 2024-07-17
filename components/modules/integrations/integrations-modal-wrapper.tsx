@@ -17,8 +17,8 @@ export default function IntegrationsModalWrapper({ children, logo, title, descri
         <div className="flex items-center gap-10">
           <LogoIcon size={50} />
           <span className="flex flex-col gap-1">
-            <ArrowLeft className="size-4 text-slate-500" />
-            <ArrowRight className="size-4 text-slate-500" />
+            <ArrowLeft className="size-4 text-foreground/50" />
+            <ArrowRight className="size-4 text-foreground/50" />
           </span>
           <Image
             src={logo}
@@ -29,7 +29,7 @@ export default function IntegrationsModalWrapper({ children, logo, title, descri
           />
         </div>
         <h3 className="text-lg font-medium text-center mt-5">{title}</h3>
-        <p className="text-sm font-medium text-slate-500 text-center max-w-[88%] mt-1">{description}</p>
+        <p className="text-sm font-medium text-foreground/50 text-center max-w-[88%] mt-1">{description}</p>
       </div>
       <Divider className="my-3" />
       {children}

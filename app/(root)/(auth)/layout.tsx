@@ -17,7 +17,7 @@ export default function Layout({ children }: PropsWithChildren) {
 
       <div className="flex-[1_0_0] py-8 px-10 bg-slate-100 flex flex-col overflow-hidden">
         <h2 className="font-serif font-semibold text-3xl mb-2 uppercase tracking-wide">Hi, I am your AI powered<br/> sales assistant</h2>
-        <p className="font-sans text-base text-slate-500 mb-5">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae, nisi!</p>
+        <p className="font-sans text-base text-foreground/50 mb-5">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae, nisi!</p>
         <div className="relative flex-1">
           <Image
             fill

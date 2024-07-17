@@ -11,12 +11,12 @@ export default function PaymentForm() {
         <div className="flex flex-col gap-5">
           <div className="border border-slate-300 py-2 px-3 rounded-lg flex items-center gap-2">
             <Image src="https://picsum.photos/200" width={30} height={30} className="rounded-md" alt="" />
-            <h3 className="text-sm font-medium text-slate-500">Product 1</h3>
+            <h3 className="text-sm font-medium text-foreground/50">Product 1</h3>
             <strong className="text-base font-medium text-slate-900 ml-auto">$30</strong>
           </div>
 
           <div>
-            <p className="text-right m-0 text-sm font-medium text-slate-500">Total: <strong className="text-base font-medium text-slate-900 ml-auto">$30</strong></p>
+            <p className="text-right m-0 text-sm font-medium text-foreground/50">Total: <strong className="text-base font-medium text-slate-900 ml-auto">$30</strong></p>
           </div>
         </div>
       </div>

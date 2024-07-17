@@ -7,7 +7,7 @@ export default function MessengerHeader() {
 
       <div className="flex flex-col gap-0">
         <h3 className="text-lg font-medium m-0 leading-tight">Google</h3>
-        <p className="text-sm text-slate-500 m-0 leading-tight">google.com</p>
+        <p className="text-sm text-foreground/50 m-0 leading-tight">google.com</p>
       </div>
 
       <div className="flex items-center ml-auto">

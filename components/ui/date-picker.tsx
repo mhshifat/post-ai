@@ -71,7 +71,7 @@ export default function DatePicker({ enableTimePicker, type }: DatePickerProps) 
               return newValues;
             }))}
           >
-            <ChevronLeft className="size-5 text-slate-500" />
+            <ChevronLeft className="size-5 text-foreground/50" />
           </DatePicker.Cell>
           <span className="text-lg font-medium">
             {formatDate(year, month, day, "MMMM yyyy")}
@@ -88,7 +88,7 @@ export default function DatePicker({ enableTimePicker, type }: DatePickerProps) 
               return newValues;
             }))}
           >
-            <ChevronRight className="size-5 text-slate-500" />
+            <ChevronRight className="size-5 text-foreground/50" />
           </DatePicker.Cell>
         </div>
 
@@ -97,7 +97,7 @@ export default function DatePicker({ enableTimePicker, type }: DatePickerProps) 
             {weekdays.map((weekDay) => (
               <DatePicker.Cell
                 key={weekDay}
-                className="text-sm font-medium text-slate-500 w-full"
+                className="text-sm font-medium text-foreground/50 w-full"
                 readOnly
               >
                 {weekDay}
@@ -115,7 +115,7 @@ export default function DatePicker({ enableTimePicker, type }: DatePickerProps) 
                 return (
                   <DatePicker.Cell
                     key={weekDay}
-                    className="text-sm font-medium text-slate-500 w-full"
+                    className="text-sm font-medium text-foreground/50 w-full"
                     readOnly={!isDateInMon}
                     disabled={!isDateInMon}
                     selected={isToday}
@@ -166,7 +166,7 @@ export default function DatePicker({ enableTimePicker, type }: DatePickerProps) 
 							.map((slot) => (
 								<li
 									className={cn(
-										"w-full text-sm font-medium text-slate-500 hover:text-slate-900 transition",
+										"w-full text-sm font-medium text-foreground/50 hover:text-slate-900 transition",
 										{
 											"text-slate-300": slot.disabled,
 											"text-primary": slot.selected,

@@ -13,7 +13,7 @@ export default function Uploader({ values, onChange }: { values?: any[], onChang
 
   return (
     <div>
-      <FileUploaderMinimal onChange={(items) => {
+      <FileUploaderMinimal className='bg-background' onChange={(items) => {
         const newValues = [...items.allEntries.filter((file) => file.status === 'success')];
         setFiles(newValues);
         onChange?.(newValues);

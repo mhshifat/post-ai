@@ -17,9 +17,9 @@ export default function Products({ domainId, products }: { domainId: string; pro
     <Tab className="flex flex-col h-full">
       <div className="flex items-center gap-5 justify-between mb-5">
         <Tab.List
-          className="flex items-center bg-slate-200 rounded-lg p-1 [&>*]:flex-1"
+          className="flex items-center bg-foreground/10 rounded-lg p-1 [&>*]:flex-1"
           renderItem={({ content, isSelected }) => (
-            <span className={cn("w-full flex justify-center items-center font-medium text-slate-600 text-sm gap-1 bg-transparent rounded-md cursor-pointer py-1 px-3 whitespace-nowrap", {
+            <span className={cn("w-full flex justify-center items-center font-medium text-foreground text-sm gap-1 bg-transparent rounded-md cursor-pointer py-1 px-3 whitespace-nowrap", {
               "bg-background": isSelected
             })}>
               {content}

@@ -9,7 +9,7 @@ export default function AccordionTrigger({ children, identifier, className }: Pr
   return (
     <div onClick={() => selectItem(identifier!)} className={cn("flex items-center gap-5 justify-between cursor-pointer", className)}>
       {children}
-      <ChevronDown className="text-slate-500" />
+      <ChevronDown className="text-foreground/50" />
     </div>
   )
 }

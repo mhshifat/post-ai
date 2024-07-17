@@ -54,7 +54,7 @@ export default function SignUpOnboardingForm() {
 
                 <span className="flex flex-col justify-center">
                   <h3 className="text-base font-semibold">{title}</h3>
-                  {metadata && <p className="text-sm mt-1 text-slate-500">{metadata?.description as ReactNode}</p>}
+                  {metadata && <p className="text-sm mt-1 text-foreground/50">{metadata?.description as ReactNode}</p>}
                 </span>
               </div>
             )}
