@@ -6,6 +6,7 @@ import { Toaster } from "@/components/ui/sonner";
 import Providers from "@/components/providers";
 import { upsertStripeSubscriptionProducts } from "@/actions/stripe";
 import { plans } from "@/utils/constants";
+import ThemeProvider from "@/components/providers/theme-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,8 +27,10 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body id="AiChatBot" className={`${inter.className} h-screen`}>
-        {children}
+      <body id="AiChatBot" className={`${inter.className} h-screen bg-background text-foreground`}>
+        <ThemeProvider>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

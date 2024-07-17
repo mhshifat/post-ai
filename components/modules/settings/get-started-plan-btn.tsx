@@ -19,6 +19,6 @@ export default function GetStartedPlanBtn(props: GetStartedPlanBtnProps) {
   }
   
   return (
-    <Button onClick={handleClick} className="w-full mt-10 flex items-center justify-center text-base font-semibold border border-[#007DFC]/50 py-2 px-3 text-slate-900 rounded-md bg-[#007DFC]/10 hover:text-white">{loading ? <Spinner /> : "Get Started"}</Button>
+    <Button onClick={handleClick} className="w-full mt-10 flex items-center justify-center text-base font-semibold border border-primary/50 py-2 px-3 text-foreground rounded-md bg-primary/10 hover:text-primary-foreground">{loading ? <Spinner /> : "Get Started"}</Button>
   )
 }
