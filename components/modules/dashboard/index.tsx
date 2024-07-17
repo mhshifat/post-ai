@@ -5,8 +5,8 @@ import RecentTransactions from "./recent-transactions";
 
 export default function DashboardPageLayout() {
   return (
-    <div className="w-full py-2 px-3">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:md:grid-cols-4 auto-rows-fr gap-5">
+    <div className="w-full p-7">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:md:grid-cols-4 auto-rows-fr gap-10">
         <DashboardCard
           icon={<UserCheck className="size-5" />}
           title="Potential Clients"
@@ -29,7 +29,7 @@ export default function DashboardPageLayout() {
         />
       </div>
 
-      <div className="mt-10 gap-5 grid grid-cols-1 md:grid-cols-2 auto-rows-fr">
+      <div className="mt-10 gap-10 grid grid-cols-1 md:grid-cols-2 auto-rows-fr">
         <PlanUsage />
         <RecentTransactions />
       </div>

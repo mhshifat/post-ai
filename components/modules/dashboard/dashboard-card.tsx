@@ -10,12 +10,12 @@ export default function DashboardCard({
   icon,
 }: DashboardCardProps) {
   return (
-    <div className="w-full border border-slate-200 px-8 py-6 rounded-sm bg-slate-50 flex flex-col gap-3">
+    <div className="w-full border border-border px-8 py-6 rounded-sm bg-background-secondary flex flex-col gap-3">
       <div className="w-full flex items-center gap-2 text-xl font-semibold">
         {icon} {title}
       </div>
 
-      <div className="text-3xl font-semibold text-slate-900">
+      <div className="text-3xl font-semibold text-primary">
         {content}
       </div>
     </div>

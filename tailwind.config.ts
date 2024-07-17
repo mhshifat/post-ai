@@ -20,7 +20,8 @@ const config = {
     extend: {
       colors: {
         background: {
-          DEFAULT: "hsl(var(--background))"
+          DEFAULT: "hsl(var(--background))",
+          secondary: "hsl(var(--background-secondary))",
         },
         foreground: {
           DEFAULT: "hsl(var(--foreground))"

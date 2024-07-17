@@ -117,7 +117,7 @@ export default function DashboardSidebar({ domains }: { domains: IDomainsWithUse
     }
   }
   return (
-    <aside className="py-3 px-3 pb-8 bg-slate-100 flex flex-col">
+    <aside className="py-3 px-3 pb-8 bg-background-secondary flex flex-col">
       <Link href="/"><LogoIcon /></Link>
 
       <ul className="my-10 flex flex-col justify-center items-center gap-7">
@@ -126,7 +126,7 @@ export default function DashboardSidebar({ domains }: { domains: IDomainsWithUse
             <SidebarItem
               item={item}
             >
-              <Icon className={cn("group-hover:text-slate-600 transition", item.as === 'link' && pathname === item.path ? "text-slate-600" : "text-slate-500")} />
+              <Icon className={cn("group-hover:text-foreground transition", item.as === 'link' && pathname === item.path ? "text-foreground" : "text-foreground/50")} />
             </SidebarItem>
           </li>
         ))}
@@ -141,7 +141,7 @@ export default function DashboardSidebar({ domains }: { domains: IDomainsWithUse
               closeDialog();
               router.refresh();
             }} />
-          })} className="text-slate-500 group-hover:text-slate-600 transition" />
+          })} className="text-foreground/50 group-hover:text-foreground transition" />
         </li>
         {domains?.map(domain => (
           <li key={domain.id}>
@@ -153,7 +153,7 @@ export default function DashboardSidebar({ domains }: { domains: IDomainsWithUse
                 alt={domain.details?.domain || ""}
                 width={30}
                 height={30}
-                className="bg-slate-300 rounded-full cursor-pointer border border-slate-300 object-contain"
+                className="text-foreground/50 rounded-full cursor-pointer border border-border object-contain"
               />
             </Link>
           </li>
@@ -169,7 +169,7 @@ export default function DashboardSidebar({ domains }: { domains: IDomainsWithUse
                 onClick: () => handleClick(item.title)
               }}
             >
-              <Icon className={cn("group-hover:text-slate-600 transition", item.as === 'link' && pathname === item.path ? "text-slate-600" : "text-slate-500")} />
+              <Icon className={cn("group-hover:text-foreground transition", item.as === 'link' && pathname === item.path ? "text-foreground" : "text-foreground/50")} />
             </SidebarItem>
           </li>
         ))}

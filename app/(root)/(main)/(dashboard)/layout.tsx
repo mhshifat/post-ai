@@ -17,7 +17,7 @@ export default async function Layout({ children }: PropsWithChildren) {
       />
       <div className="flex-1 overflow-y-auto flex flex-col">
         <DashboardInfoBar />
-        <div className="flex-1 py-2">
+        <div className="flex-1">
           {children}
         </div>
       </div>
