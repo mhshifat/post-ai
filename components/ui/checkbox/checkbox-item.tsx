@@ -19,7 +19,7 @@ export default function CheckboxItem({ title, value, metadata, className, disabl
     <label className={cn("cursor-pointer", className, {
       "opacity-50": disabled
     })}>
-      <input defaultChecked={checkedByDefault} disabled={disabled} type={type} hidden name={identifier} value={value} checked={isChecked(value)} onChange={({ target }) => toggleCheckbox(value, target.checked)} />
+      <input disabled={disabled} type={type} hidden name={identifier} value={value} checked={isChecked(value) || checkedByDefault} onChange={({ target }) => toggleCheckbox(value, target.checked)} />
       {renderItem?.({ title, metadata, isChecked: isChecked(value) || checkedByDefault }) || title}
     </label>
   )

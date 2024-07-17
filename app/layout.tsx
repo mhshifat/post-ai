@@ -27,7 +27,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body id="AiChatBot" className={`${inter.className} h-screen bg-background text-foreground dark`}>
+      <body className={`${inter.className} h-screen bg-background text-foreground`}>
         <ThemeProvider>
           {children}
         </ThemeProvider>
