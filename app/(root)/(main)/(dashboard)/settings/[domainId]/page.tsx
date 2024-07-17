@@ -27,7 +27,7 @@ export default async function Domain({ params }: { params: { domainId: string } 
             <Section>
               <Section.Header className="flex items-start justify-between gap-5 px-5 py-2">
                 <div>
-                  <h3 className="text-base capitalize font-medium text-balance">Update Domain</h3>
+                  <h3 className="text-base capitalize font-medium text-balance text-foreground">Update Domain</h3>
                 </div>
               </Section.Header>
               <Section.Content className="p-5">
@@ -54,7 +54,7 @@ export default async function Domain({ params }: { params: { domainId: string } 
             <Section>
               <Section.Header className="flex items-start justify-between gap-5 px-5 py-2">
                 <div>
-                  <h3 className="text-base capitalize font-medium text-balance">Chatbot Settings</h3>
+                  <h3 className="text-base capitalize font-medium text-balance text-foreground">Chatbot Settings</h3>
                 </div>
               </Section.Header>
               <Section.Content className="p-5">
@@ -72,7 +72,7 @@ export default async function Domain({ params }: { params: { domainId: string } 
             <Section>
               <Section.Header className="flex items-start justify-between gap-5 px-5 py-2">
                 <div>
-                  <h3 className="text-base capitalize font-medium text-balance">Help Desk Q&A</h3>
+                  <h3 className="text-base capitalize font-medium text-balance text-foreground">Help Desk Q&A</h3>
                 </div>
               </Section.Header>
               <Section.Content className="p-5">
@@ -91,7 +91,7 @@ export default async function Domain({ params }: { params: { domainId: string } 
             <Section>
               <Section.Header className="flex items-start justify-between gap-5 px-5 py-2">
                 <div>
-                  <h3 className="text-base capitalize font-medium text-balance">Help Desk Q&A</h3>
+                  <h3 className="text-base capitalize font-medium text-balance text-foreground">Help Desk Q&A</h3>
                 </div>
               </Section.Header>
               <Section.Content className="p-5">
@@ -112,7 +112,7 @@ export default async function Domain({ params }: { params: { domainId: string } 
             <Section>
               <Section.Header className="flex items-start justify-between gap-5 px-5 py-2">
                 <div>
-                  <h3 className="text-base capitalize font-medium text-balance">Products</h3>
+                  <h3 className="text-base capitalize font-medium text-balance text-foreground">Products</h3>
                 </div>
               </Section.Header>
               <Section.Content className="p-5">

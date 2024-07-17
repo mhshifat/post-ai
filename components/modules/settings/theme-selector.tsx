@@ -1,25 +1,27 @@
 "use client";
 
+import { useTheme } from "@/components/providers/theme-provider";
 import Checkbox from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
 import { IThemes } from "@/utils/types";
 import { ReactNode, useState } from "react";
 
 export default function ThemeSelector() {
-  const [theme, setTheme] = useState<IThemes>("SYSTEM");
+  const { currentTheme, changeTheme } = useTheme();
 
   return (
     <Checkbox
       type="radio"
+      checked={[currentTheme]}
       className="flex items-center justify-between gap-5"
       renderItem={({ title, metadata, isChecked }) => (
-        <div className={cn("relative border-2 border-slate-200 flex items-center gap-5 rounded-lg overflow-hidden", {
+        <div className={cn("relative border-2 border-transparent flex items-center gap-5 rounded-lg overflow-hidden", {
           "border-[#007DFC]": isChecked
         })}>
           {metadata?.svg as ReactNode}
         </div>
       )}
-      onChange={({ checked, item }) => checked && setTheme(item as IThemes)}
+      onChange={({ checked, item }) => checked && changeTheme(item as IThemes)}
     >
       <Checkbox.Item
         title="System"
@@ -27,7 +29,7 @@ export default function ThemeSelector() {
         metadata={{
           svg: (
             <svg
-              className="w-full h-full overflow-hidden"
+              className="w-full h-full overflow-hidden scale-110"
               viewBox="0 0 282 193"
               fill="none"
               xmlns="http://www.w3.org/2000/svg">
@@ -78,7 +80,7 @@ export default function ThemeSelector() {
         metadata={{
           svg: (
             <svg
-              className="w-full h-full overflow-hidden"
+              className="w-full h-full overflow-hidden scale-110"
               viewBox="0 0 282 193"
               fill="none"
               xmlns="http://www.w3.org/2000/svg">
@@ -129,7 +131,7 @@ export default function ThemeSelector() {
         metadata={{
           svg: (
             <svg
-              className="w-full h-full overflow-hidden"
+              className="w-full h-full overflow-hidden scale-110"
               viewBox="0 0 282 193"
               fill="none"
               xmlns="http://www.w3.org/2000/svg">

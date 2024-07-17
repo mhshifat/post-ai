@@ -27,7 +27,7 @@ export default function CurrentPlan() {
     <div className="w-full">
       {!currentPlan && (
         <div className="flex items-center gap-5 justify-center flex-col py-2 px-3 aspect-[3/1] text-center">
-          <p className="max-w-[82%] text-sm font-semibold text-slate-500">You do not have any active subscription, to purchase a subscription please click on the button that says "Purchase Plan" below.</p>
+          <p className="max-w-[82%] text-sm font-semibold text-foreground/50">You do not have any active subscription, to purchase a subscription please click on the button that says "Purchase Plan" below.</p>
         </div>
       )}
       {currentPlan && <div className="flex gap-10">
@@ -42,7 +42,7 @@ export default function CurrentPlan() {
           </h3>
           <ul className="flex flex-col gap-1 mt-5">
             {planDetails?.benefits.map((item, idx) => (
-              <li key={item + idx} className="flex items-start gap-2 text-sm text-slate-500"><CheckIcon className="mt-1 shrink-0 size-4 text-slate-500" /> {item}</li>
+              <li key={item + idx} className="flex items-start gap-2 text-sm text-foreground/50"><CheckIcon className="mt-1 shrink-0 size-4 text-foreground/50" /> {item}</li>
             ))}
           </ul>
         </div>

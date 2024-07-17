@@ -12,14 +12,15 @@ interface CheckboxItemProps {
 }
 
 export default function CheckboxItem({ title, value, metadata, className, disabled }: CheckboxItemProps) {
-  const { type, renderItem, isChecked, toggleCheckbox, identifier } = useCheckbox();
+  const { type, renderItem, isChecked, toggleCheckbox, identifier, checked } = useCheckbox();
+  const checkedByDefault = checked?.some(item => value === item);
 
   return (
     <label className={cn("cursor-pointer", className, {
       "opacity-50": disabled
     })}>
-      <input disabled={disabled} type={type} hidden name={identifier} value={value} checked={isChecked(value)} onChange={({ target }) => toggleCheckbox(value, target.checked)} />
-      {renderItem?.({ title, metadata, isChecked: isChecked(value) }) || title}
+      <input defaultChecked={checkedByDefault} disabled={disabled} type={type} hidden name={identifier} value={value} checked={isChecked(value)} onChange={({ target }) => toggleCheckbox(value, target.checked)} />
+      {renderItem?.({ title, metadata, isChecked: isChecked(value) || checkedByDefault }) || title}
     </label>
   )
 }

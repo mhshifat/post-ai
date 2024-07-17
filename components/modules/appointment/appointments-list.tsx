@@ -16,33 +16,33 @@ const TABLE_HEADERS = [
 
 export default function AppointmentsList() {
   return (
-    <Table className="w-full border border-slate-200 rounded-xl overflow-hidden">
+    <Table className="w-full border border-border rounded-xl overflow-hidden">
       <Table.Content>
-        <Table.Row className="bg-slate-300">
+        <Table.Row className="bg-background-secondary">
           {TABLE_HEADERS.map((header, headerIdx) => (
             <Table.Cell key={header.title} className="py-2 px-3" align={headerIdx === TABLE_HEADERS.length - 1 ? "right" : "left"}>
-              <span className="text-base font-medium">{header.title}</span>
+              <span className="text-base font-medium text-foreground">{header.title}</span>
             </Table.Cell>
           ))}
         </Table.Row>
-        <Table.Row className="bg-white border-t border-slate-200">
+        <Table.Row className="bg-background border-t border-border">
           {TABLE_HEADERS.map((header, headerIdx) => (
             <Table.Cell key={header.title} className="py-3 px-3" align={headerIdx === TABLE_HEADERS.length - 1 ? "right" : "left"}>
-              <span className="text-sm font-medium text-slate-500">Data</span>
+              <span className="text-sm font-medium text-foreground/50">Data</span>
             </Table.Cell>
           ))}
         </Table.Row>
-        <Table.Row className="bg-white border-t border-slate-200">
+        <Table.Row className="bg-background border-t border-border">
           {TABLE_HEADERS.map((header, headerIdx) => (
             <Table.Cell key={header.title} className="py-3 px-3" align={headerIdx === TABLE_HEADERS.length - 1 ? "right" : "left"}>
-              <span className="text-sm font-medium text-slate-500">Data</span>
+              <span className="text-sm font-medium text-foreground/50">Data</span>
             </Table.Cell>
           ))}
         </Table.Row>
-        <Table.Row className="bg-white border-t border-slate-200">
+        <Table.Row className="bg-background border-t border-border">
           {TABLE_HEADERS.map((header, headerIdx) => (
             <Table.Cell key={header.title} className="py-3 px-3" align={headerIdx === TABLE_HEADERS.length - 1 ? "right" : "left"}>
-              <span className="text-sm font-medium text-slate-500">Data</span>
+              <span className="text-sm font-medium text-foreground/50">Data</span>
             </Table.Cell>
           ))}
         </Table.Row>

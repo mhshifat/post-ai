@@ -52,7 +52,7 @@ export default function CopySnippet({ domainId }: { domainId: string }) {
     <Section>
       <Section.Header className="flex items-start justify-between gap-5 px-5 py-2">
         <div>
-          <h3 className="text-base capitalize font-medium text-balance">Code Snippet</h3>
+          <h3 className="text-base capitalize font-medium text-balance text-foreground">Code Snippet</h3>
           <p className="text-sm font-normal text-balance text-slate-500">Copy and paste this snippet into the header tag of your website</p>
         </div>
 

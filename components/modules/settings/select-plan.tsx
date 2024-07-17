@@ -18,20 +18,20 @@ export default function SelectPlan() {
         type="radio"
         className="flex flex-col gap-5"
         renderItem={({ title, metadata, isChecked }) => (
-          <div className={cn("relative py-2 px-3 border border-slate-200 rounded-sm shadow-inner flex items-center gap-5", {
-            "border-[#007DFC]": isChecked
+          <div className={cn("relative py-2 px-3 border border-border rounded-sm shadow-inner flex items-center gap-5", {
+            "border-primary": isChecked
           })}>
-            {isChecked && <span className="absolute top-3 right-3 w-2 h-2 rounded-full bg-[#007DFC]" />}
+            {isChecked && <span className="absolute top-3 right-3 w-2 h-2 rounded-full bg-primary" />}
 
             <span className={cn("h-full flex justify-center items-center p-3 text-2xl font-semibold", {
-              "border-[#007DFC]": isChecked
+              "border-primary": isChecked
             })}>
               ${(metadata?.price || "0") as ReactNode}
             </span>
 
             <span className="flex flex-col justify-center">
               <h3 className="text-base font-semibold">{title}</h3>
-              {metadata && <p className="text-sm mt-1 text-slate-500">{metadata?.description as ReactNode}</p>}
+              {metadata && <p className="text-sm mt-1 text-foreground/50">{metadata?.description as ReactNode}</p>}
             </span>
           </div>
         )}

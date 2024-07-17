@@ -4,7 +4,7 @@ import SectionContent from "./section-content";
 
 export default function Section({ children }: PropsWithChildren) {
   return (
-    <div className="bg-slate-100 w-full p-1 rounded-2xl">
+    <div className="bg-foreground/10 w-full p-1 rounded-2xl">
       {children}
     </div>
   )

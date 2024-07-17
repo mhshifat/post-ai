@@ -5,8 +5,8 @@ export default function SettingsLeft({ children, className, title, description }
   return (
     <div className={cn("w-[300px] shrink-0", className)}>
       <div>
-        <h3 className="text-lg capitalize font-medium text-balance">{title}</h3>
-        <p className="text-sm font-normal text-balance text-slate-500">{description}</p>
+        <h3 className="text-lg capitalize font-medium text-balance text-foreground">{title}</h3>
+        <p className="text-sm font-normal text-balance text-foreground/50">{description}</p>
       </div>
       {children}
     </div>

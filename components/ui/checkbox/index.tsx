@@ -13,6 +13,7 @@ interface CheckboxProps {
     isChecked?: boolean;
   }) => JSX.Element;
   onChange?: (args: { item: string, checked: boolean }) => void;
+  checked?: string[]
 }
 
 interface CheckboxCtxProps extends CheckboxProps {
@@ -22,7 +23,7 @@ interface CheckboxCtxProps extends CheckboxProps {
 
 const CheckboxCtx = createContext<CheckboxCtxProps | null>(null);
 
-export default function Checkbox({ children, renderItem, className, onChange, type = "checkbox", identifier: uniqueIdentifier }: PropsWithChildren<CheckboxProps>) {
+export default function Checkbox({ children, renderItem, className, onChange, type = "checkbox", identifier: uniqueIdentifier, checked }: PropsWithChildren<CheckboxProps>) {
   const id = useId();
   const identifier = uniqueIdentifier || id;
   const [checkedItems, setCheckedItems] = useState<Record<string, boolean>>({});
@@ -55,7 +56,8 @@ export default function Checkbox({ children, renderItem, className, onChange, ty
       toggleCheckbox,
       isChecked,
       type,
-      identifier
+      identifier,
+      checked
     }}>
       <div className={className}>
         {children}

@@ -9,6 +9,7 @@ import { FormEvent, useState } from "react";
 import { Button } from '@/components/ui/button';
 import axios from 'axios';
 import Spinner from '@/components/shared/spinner';
+import { useTheme } from '@/components/providers/theme-provider';
 
 interface StripePaymentFormProps {
   amount: number;
@@ -18,6 +19,7 @@ interface StripePaymentFormProps {
 }
 
 export default function StripePaymentForm(props: StripePaymentFormProps) {
+  const { currentTheme } = useTheme();
   const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
   const options: StripeElementsOptions = {
     mode: props.mode,
@@ -26,7 +28,7 @@ export default function StripePaymentForm(props: StripePaymentFormProps) {
     // Fully customizable with appearance API.
     appearance: {
       labels: "floating",
-      theme: "stripe",
+      theme: currentTheme === "DARK" ? "night" : "stripe",
       disableAnimations: true
     },
   };

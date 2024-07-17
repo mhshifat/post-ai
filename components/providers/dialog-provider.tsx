@@ -49,8 +49,8 @@ export default function DialogProvider({ children }: PropsWithChildren) {
           {(dialogState?.title || dialogState?.description) && (
             <>
               <DialogHeader>
-                <DialogTitle>{dialogState?.title}</DialogTitle>
-                <DialogDescription>{dialogState?.description}</DialogDescription>
+                <DialogTitle className="text-foreground">{dialogState?.title}</DialogTitle>
+                <DialogDescription className="text-foreground/50">{dialogState?.description}</DialogDescription>
               </DialogHeader>
               <Divider className="h-[1px]" />
             </>
