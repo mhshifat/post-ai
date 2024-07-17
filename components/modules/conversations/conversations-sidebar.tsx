@@ -9,13 +9,13 @@ import Threads from "./threads";
 
 export default function ConversationsSidebar() {
   return (
-    <aside className="w-[370px] p-3 h-full border-r border-slate-100">
+    <aside className="w-[370px] p-3 h-full border-r border-border/50 bg-background">
       <Tab className="flex flex-col h-full">
         <Tab.List
-          className="flex items-center bg-slate-200 rounded-lg p-1 [&>*]:flex-1"
+          className="flex items-center bg-foreground/10 rounded-lg p-1 [&>*]:flex-1"
           renderItem={({ content, isSelected }) => (
-            <span className={cn("w-full flex justify-center items-center font-medium text-slate-600 text-sm gap-1 bg-transparent rounded-md cursor-pointer py-1 px-3", {
-              "bg-white": isSelected
+            <span className={cn("w-full flex justify-center items-center font-medium text-foreground text-sm gap-1 bg-transparent rounded-md cursor-pointer py-1 px-3", {
+              "bg-background": isSelected
             })}>
               {content}
             </span>
@@ -24,13 +24,13 @@ export default function ConversationsSidebar() {
 
         <Select className="my-5">
           <Select.Trigger>
-            <Select.Placeholder className="text-sm font-medium text-slate-500">Domain Name</Select.Placeholder>
+            <Select.Placeholder className="text-sm font-medium text-foreground/50">Domain Name</Select.Placeholder>
           </Select.Trigger>
-          <Select.Content className="border-slate-300 border overflow-hidden rounded-lg bg-white shadow-sm">
-            <Select.Search className="p-3 border-none outline-none shadow-none text-sm font-medium text-slate-500" placeholder="Search" />
+          <Select.Content className="border-border border overflow-hidden rounded-lg bg-background shadow-sm">
+            <Select.Search className="p-3 bg-background border-none outline-none shadow-none text-sm font-medium text-foreground/50" placeholder="Search" />
             <Divider />
-            <Select.Option value="1" className="py-2 px-3 text-sm font-medium hover:bg-slate-100 transition cursor-pointer">Domain 1</Select.Option>
-            <Select.Option value="2" className="py-2 px-3 text-sm font-medium hover:bg-slate-100 transition cursor-pointer">Domain 2</Select.Option>
+            <Select.Option value="1" className="py-2 px-3 text-sm font-medium hover:bg-foreground/10 transition cursor-pointer">Domain 1</Select.Option>
+            <Select.Option value="2" className="py-2 px-3 text-sm font-medium hover:bg-foreground/10 transition cursor-pointer">Domain 2</Select.Option>
           </Select.Content>
         </Select>
 

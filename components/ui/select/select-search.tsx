@@ -1,3 +1,5 @@
+import { cn } from "@/lib/utils";
+
 interface SelectSearchProps {
   className?: string;
   placeholder?: string;
@@ -6,7 +8,7 @@ interface SelectSearchProps {
 export default function SelectSearch({ className, placeholder }: SelectSearchProps) {
   return (
     <li>
-      <input className={className} type="text" placeholder={placeholder} />
+      <input className={cn("w-full", className)} type="text" placeholder={placeholder} />
     </li>
   )
 }

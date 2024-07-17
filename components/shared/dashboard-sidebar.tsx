@@ -117,7 +117,7 @@ export default function DashboardSidebar({ domains }: { domains: IDomainsWithUse
     }
   }
   return (
-    <aside className="py-3 px-3 pb-8 bg-background-secondary flex flex-col">
+    <aside className="py-3 px-3 pb-8 bg-background-secondary flex flex-col border-r border-border/50">
       <Link href="/"><LogoIcon /></Link>
 
       <ul className="my-10 flex flex-col justify-center items-center gap-7">

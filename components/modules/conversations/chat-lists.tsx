@@ -26,14 +26,14 @@ interface ChatListsProps {
 
 export default function ChatLists({ className }: ChatListsProps) {
 	return (
-		<ul className={cn("list-none p-8 flex flex-col-reverse gap-8 flex-[1_0_0] overflow-y-auto overflow-x-hidden", className)}>
+		<ul className={cn("list-none p-8 flex flex-col-reverse gap-8 flex-[1_0_0] overflow-y-auto overflow-x-hidden bg-background", className)}>
 			{DUMMY_MESSAGES.map((item) =>
 				"1" === item.senderId ? (
 					<li key={item.id} className="flex items-start gap-5 max-w-[80%]">
-						<span className="shrink-0 w-10 h-10 border-slate-300 flex items-center justify-center border rounded-full bg-slate-200">
-							<BotIcon className="text-slate-600" />
+						<span className="shrink-0 w-10 h-10 border-border flex items-center justify-center border rounded-full bg-foreground/10">
+							<BotIcon className="text-foreground/50" />
 						</span>
-						<div className="break-keep break-words transition w-full py-3 px-5 border border-slate-300 bg-slate-200 rounded-tr-3xl rounded-br-3xl rounded-bl-3xl prose">
+						<div className="break-keep break-words transition w-full py-3 px-5 border border-border bg-foreground/10 rounded-tr-3xl rounded-br-3xl rounded-bl-3xl prose text-foreground">
 							<Markdown remarkPlugins={[remarkGfm]}>
 								{item.content}
 							</Markdown>
@@ -44,10 +44,10 @@ export default function ChatLists({ className }: ChatListsProps) {
 						key={item.id}
 						className="flex items-start gap-5 max-w-[80%] ml-auto"
 					>
-						<span className="shrink-0 w-10 h-10 border-slate-300 flex items-center justify-center border rounded-full bg-slate-200 order-2">
-							<User2Icon className="text-slate-600" />
+						<span className="shrink-0 w-10 h-10 border-border flex items-center justify-center border rounded-full bg-foreground/10 order-2">
+							<User2Icon className="text-foreground/50" />
 						</span>
-						<div className="break-keep break-words transition w-full py-3 px-5 border border-slate-300 bg-slate-200 rounded-tl-3xl rounded-br-3xl rounded-bl-3xl prose order-1">
+						<div className="break-keep break-words transition w-full py-3 px-5 border border-border bg-foreground/10 rounded-tl-3xl rounded-br-3xl rounded-bl-3xl prose text-foreground order-1">
 							<Markdown remarkPlugins={[remarkGfm]}>
 								{item.content}
 							</Markdown>
