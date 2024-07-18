@@ -21,6 +21,7 @@ const formSchema = z.object({
 export type CreateDomainFormSchema = z.infer<typeof formSchema>;
 
 export default function CreateDomainForm({ onSubmit, defaultValues }: { onSubmit?: () => void; defaultValues?: Partial<IDomain> }) {
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const form = useForm<CreateDomainFormSchema>({
     mode: "onChange",
@@ -43,7 +44,7 @@ export default function CreateDomainForm({ onSubmit, defaultValues }: { onSubmit
         logo: values.logo,
       });
       toast.success(`Successfully ${defaultValues?.id ? "updated the" : 'created a'} domain`);
-      form.reset();
+      router.refresh();
       onSubmit?.();
     } catch (err) {
       const message = (err as Error)?.message;
@@ -76,12 +77,10 @@ export default function CreateDomainForm({ onSubmit, defaultValues }: { onSubmit
               <FormControl>
                 <Uploader
                   values={[{
-                    cdnUrl: field.value,
-                    fileInfo: {
-                      originalFilename: ""
-                    }
+                    url: field.value,
+                    id: field.value
                   }]}
-                  onChange={(values) => field.onChange(values?.[0]?.cdnUrl)}
+                  onChange={(values) => field.onChange(values?.[0]?.url)}
                 />
               </FormControl>
               <FormMessage />

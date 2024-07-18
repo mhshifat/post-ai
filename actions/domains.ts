@@ -1,7 +1,7 @@
 "use server";
 
 import { db } from "@/db/drizzle";
-import { domains, products, users } from "@/db/schema";
+import { bots, domains, products, users } from "@/db/schema";
 import { IDomain, IProduct } from "@/utils/types";
 import { currentUser } from "@clerk/nextjs/server";
 import { and, desc, eq } from "drizzle-orm";
@@ -46,6 +46,8 @@ export async function updateDomain(domainId: string, payload: Pick<IDomain, "dom
 }
 
 export async function getDomainDetails(domainId: string) {
+  unstable_noStore();
+
   const user = await currentUser();
   if (!user) return;
   const [data] = await db
@@ -53,8 +55,11 @@ export async function getDomainDetails(domainId: string) {
       id: domains.id,
       domain: domains.domain,
       logo: domains.logo,
+      updatedAt: domains.updatedAt,
+      bot: bots
     })
     .from(domains)
+    .leftJoin(bots, eq(bots.domainId, domainId))
     .leftJoin(users, eq(users.id, domains.userId))
     .where(
       and(
@@ -62,6 +67,7 @@ export async function getDomainDetails(domainId: string) {
         eq(users.clerkId, user.id)
       )
     );
+  console.log(data);
   return data;
 }
 

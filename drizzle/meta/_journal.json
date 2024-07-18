@@ -50,6 +50,13 @@
       "when": 1720428241480,
       "tag": "0006_tiresome_squadron_sinister",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1721311726860,
+      "tag": "0007_tiresome_liz_osborn",
+      "breakpoints": true
     }
   ]
 }

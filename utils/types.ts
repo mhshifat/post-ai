@@ -1,10 +1,11 @@
 import { getConnections } from '@/actions/connections';
 import { getDomains, getProducts } from '@/actions/domains';
-import { domains, products } from '@/db/schema';
+import { bots, domains, products } from '@/db/schema';
 import { InferSelectModel } from 'drizzle-orm';
 import Stripe from 'stripe';
 
 export type IDomain = InferSelectModel<typeof domains>;
+export type IChatBot = InferSelectModel<typeof bots>;
 export type IProduct = InferSelectModel<typeof products>;
 export type IDomainsWithUserId = Awaited<ReturnType<typeof getDomains>>;
 export type IConnectionsWithUserId = Awaited<ReturnType<typeof getConnections>>;
@@ -22,3 +23,4 @@ export type IStripeSubScriptionWithPlan = Stripe.Subscription & {
     product: string;
   }
 };
+export type IUploaderFile = { id: string, url: string };

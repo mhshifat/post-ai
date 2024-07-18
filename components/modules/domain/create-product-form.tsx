@@ -85,7 +85,7 @@ export default function CreateProductForm({ onSubmit, domainId }: { onSubmit?: (
             <FormItem>
               <FormControl>
                 <Uploader
-                  onChange={(values) => field.onChange(values?.[0]?.cdnUrl)}
+                  onChange={(values) => field.onChange(values?.[0]?.url)}
                 />
               </FormControl>
               <FormMessage />

@@ -35,7 +35,12 @@ export default async function Domain({ params }: { params: { domainId: string } 
               </Section.Header>
               <Section.Content className="p-5">
                 <CreateDomainForm
-                  defaultValues={domainDetails}
+                  key={domainDetails?.updatedAt + ""}
+                  defaultValues={{
+                    id: domainDetails.id,
+                    domain: domainDetails.domain,
+                    logo: domainDetails.logo
+                  }}
                 />
               </Section.Content>
             </Section>
@@ -52,7 +57,7 @@ export default async function Domain({ params }: { params: { domainId: string } 
         </SettingsLayout>
         <SettingsLayout>
           <SettingsLayout.Left
-            title="Chatbot (Premium)"
+            title="Chatbot (Pro)"
             description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa, repellat?"
           />
           <SettingsLayout.Right>
@@ -63,7 +68,15 @@ export default async function Domain({ params }: { params: { domainId: string } 
                 </div>
               </Section.Header>
               <Section.Content className="p-5">
-                <ChatbotForm />
+                <ChatbotForm
+                  key={domainDetails.bot?.updatedAt + ""}
+                  domainId={params.domainId}
+                  defaultValues={{
+                    id: domainDetails.bot?.id,
+                    logo: domainDetails.bot?.logo,
+                    welcomeText: domainDetails.bot?.welcomeText,
+                  }}
+                />
               </Section.Content>
             </Section>
           </SettingsLayout.Right>
