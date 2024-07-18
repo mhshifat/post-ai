@@ -1,4 +1,4 @@
-import { getProducts } from "@/actions/domains";
+import { getDomainDetails, getProducts } from "@/actions/domains";
 import ChatbotForm from "@/components/modules/domain/chatbot-form";
 import CopySnippet from "@/components/modules/domain/copy-snippet";
 import CreateDomainForm from "@/components/modules/domain/create-domain-form";
@@ -11,8 +11,11 @@ import Products from "@/components/modules/domain/products";
 import Section from "@/components/shared/section";
 import SettingsLayout from "@/components/shared/settings-layout";
 import ClientOnly from "@/components/ui/client-only";
+import { redirect } from "next/navigation";
 
 export default async function Domain({ params }: { params: { domainId: string } }) {
+  const domainDetails = await getDomainDetails(params.domainId);
+  if (!domainDetails) return redirect("/sign-in");
   const products = await getProducts(params.domainId);
   
   return (
@@ -31,7 +34,9 @@ export default async function Domain({ params }: { params: { domainId: string } 
                 </div>
               </Section.Header>
               <Section.Content className="p-5">
-                <CreateDomainForm />
+                <CreateDomainForm
+                  defaultValues={domainDetails}
+                />
               </Section.Content>
             </Section>
           </SettingsLayout.Right>

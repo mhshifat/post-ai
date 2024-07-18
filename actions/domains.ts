@@ -4,7 +4,7 @@ import { db } from "@/db/drizzle";
 import { domains, products, users } from "@/db/schema";
 import { IDomain, IProduct } from "@/utils/types";
 import { currentUser } from "@clerk/nextjs/server";
-import { desc, eq } from "drizzle-orm";
+import { and, desc, eq } from "drizzle-orm";
 import { unstable_noStore } from "next/cache";
 import { v4 } from 'uuid';
 
@@ -23,6 +23,45 @@ export async function createDomain(payload: Pick<IDomain, "domain" | "logo">) {
     .returning({ id: users.id })
     .execute();
 
+  return data;
+}
+
+export async function updateDomain(domainId: string, payload: Pick<IDomain, "domain" | "logo">) {
+  const user = await currentUser();
+  if (!user) return;
+  const [data] = await db
+    .update(domains)
+    .set({
+      domain: payload.domain,
+      logo: payload.logo,
+      updatedAt: new Date()
+    })
+    .where(
+      eq(domains.id, domainId)
+    )
+    .returning({ id: domains.id })
+    .execute();
+
+  return data;
+}
+
+export async function getDomainDetails(domainId: string) {
+  const user = await currentUser();
+  if (!user) return;
+  const [data] = await db
+    .select({
+      id: domains.id,
+      domain: domains.domain,
+      logo: domains.logo,
+    })
+    .from(domains)
+    .leftJoin(users, eq(users.id, domains.userId))
+    .where(
+      and(
+        eq(domains.id, domainId),
+        eq(users.clerkId, user.id)
+      )
+    );
   return data;
 }
 
