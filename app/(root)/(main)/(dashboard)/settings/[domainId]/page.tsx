@@ -8,9 +8,12 @@ import FilterQuestions from "@/components/modules/domain/filter-questions";
 import HelpDeskForm from "@/components/modules/domain/help-desk-form";
 import HelpDeskQuestions from "@/components/modules/domain/help-desk-questions";
 import Products from "@/components/modules/domain/products";
+import CanAccess from "@/components/shared/can-access";
 import Section from "@/components/shared/section";
 import SettingsLayout from "@/components/shared/settings-layout";
+import { Button } from "@/components/ui/button";
 import ClientOnly from "@/components/ui/client-only";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 
 export default async function Domain({ params }: { params: { domainId: string } }) {
@@ -61,24 +64,35 @@ export default async function Domain({ params }: { params: { domainId: string } 
             description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa, repellat?"
           />
           <SettingsLayout.Right>
-            <Section>
-              <Section.Header className="flex items-start justify-between gap-5 px-5 py-2">
+            <CanAccess
+              subscriptions={["PRO"]}
+              fallback={(
                 <div>
-                  <h3 className="text-base capitalize font-medium text-balance text-foreground">Chatbot Settings</h3>
+                  <Link href="/settings">
+                    <Button variant="link">Upgrade Plan</Button>
+                  </Link>
                 </div>
-              </Section.Header>
-              <Section.Content className="p-5">
-                <ChatbotForm
-                  key={domainDetails.bot?.updatedAt + ""}
-                  domainId={params.domainId}
-                  defaultValues={{
-                    id: domainDetails.bot?.id,
-                    logo: domainDetails.bot?.logo,
-                    welcomeText: domainDetails.bot?.welcomeText,
-                  }}
-                />
-              </Section.Content>
-            </Section>
+              )}
+            >
+              <Section>
+                <Section.Header className="flex items-start justify-between gap-5 px-5 py-2">
+                  <div>
+                    <h3 className="text-base capitalize font-medium text-balance text-foreground">Chatbot Settings</h3>
+                  </div>
+                </Section.Header>
+                <Section.Content className="p-5">
+                  <ChatbotForm
+                    key={domainDetails.bot?.updatedAt + ""}
+                    domainId={params.domainId}
+                    defaultValues={{
+                      id: domainDetails.bot?.id,
+                      logo: domainDetails.bot?.logo,
+                      welcomeText: domainDetails.bot?.welcomeText,
+                    }}
+                  />
+                </Section.Content>
+              </Section>
+            </CanAccess>
           </SettingsLayout.Right>
         </SettingsLayout>
         <SettingsLayout>
