@@ -4,6 +4,9 @@ import { ClerkLoaded, ClerkLoading, UserButton } from "@clerk/nextjs";
 import Spinner from "./spinner";
 import { usePathname } from "next/navigation";
 import { DASHBOARD_SIDEBAR_MAIN_LINKS } from "./dashboard-sidebar";
+import { Button } from "../ui/button";
+import { Bell } from "lucide-react";
+import Avatar from "../ui/avatar";
 
 export default function DashboardInfoBar() {
   const pathname = usePathname();
@@ -12,17 +15,25 @@ export default function DashboardInfoBar() {
   return (
     <div className="border-b border-border/50 py-2 px-3 shadow-sm flex items-center gap-10 justify-between sticky top-0 left-0 z-50 bg-background-secondary">
       <div>
-        <h3 className="text-base font-semibold text-foreground">{currentPage?.title}</h3>
-        <p className="text-sm font-semibold text-foreground/50">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus, corporis?</p>
+        <h3 className="text-lg font-medium text-foreground">{currentPage?.title}</h3>
+        <p className="text-xs font-medium text-foreground/50">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus, corporis?</p>
       </div>
 
-      <div className="flex justify-center items-center">
-        <ClerkLoaded>
+      <div className="flex justify-center items-center gap-2">
+        <Button className="shrink-0" variant="ghost" size="icon">
+          <Bell className="size-5" />
+        </Button>
+        <Avatar
+          className="shrink-0"
+          size={35}
+        />
+        {/* TODO: Uncomment */}
+        {/* <ClerkLoaded>
           <UserButton signInUrl="/" />
         </ClerkLoaded>
         <ClerkLoading>
           <Spinner />
-        </ClerkLoading>
+        </ClerkLoading> */}
       </div>
     </div>
   )

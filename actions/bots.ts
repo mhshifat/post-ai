@@ -3,11 +3,11 @@
 import { db } from "@/db/drizzle";
 import { bots } from "@/db/schema";
 import { IChatBot } from "@/utils/types";
-import { currentUser } from "@clerk/nextjs/server";
 import { v4 } from "uuid";
+import { getUserDetails } from "./users";
 
 export async function upsertBot(payload: Partial<IChatBot>) {
-  const user = await currentUser();
+  const user = await getUserDetails();
   if (!user) throw new Error("User not found");
   const payloadData = {
     logo: payload.logo!,

@@ -1,12 +1,13 @@
 import { getDomains } from "@/actions/domains";
+import { getUserDetails } from "@/actions/users";
 import DashboardInfoBar from "@/components/shared/dashboard-info-bar";
 import DashboardSidebar from "@/components/shared/dashboard-sidebar";
-import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { PropsWithChildren } from "react";
 
 export default async function Layout({ children }: PropsWithChildren) {
-  const user = await currentUser();
+  const user = await getUserDetails();
+  
   if (!user) return redirect("/sign-in");
   const domains = await getDomains();
   

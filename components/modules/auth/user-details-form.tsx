@@ -1,3 +1,4 @@
+import Spinner from "@/components/shared/spinner";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -20,7 +21,7 @@ const formSchema = z.object({
 
 export type SignUpFormSchema = z.infer<typeof formSchema>;
 
-export default function UserDetailsForm({ onSubmit }: { onSubmit: (formValues: SignUpFormSchema) => void }) {
+export default function UserDetailsForm({ onSubmit, accountType }: { accountType: string | null; onSubmit: (formValues: SignUpFormSchema) => void }) {
   const { signUp } = useSignUp();
   const [loading, setLoading] = useState(false);
   const triggerRef = useRef<{ handleStep: () => void; }>({
@@ -50,7 +51,7 @@ export default function UserDetailsForm({ onSubmit }: { onSubmit: (formValues: S
       onSubmit?.(values);
       triggerRef.current.handleStep();
     } catch (err) {
-      const message = (err as ClerkAPIResponseError)?.errors?.[0]?.longMessage;
+      const message = (err as ClerkAPIResponseError)?.errors?.[0]?.longMessage || (err as Error).message;
       toast.error(message);
     } finally {
       setLoading(false);
@@ -109,7 +110,7 @@ export default function UserDetailsForm({ onSubmit }: { onSubmit: (formValues: S
         />
 
         <Button disabled={loading} type="submit" className="w-full">
-          {loading ? "Loading..." : "Send Otp"}
+          {loading ? <Spinner /> : "Send Otp"}
         </Button>
         <Steps.Trigger ref={triggerRef} type="next" />
         <Link href="/sign-in" className="text-center">Already have an account? <strong>Sign In</strong></Link>

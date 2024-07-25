@@ -6,8 +6,23 @@ import Tab from "@/components/ui/tab";
 import { cn } from "@/lib/utils";
 import { Clock, Inbox, Mail, Star } from "lucide-react";
 import Threads from "./threads";
+import { IDomain } from "@/utils/types";
+import NotFound from "@/components/shared/not-found";
+import { useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-export default function ConversationsSidebar() {
+interface ConversationsSidebarProps {
+  domains: Partial<IDomain>[];
+}
+
+export default function ConversationsSidebar({ domains }: ConversationsSidebarProps) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const domainId = searchParams.get("domain");
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const filteredDomains = domains.filter(item => searchTerm ? item.domain?.includes(searchTerm) : item);
   return (
     <aside className="w-[370px] p-3 h-full border-r border-border/50 bg-background">
       <Tab className="flex flex-col h-full">
@@ -22,15 +37,29 @@ export default function ConversationsSidebar() {
           )}
         />
 
-        <Select className="my-5">
+        <Select
+          className="my-5"
+          value={domains.filter(d => d.id === domainId).map(d => ({
+            content: d.domain!,
+            value: d.id!
+          }))}
+          onChange={(value) => router.push(`${pathname}?domain=${value}`)}
+        >
           <Select.Trigger>
             <Select.Placeholder className="text-sm font-medium text-foreground/50">Domain Name</Select.Placeholder>
           </Select.Trigger>
           <Select.Content className="border-border border overflow-hidden rounded-lg bg-background shadow-sm">
-            <Select.Search className="p-3 bg-background border-none outline-none shadow-none text-sm font-medium text-foreground/50" placeholder="Search" />
+            <Select.Search onChange={(value) => setSearchTerm(value)} className="p-3 bg-background border-none outline-none shadow-none text-sm font-medium text-foreground/50" placeholder="Search" />
             <Divider />
-            <Select.Option value="1" className="py-2 px-3 text-sm font-medium hover:bg-foreground/10 transition cursor-pointer">Domain 1</Select.Option>
-            <Select.Option value="2" className="py-2 px-3 text-sm font-medium hover:bg-foreground/10 transition cursor-pointer">Domain 2</Select.Option>
+            {filteredDomains.map(domain => (
+              <Select.Option key={domain.id} value={domain.id} className="py-2 px-3 text-sm font-medium hover:bg-foreground/10 transition cursor-pointer">{domain.domain}</Select.Option>
+            ))}
+            
+            {!filteredDomains.length && (
+              <Select.Option disabled>
+                <NotFound />
+              </Select.Option>
+            )}
           </Select.Content>
         </Select>
 

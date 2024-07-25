@@ -9,8 +9,8 @@ import TableContent from "./table-content";
 
 interface TableProps {
   className?: string;
-  renderPrefix?: (args: { type?: "header" | "body"; }) => JSX.Element;
-  renderSuffix?: (args: { type?: "header" | "body"; }) => JSX.Element;
+  renderPrefix?: (args: { type?: "header" | "body" | "extra"; data?: unknown; }) => JSX.Element;
+  renderSuffix?: (args: { type?: "header" | "body" | "extra"; data?: unknown; }) => JSX.Element;
 }
 
 interface TableCtxProps extends TableProps {

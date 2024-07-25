@@ -1,26 +1,31 @@
 "use client";
 
+import NotFound from "@/components/shared/not-found";
 import Accordion from "@/components/ui/accordion";
+import { cn } from "@/lib/utils";
+import { IQuestion } from "@/utils/types";
 
-export default function FilterQuestions() {
+interface FilterQuestionsProps {
+  className?: string;
+  questions: Partial<IQuestion>[];
+}
+
+export default function FilterQuestions({ className, questions }: FilterQuestionsProps) {
+  if (!questions.length) return <NotFound />;
   return (
     <Accordion>
-      <Accordion.Item>
-        <Accordion.Trigger className="py-2">
-          <h3 className="text-base text-foreground font-semibold">Question?</h3>
-        </Accordion.Trigger>
-        <Accordion.Content>
-          <p className="text-sm font-semibold text-foreground/50">Answer....</p>
-        </Accordion.Content>
-      </Accordion.Item>
-      <Accordion.Item>
-        <Accordion.Trigger className="py-2">
-          <h3 className="text-base text-foreground font-semibold">Question 1?</h3>
-        </Accordion.Trigger>
-        <Accordion.Content>
-          <p className="text-sm font-semibold text-foreground/50">Answer 1....</p>
-        </Accordion.Content>
-      </Accordion.Item>
+      <Accordion className={cn("empty:hidden", className)}>
+        {questions.map(q => (
+          <Accordion.Item key={q.id}>
+            <Accordion.Trigger className="py-2">
+              <h3 className="text-lg text-foreground font-medium">{q.question}</h3>
+            </Accordion.Trigger>
+            <Accordion.Content>
+              <p className="text-xs font-medium text-foreground/50">{q.answer}</p>
+            </Accordion.Content>
+          </Accordion.Item>
+        ))}
+      </Accordion>
     </Accordion>
   )
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { createDomain, updateDomain } from "@/actions/domains";
+import Spinner from "@/components/shared/spinner";
 import Uploader from "@/components/shared/uploader";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
@@ -20,7 +21,7 @@ const formSchema = z.object({
 
 export type CreateDomainFormSchema = z.infer<typeof formSchema>;
 
-export default function CreateDomainForm({ onSubmit, defaultValues }: { onSubmit?: () => void; defaultValues?: Partial<IDomain> }) {
+export default function CreateDomainForm({ onSubmit, defaultValues }: { onSubmit?: (domain?: Partial<IDomain>) => void; defaultValues?: Partial<IDomain> }) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const form = useForm<CreateDomainFormSchema>({
@@ -35,17 +36,18 @@ export default function CreateDomainForm({ onSubmit, defaultValues }: { onSubmit
   async function handleSubmit(values: CreateDomainFormSchema) {
     setLoading(true);
     try {
-      if (defaultValues?.id) await updateDomain(defaultValues.id, {
+      let domain: Partial<IDomain> | undefined;
+      if (defaultValues?.id) domain = await updateDomain(defaultValues.id, {
         domain: values.domain,
         logo: values.logo,
       })
-      else await createDomain({
+      else domain = await createDomain({
         domain: values.domain,
         logo: values.logo,
       });
       toast.success(`Successfully ${defaultValues?.id ? "updated the" : 'created a'} domain`);
       router.refresh();
-      onSubmit?.();
+      onSubmit?.(domain);
     } catch (err) {
       const message = (err as Error)?.message;
       toast.error(message);
@@ -89,7 +91,7 @@ export default function CreateDomainForm({ onSubmit, defaultValues }: { onSubmit
         />
 
         <Button disabled={!Object.keys(form.formState.dirtyFields).length || loading} type="submit" className="w-full">
-          {loading ? "Loading..." : "Create"}
+          {loading ? <Spinner /> : "Create"}
         </Button>
       </form>
     </Form>

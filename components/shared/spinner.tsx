@@ -1,9 +1,15 @@
+import { cn } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
 
-export default function Spinner() {
+export default function Spinner({ className, size }: { className?: string, size?: number }) {
   return (
-    <div className="flex justify-center items-center w-full">
-      <Loader2 className="size-4 animate-spin text-foreground/50" />
+    <div className={cn("flex justify-center items-center w-full", className)}>
+      <Loader2 className="size-4 animate-spin text-foreground/50" style={{
+        ...size?{
+          width: size,
+          height: size,
+        }:{}
+      }} />
     </div>
   )
 }

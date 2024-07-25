@@ -31,11 +31,12 @@ export default function CopySnippet({ domainId }: { domainId: string }) {
           window.addEventListener("message", (e) => {
             const ROOT_ORIGIN = "${window.location.origin}";
             if (e.origin !== ROOT_ORIGIN) return;
-            const { width, height } = JSON.parse(e.data || "{}");
+            const { width, height, rounded } = JSON.parse(e.data || "{}");
             iframe.style.maxWidth = width;
             iframe.style.width = "100%";
             iframe.style.maxHeight = height;
             iframe.style.height = "100%";
+            iframe.style.borderRadius = rounded;
             iframe.contentWindow.postMessage("${domainId}", ROOT_ORIGIN)
           });
         });

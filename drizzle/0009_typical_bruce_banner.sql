@@ -1,0 +1,1 @@
+ALTER TABLE "questions_answers" ADD COLUMN "type" text DEFAULT 'Q&S';

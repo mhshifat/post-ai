@@ -1,10 +1,15 @@
+import { getDomains } from "@/actions/domains";
 import ConversationsSidebar from "@/components/modules/conversations/conversations-sidebar";
 import { PropsWithChildren } from "react";
 
-export default function ConversationsLayout({ children }: PropsWithChildren) {
+export default async function ConversationsLayout({ children }: PropsWithChildren) {
+  const domains = await getDomains();
+
   return (
     <div className="flex-1 h-full flex items-start">
-      <ConversationsSidebar />
+      <ConversationsSidebar
+        domains={domains}
+      />
       {children}
     </div>
   )

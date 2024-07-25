@@ -1,3 +1,4 @@
+import NotFound from "@/components/shared/not-found";
 import Table from "@/components/ui/table";
 import { IProductsWithDomainId } from "@/utils/types";
 import Image from "next/image";
@@ -53,6 +54,13 @@ export default function ProductsTable({ products }: { products: IProductsWithDom
               ))}
             </Table.Row>
           ))}
+          {!products?.length && (
+            <Table.Row className="bg-background border-t border-border">
+              <Table.Cell colSpan={3} className="py-3 px-3">
+                <NotFound />
+              </Table.Cell>
+            </Table.Row>
+          )}
         </Table.Content>
       </Table>
     </div>

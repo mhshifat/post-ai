@@ -81,3 +81,15 @@ export function formatDate(year: number, month: number, day: number, format: key
 
   return formats[format](date, format);
 }
+
+export function formatToDate(year: number, month: number, day: number) {
+  const date = new Date(year, month - 1, day);
+
+  return date;
+}
+
+export function formatISODate(isoDate: Date, format: keyof typeof formats = "MMMM yyyy") {
+  const date = new Date(isoDate);
+
+  return formats[format](date, format);
+}

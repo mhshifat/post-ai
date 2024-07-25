@@ -1,5 +1,6 @@
 "use client";
 
+import Spinner from "@/components/shared/spinner";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -76,9 +77,9 @@ export default function SignInForm() {
         />
 
         <Button disabled={loading} type="submit" className="w-full">
-          {loading ? "Loading..." : "Login"}
+          {loading ? <Spinner /> : "Login"}
         </Button>
-        <Link href="/sign-up" className="text-center">Don't have an account? <strong>Create One</strong></Link>
+        <Link href="/sign-up" className="text-center">Don't have an account? <span className="underline text-primary font-medium text-base">Create One</span></Link>
       </form>
     </Form>
   )

@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import {
 	formatDate,
+	formatToDate,
 	getDaysForEachWeekday,
 	getTimeSlots,
 	getWeekDaysShort,
@@ -22,22 +23,25 @@ import Spinner from "../shared/spinner";
 interface DatePickerProps {
 	enableTimePicker?: boolean;
   type?: "range";
+  onChange?: (date: Date) => void;
+  onTimeSelect?: (date: string) => void;
 }
 
 const today = new Date();
 const slots = getTimeSlots();
 const weekdays = getWeekDaysShort();
 
-export default function DatePicker({ enableTimePicker, type }: DatePickerProps) {
+export default function DatePicker({ enableTimePicker, type, onChange, onTimeSelect }: DatePickerProps) {
 	const [loading, setLoading] = useState(true);
 	const [rendered, forceUpdate] = useReducer((x) => x + 1, 0);
+  const [selectedTimeSlot, setSelectedTimeSlot] = useState<string | null>(null);
 	const [datePickerRef, setDatePickerRef] = useState<HTMLDivElement | null>(
 		null
 	);
 	const [date, setDate] = useState({
 		year: today.getFullYear(),
 		month: today.getMonth() + 1,
-		day: today.getDay(),
+		day: today.getDate(),
 	});
 	const { height } = datePickerRef?.getBoundingClientRect() || {};
 
@@ -111,6 +115,7 @@ export default function DatePicker({ enableTimePicker, type }: DatePickerProps) 
                   datesOfMonth?.[weekDay]?.[spaceKey];
                 const isDateInMon = isDateInMonth(cell.year, cell.month, cell.day, year, month);
                 const isToday = isDateToday(cell.year, cell.month, cell.day);
+                const isDateSame = cell.year === date.year && cell.day === date.day && cell.month === date.month;
 
                 return (
                   <DatePicker.Cell
@@ -118,7 +123,11 @@ export default function DatePicker({ enableTimePicker, type }: DatePickerProps) 
                     className="text-sm font-medium text-foreground/50 w-full"
                     readOnly={!isDateInMon}
                     disabled={!isDateInMon}
-                    selected={isToday}
+                    selected={isDateSame || isToday}
+                    onClick={() => {
+                      setDate(cell);
+                      onChange?.(formatToDate(cell.year, cell.month, cell.day));
+                    }}
                   >
                     {cell.day}
                   </DatePicker.Cell>
@@ -161,7 +170,7 @@ export default function DatePicker({ enableTimePicker, type }: DatePickerProps) 
 							.map((item) => ({
 								title: item,
 								disabled: false,
-								selected: false,
+								selected: item === selectedTimeSlot,
 							}))
 							.map((slot) => (
 								<li
@@ -173,7 +182,10 @@ export default function DatePicker({ enableTimePicker, type }: DatePickerProps) 
 										}
 									)}
 								>
-									<button type="button">{slot.title}</button>
+									<button type="button" onClick={() => {
+                    setSelectedTimeSlot(slot.title);
+                    onTimeSelect?.(slot.title);
+                  }}>{slot.title}</button>
 								</li>
 							))}
 					</ul>

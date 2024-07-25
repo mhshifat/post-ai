@@ -4,7 +4,7 @@ import { HandHelping, Mail } from "lucide-react";
 import ChatContents from "./chat-contents";
 import ChatHelpDesk from "./chat-help-desk";
 
-export default function ChatTabs({}: {}) {
+export default function ChatTabs() {
   return (
     <Tab className="flex flex-col h-full">
       <div className="py-2 px-3 border-b border-border">

@@ -28,7 +28,7 @@ export default function IntegrationsModalWrapper({ children, logo, title, descri
             className="rounded-lg"
           />
         </div>
-        <h3 className="text-lg font-medium text-center mt-5">{title}</h3>
+        <h3 className="text-lg font-medium text-center mt-5 text-foreground">{title}</h3>
         <p className="text-sm font-medium text-foreground/50 text-center max-w-[88%] mt-1">{description}</p>
       </div>
       <Divider className="my-3" />

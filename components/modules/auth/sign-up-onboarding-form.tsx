@@ -13,12 +13,12 @@ import { SignUpFormSchema } from "./user-details-form";
 
 const UserDetailsForm = dynamic(() => import('./user-details-form'), {
   ssr: false,
-  loading: Spinner
+  loading: () => <Spinner />
 })
 
 const OtpForm = dynamic(() => import('./otp-form'), {
   ssr: false,
-  loading: Spinner
+  loading: () => <Spinner />
 })
 
 export default function SignUpOnboardingForm() {
@@ -53,8 +53,8 @@ export default function SignUpOnboardingForm() {
                 </span>
 
                 <span className="flex flex-col justify-center">
-                  <h3 className="text-base font-semibold">{title}</h3>
-                  {metadata && <p className="text-sm mt-1 text-foreground/50">{metadata?.description as ReactNode}</p>}
+                  <h3 className="text-base font-medium">{title}</h3>
+                  {metadata && <p className="text-xs mt-1 text-foreground/50">{metadata?.description as ReactNode}</p>}
                 </span>
               </div>
             )}
@@ -78,7 +78,7 @@ export default function SignUpOnboardingForm() {
           <Steps.Trigger asChild type="next">
             <Button disabled={accountType === null} className="w-full">Continue</Button>
           </Steps.Trigger>
-          <Link href="/sign-in" className="text-center">Already have an account? <strong>Sign In</strong></Link>
+          <Link href="/sign-in" className="text-center">Already have an account? <span className="underline text-primary font-medium text-base">Sign In</span></Link>
         </div>
       </Steps.Item>
 
@@ -86,7 +86,7 @@ export default function SignUpOnboardingForm() {
         identifier={1}
       >
         <div className="flex flex-col gap-5">
-          <UserDetailsForm onSubmit={(values) => setUserDetails(values)} />
+          <UserDetailsForm accountType={accountType} onSubmit={(values) => setUserDetails(values)} />
         </div>
       </Steps.Item>
 

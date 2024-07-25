@@ -12,7 +12,7 @@ interface CanAccessProps {
 export default function CanAccess({ children, subscriptions, fallback }: PropsWithChildren<CanAccessProps>) {
   let hasAccess = false;
   const { currentPlan } = useSubscription();
-  if (subscriptions.length && currentPlan) hasAccess = subscriptions[0] === currentPlan;
+  if (subscriptions.length && currentPlan) hasAccess = subscriptions?.[0] === currentPlan;
 
   if (!hasAccess) return fallback;
   return (

@@ -1,4 +1,5 @@
 import { getDomainDetails, getProducts } from "@/actions/domains";
+import { getFilterQuestions, getHelpDeskQuestions } from "@/actions/questions";
 import ChatbotForm from "@/components/modules/domain/chatbot-form";
 import CopySnippet from "@/components/modules/domain/copy-snippet";
 import CreateDomainForm from "@/components/modules/domain/create-domain-form";
@@ -9,6 +10,7 @@ import HelpDeskForm from "@/components/modules/domain/help-desk-form";
 import HelpDeskQuestions from "@/components/modules/domain/help-desk-questions";
 import Products from "@/components/modules/domain/products";
 import CanAccess from "@/components/shared/can-access";
+import NotFound from "@/components/shared/not-found";
 import Section from "@/components/shared/section";
 import SettingsLayout from "@/components/shared/settings-layout";
 import { Button } from "@/components/ui/button";
@@ -18,9 +20,11 @@ import { redirect } from "next/navigation";
 
 export default async function Domain({ params }: { params: { domainId: string } }) {
   const domainDetails = await getDomainDetails(params.domainId);
-  if (!domainDetails) return redirect("/sign-in");
   const products = await getProducts(params.domainId);
+  const helpDeskQuestions = await getHelpDeskQuestions(params.domainId);
+  const filterQuestions = await getFilterQuestions(params.domainId);
   
+  if (!domainDetails) return <NotFound />
   return (
     <div className="max-w-[1024px] mx-auto">
       <ClientOnly>
@@ -108,8 +112,12 @@ export default async function Domain({ params }: { params: { domainId: string } 
                 </div>
               </Section.Header>
               <Section.Content className="p-5">
-                <HelpDeskForm />
-                <HelpDeskQuestions />
+                <HelpDeskForm
+                  domainId={params.domainId}
+                />
+                <HelpDeskQuestions
+                  questions={helpDeskQuestions}
+                />
               </Section.Content>
             </Section>
           </SettingsLayout.Right>
@@ -123,13 +131,17 @@ export default async function Domain({ params }: { params: { domainId: string } 
             <Section>
               <Section.Header className="flex items-start justify-between gap-5 px-5 py-2">
                 <div>
-                  <h3 className="text-base capitalize font-medium text-balance text-foreground">Help Desk Q&A</h3>
+                  <h3 className="text-base capitalize font-medium text-balance text-foreground">Filter Questions</h3>
                 </div>
               </Section.Header>
               <Section.Content className="p-5">
-                <FilterQuestionForm />
+                <FilterQuestionForm
+                  domainId={params.domainId}
+                />
                 <div className="mt-10">
-                  <FilterQuestions />
+                  <FilterQuestions
+                    questions={filterQuestions}
+                  />
                 </div>
               </Section.Content>
             </Section>
@@ -160,7 +172,7 @@ export default async function Domain({ params }: { params: { domainId: string } 
           />
           <SettingsLayout.Right>
             <div className="flex justify-start">
-              <DeleteDomainBtn />
+              <DeleteDomainBtn domainId={params.domainId} />
             </div>
           </SettingsLayout.Right>
         </SettingsLayout>

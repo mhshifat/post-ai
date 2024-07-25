@@ -11,7 +11,9 @@ export default function AppLayout({
     <ClerkProvider>
       <Toaster />
       <Providers>
-        {children}
+        <div className="bg-background text-foreground w-full h-full flex-1">
+          {children}
+        </div>
       </Providers>
     </ClerkProvider>
   );

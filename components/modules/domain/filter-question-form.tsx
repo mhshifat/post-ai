@@ -1,10 +1,13 @@
 "use client";
 
+import { createQuestion } from "@/actions/questions";
+import Spinner from "@/components/shared/spinner";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -12,12 +15,13 @@ import { z } from "zod";
 
 const formSchema = z.object({
   question: z.string(),
-  answer: z.string(),
+  answer: z.string().nullable().default(null),
 })
 
 export type FilterQuestionFormSchema = z.infer<typeof formSchema>;
 
-export default function FilterQuestionForm({ onSubmit }: { onSubmit?: () => void }) {
+export default function FilterQuestionForm({ onSubmit, domainId }: { onSubmit?: () => void; domainId: string }) {
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const form = useForm<FilterQuestionFormSchema>({
     mode: "onChange",
@@ -31,7 +35,14 @@ export default function FilterQuestionForm({ onSubmit }: { onSubmit?: () => void
   async function handleSubmit(values: FilterQuestionFormSchema) {
     setLoading(true);
     try {
-      // 
+      await createQuestion({
+        answer: values.answer,
+        question: values.question,
+        domainId,
+        type: "FILTERED_QUESTIONS"
+      });
+      form.reset();
+      router.refresh();
       toast.success("Successfully saved filter question");
       onSubmit?.();
     } catch (err) {
@@ -63,7 +74,7 @@ export default function FilterQuestionForm({ onSubmit }: { onSubmit?: () => void
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Textarea {...field} placeholder="Answer" />
+                <Textarea value={field.value || ""} onBlur={field.onBlur} onChange={field.onChange} placeholder="Answer" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -71,7 +82,7 @@ export default function FilterQuestionForm({ onSubmit }: { onSubmit?: () => void
         />
 
         <Button disabled={loading} type="submit" className="w-full">
-          {loading ? "Loading..." : "Save"}
+          {loading ? <Spinner /> : "Save"}
         </Button>
       </form>
     </Form>

@@ -18,6 +18,13 @@ const INTEGRATIONS = [
     type: "stripe",
     description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque, minus esse! Recusandae fugit magni natus!"
   },
+  {
+    id: "2",
+    logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQGluJhW7I1NYU7jF77E-9K9I46_ib_DUNHw&s",
+    title: "Google Meet",
+    type: "google_meet",
+    description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque, minus esse! Recusandae fugit magni natus!"
+  },
 ]
 
 export default function IntegrationsList({ connections }: { connections: IConnectionsWithUserId }) {

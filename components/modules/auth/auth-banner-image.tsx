@@ -11,7 +11,7 @@ export default function AuthBannerImage() {
       fill
       src={mode === "DARK" ? "/images/dark-bg.png" : "/images/light-bg.png"}
       alt=""
-      className="object-cover object-left-top overflow-x-visible !w-[150%] max-w-screen-2xl"
+      className="object-cover object-left-top overflow-x-visible !w-screen max-w-screen-2xl !h-screen max-h-screen rounded-tl-xl rounded-bl-xl overflow-hidden"
     />
   )
 }

@@ -21,7 +21,7 @@ export default function StripeIntegrationInfo() {
   }
   return (
     <div className="w-full">
-      <h3 className="text-lg font-medium text-left mt-5 mb-2">Stripe would like to access</h3>
+      <h3 className="text-lg font-medium text-left mt-5 mb-2 text-foreground">Stripe would like to access</h3>
       <ul className="pl-3 flex flex-col gap-2">
         <li className="flex items-center gap-2 text-sm font-medium text-foreground/50">
           <CheckCircle2Icon className="size-4" />

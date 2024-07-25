@@ -1,34 +1,20 @@
+import { useBot } from "@/components/providers/bot-provider";
 import { cn } from "@/lib/utils";
 import { BotIcon, User2Icon } from "lucide-react";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-
-const DUMMY_MESSAGES = [
-	{
-		id: "1",
-		content:
-			"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dignissimos aspernatur accusamus recusandae atque praesentium eligendi. Eius at optio, laborum ipsa consequuntur accusantium fugit temporibus illo iusto quae nobis ut consequatur?",
-		senderId: "1",
-		recipientId: "2",
-	},
-	{
-		id: "2",
-		content:
-			"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dignissimos aspernatur accusamus recusandae atque praesentium eligendi. Eius at optio, laborum ipsa consequuntur accusantium fugit temporibus illo iusto quae nobis ut consequatur?",
-		senderId: "2",
-		recipientId: "1",
-	},
-];
 
 interface ChatListsProps {
   className?: string;
 }
 
 export default function ChatLists({ className }: ChatListsProps) {
+  const { domainId, messages } = useBot();
+
 	return (
 		<ul className={cn("list-none p-8 flex flex-col-reverse gap-8 flex-[1_0_0] overflow-y-auto overflow-x-hidden bg-background", className)}>
-			{DUMMY_MESSAGES.map((item) =>
-				"1" === item.senderId ? (
+			{messages.map((item) =>
+				(item.senderId === "bot" || item.senderId === domainId) ? (
 					<li key={item.id} className="flex items-start gap-5 max-w-[80%]">
 						<span className="shrink-0 w-10 h-10 border-border flex items-center justify-center border rounded-full bg-foreground/10">
 							<BotIcon className="text-foreground/50" />

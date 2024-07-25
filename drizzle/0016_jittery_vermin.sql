@@ -1,0 +1,1 @@
+ALTER TABLE "threads" ADD COLUMN "is_live" boolean DEFAULT false;

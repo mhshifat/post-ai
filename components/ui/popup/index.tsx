@@ -32,7 +32,7 @@ export default function Popup({ children, className }: PropsWithChildren<PopupPr
       top: top + height + 10,
       left: left,
       width: width,
-      zIndex: show ? 99 : -10000,
+      zIndex: show ? 50 : -10000,
       opacity: show ? 1 : 0,
       pointerEvents: show ? "all" : "none"
     } satisfies CSSProperties;

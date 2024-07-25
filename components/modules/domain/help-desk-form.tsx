@@ -1,11 +1,14 @@
 "use client";
 
+import { createQuestion } from "@/actions/questions";
+import Spinner from "@/components/shared/spinner";
 import Uploader from "@/components/shared/uploader";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -18,7 +21,8 @@ const formSchema = z.object({
 
 export type HelpDeskFormSchema = z.infer<typeof formSchema>;
 
-export default function HelpDeskForm({ onSubmit }: { onSubmit?: () => void }) {
+export default function HelpDeskForm({ onSubmit, domainId }: { onSubmit?: () => void; domainId: string }) {
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const form = useForm<HelpDeskFormSchema>({
     mode: "onChange",
@@ -32,7 +36,13 @@ export default function HelpDeskForm({ onSubmit }: { onSubmit?: () => void }) {
   async function handleSubmit(values: HelpDeskFormSchema) {
     setLoading(true);
     try {
-      // 
+      await createQuestion({
+        answer: values.answer,
+        question: values.question,
+        domainId
+      });
+      form.reset();
+      router.refresh();
       toast.success("Successfully saved help desk questions");
       onSubmit?.();
     } catch (err) {
@@ -72,7 +82,7 @@ export default function HelpDeskForm({ onSubmit }: { onSubmit?: () => void }) {
         />
 
         <Button disabled={loading} type="submit" className="w-full">
-          {loading ? "Loading..." : "Save"}
+          {loading ? <Spinner /> : "Save"}
         </Button>
       </form>
     </Form>

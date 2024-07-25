@@ -4,11 +4,12 @@ import { PropsWithChildren } from "react";
 interface TableCellProps {
   className?: string;
   align?: "left" | "center" | "right";
+  colSpan?: number;
 }
 
-export default function TableCell({ children, align = "left", className }: PropsWithChildren<TableCellProps>) {
+export default function TableCell({ children, align = "left", className, colSpan }: PropsWithChildren<TableCellProps>) {
   return (
-    <td className={cn("", className, {
+    <td colSpan={colSpan} className={cn("", className, {
       "text-left": align === "left",
       "text-center": align === "center",
       "text-right": align === "right",

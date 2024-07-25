@@ -12,6 +12,7 @@ import { useDialog } from "../providers/dialog-provider";
 import CreateDomainForm from "../modules/domain/create-domain-form";
 import { IDomainsWithUserId } from "@/utils/types";
 import Image from "next/image";
+import Avatar from "../ui/avatar";
 
 type SidebarButtonType = {
   as: "button",
@@ -148,11 +149,10 @@ export default function DashboardSidebar({ domains }: { domains: IDomainsWithUse
             <Link
               href={`/settings/${domain.id}`}
             >
-              <Image
-                src={domain.details?.logo || ""}
-                alt={domain.details?.domain || ""}
-                width={30}
-                height={30}
+              <Avatar
+                src={domain?.logo || ""}
+                alt={domain?.domain || ""}
+                size={30}
                 className="text-foreground/50 rounded-full cursor-pointer border border-border object-contain"
               />
             </Link>

@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, Dispatch, PropsWithChildren, ReactElement, ReactNode, SetStateAction, useCallback, useContext, useId, useState } from "react"
+import { createContext, Dispatch, PropsWithChildren, ReactElement, ReactNode, SetStateAction, useCallback, useContext, useEffect, useId, useState } from "react"
 import SelectTrigger from "./select-trigger";
 import SelectOption from "./select-option";
 import SelectContent from "./select-content";
@@ -10,6 +10,10 @@ import Popup from "../popup";
 
 interface SelectProps {
   className?: string;
+  value?: {
+    value: string;
+    content: ReactNode;
+  }[]
   onChange?: (value: string) => void;
 }
 
@@ -26,9 +30,7 @@ interface SelectCtxProps extends SelectProps {
 
 const SelectCtx = createContext<SelectCtxProps | null>(null);
 
-export default function Select({ children, className, onChange }: PropsWithChildren<SelectProps>) {
-  const id = useId();
-  const identifier = id;
+export default function Select({ children, className, onChange, value }: PropsWithChildren<SelectProps>) {
   const [selected, setSelected] = useState<{value: string; content: ReactNode}[]>([]);
 
   const changeSelected = useCallback((value: {
@@ -37,14 +39,18 @@ export default function Select({ children, className, onChange }: PropsWithChild
   }[]) => {
     setSelected(value);
     onChange?.(value[0].value);
-  }, [])
+  }, []);
+
+  useEffect(() => {
+    setSelected(value || []);
+  }, [value])
 
   return (
     <SelectCtx.Provider value={{
       selected,
       changeSelected
     }}>
-      <Popup className={className}>
+      <Popup className={className || ""}>
         {children}
       </Popup>
     </SelectCtx.Provider>
