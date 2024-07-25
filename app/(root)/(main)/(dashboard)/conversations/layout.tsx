@@ -1,4 +1,4 @@
-import { getDomains } from "@/actions/domains";
+import { getDomains } from "@/actions/products";
 import ConversationsSidebar from "@/components/modules/conversations/conversations-sidebar";
 import { PropsWithChildren } from "react";
 

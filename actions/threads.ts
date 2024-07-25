@@ -1,11 +1,13 @@
+"use server";
+
 import { IThread } from "@/utils/types";
 import { getUserDetails } from "./users";
 import { db } from "@/db/drizzle";
-import { threads } from "@/db/schema/";
 import { v4 } from "uuid";
 import { and, desc, eq } from "drizzle-orm";
 import { pusherServerClient } from "@/lib/pusher";
 import { unstable_noStore } from "next/cache";
+import { threads } from "@/db/schema/thread";
 
 export async function createThread(payload: Partial<IThread>) {
   const user = await getUserDetails();

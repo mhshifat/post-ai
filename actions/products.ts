@@ -1,10 +1,13 @@
-import { domains, products } from "@/db/schema/";
+"use server";
+
 import { unstable_noStore } from "next/cache";
 import { getUserDetails } from "./users";
 import { db } from "@/db/drizzle";
 import { desc, eq } from "drizzle-orm";
 import { IProduct } from "@/utils/types";
 import { v4 } from "uuid";
+import { domains } from "@/db/schema/domain";
+import { products } from "@/db/schema/product";
 
 export async function getDomains() {
   unstable_noStore();

@@ -11,6 +11,8 @@
     --primary-foreground: 0 0% 94%;
     --danger: 0 72% 51%;
     --danger-foreground: 0 0% 94%;
+    --warning: 47 96% 53%;
+    --warning-foreground: 0 0% 21%;
     --radius: 0.5rem;
     --border: 214 32% 91%;
     --size: 35px;

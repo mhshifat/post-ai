@@ -17,7 +17,7 @@ import { toast } from "sonner";
 import { z } from "zod";
 import CreateDomainForm from "../domain/create-domain-form";
 import { useRouter } from "next/navigation";
-import { createCustomer } from "@/actions/domains";
+import { createCustomer } from "@/actions/customers";
 
 const formSchema = z.object({
   email: z.string(),

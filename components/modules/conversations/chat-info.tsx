@@ -4,7 +4,6 @@ import { getThreadDetails, updateThread } from "@/actions/threads";
 import Spinner from "@/components/shared/spinner";
 import Avatar from "@/components/ui/avatar";
 import Switch from "@/components/ui/switch";
-import { pusherClient } from "@/lib/pusher";
 import { IThread } from "@/utils/types";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -26,18 +25,18 @@ export default function ChatInfo() {
   }, [threadId])
 
   async function switchLiveMode(checked: boolean) {
-    try {
-      await updateThread({
-        id: threadId!,
-        isLive: checked
-      });
-      toast.success("Switched to live mode");
-    } catch (err) {
-      if (err instanceof Error) {
-        return toast.error(err.message);
-      }
-      toast.error("Something went wrong");
-    }
+    // try {
+    //   await updateThread({
+    //     id: threadId!,
+    //     isLive: checked
+    //   });
+    //   toast.success("Switched to live mode");
+    // } catch (err) {
+    //   if (err instanceof Error) {
+    //     return toast.error(err.message);
+    //   }
+    //   toast.error("Something went wrong");
+    // }
   }
 
   return (

@@ -3,7 +3,8 @@ import ClientOnly from "@/components/ui/client-only";
 import AppointmentsList from "./appointments-list";
 import TodaysAppointments from "./todays-appointments";
 import CreateAppointmentBtnWrapper from "./create-appointment-btn-wrapper";
-import { getAppointments, getDomains, getTodaysAppointments } from "@/actions/domains";
+import { getDomains } from "@/actions/products";
+import { getAppointments, getTodaysAppointments } from "@/actions/appointments";
 
 export default async function AppointmentsPageLayout() {
   const domains = await getDomains();

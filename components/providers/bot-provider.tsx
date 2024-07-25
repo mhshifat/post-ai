@@ -1,9 +1,10 @@
 "use client";
 
-import { getDomainDetails, getThreadDetails, getThreadMessages } from "@/actions/domains";
-import { getHelpDeskQuestions, getUnansweredFilterQuestions } from "@/actions/questions";
+import { getDomainDetails } from "@/actions/domains";
+import { getThreadMessages } from "@/actions/messages";
+import { getThreadDetails } from "@/actions/threads";
 import { pusherClient } from "@/lib/pusher";
-import { IDomain, IMessage, IQuestion } from "@/utils/types";
+import { IDomain, IMessage, IFaq } from "@/utils/types";
 import { createContext, PropsWithChildren, useCallback, useContext, useEffect, useState } from "react"
 
 interface BotProviderProps {
@@ -12,8 +13,8 @@ interface BotProviderProps {
 }
 
 interface BotCtxProps extends BotProviderProps {
-  questions: IQuestion[];
-  filterQuestions: IQuestion[];
+  questions: IFaq[];
+  filterQuestions: IFaq[];
   messages: Partial<IMessage>[];
   domainDetails: IDomain | null;
   isLive: boolean;
@@ -31,8 +32,8 @@ const BotCtx = createContext<BotCtxProps | null>(null);
 
 let steps = -2;
 export default function BotProvider({ children, domainId, threadId: threadIdProp }: PropsWithChildren<BotProviderProps>) {
-  const [questions, setQuestions] = useState<IQuestion[]>([]);
-  const [filterQuestions, setFilterQuestions] = useState<IQuestion[]>([]);
+  const [questions, setQuestions] = useState<IFaq[]>([]);
+  const [filterQuestions, setFilterQuestions] = useState<IFaq[]>([]);
   const [messages, setMessages] = useState<Partial<IMessage>[]>([]);
   const [domainDetails, setDomainDetails] = useState<IDomain | null>(null);
   const [isLive, setIsLive] = useState(false);
@@ -122,14 +123,15 @@ export default function BotProvider({ children, domainId, threadId: threadIdProp
           }
         ]);
       });
-    getHelpDeskQuestions(domainId)
-      .then((data) => {
-        setQuestions(data as unknown as IQuestion[]);
-      });
-    getUnansweredFilterQuestions(domainId)
-      .then((data) => {
-        setFilterQuestions(data as unknown as IQuestion[]);
-      });
+    // TODO: fetch faqs
+    // getHelpDeskQuestions(domainId)
+    //   .then((data) => {
+    //     setQuestions(data as unknown as IFaq[]);
+    //   });
+    // getUnansweredFilterQuestions(domainId)
+    //   .then((data) => {
+    //     setFilterQuestions(data as unknown as IFaq[]);
+    //   });
   }, [domainId, threadIdProp])
 
   useEffect(() => {

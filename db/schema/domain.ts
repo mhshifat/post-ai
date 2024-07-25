@@ -1,6 +1,9 @@
 import { pgTable, text, timestamp } from "drizzle-orm/pg-core";
-import { customers, products, qAndAs, users } from "./user";
 import { relations } from "drizzle-orm";
+import { users } from "./user";
+import { products } from "./product";
+import { faqs } from "./faq";
+import { customers } from "./customer";
 
 export const domains = pgTable("domains", {
   id: text("id").primaryKey(),
@@ -17,6 +20,6 @@ export const domainsRelations = relations(domains, ({ one, many }) => ({
     references: [users.id]
   }),
   products: many(products),
-  qAndAs: many(qAndAs),
+  faqs: many(faqs),
   customers: many(customers),
 }));

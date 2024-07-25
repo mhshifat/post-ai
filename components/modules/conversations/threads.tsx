@@ -1,4 +1,4 @@
-import { getThreads } from "@/actions/domains";
+import { getThreads } from "@/actions/threads";
 import NotFound from "@/components/shared/not-found";
 import Spinner from "@/components/shared/spinner";
 import Avatar from "@/components/ui/avatar";

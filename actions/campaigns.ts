@@ -1,12 +1,12 @@
 "use server";
 
 import { db } from "@/db/drizzle";
-import { campaigns } from "@/db/schema/";
 import { ICampaign } from "@/utils/types";
 import { desc, eq } from "drizzle-orm";
 import { unstable_noStore } from "next/cache";
 import { v4 } from 'uuid';
 import { getUserDetails } from "./users";
+import { campaigns } from "@/db/schema/campaign";
 
 export async function createCampaign(payload: Partial<ICampaign>) {
   const user = await getUserDetails();

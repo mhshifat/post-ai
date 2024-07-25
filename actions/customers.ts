@@ -1,10 +1,13 @@
+"use server";
+
 import { ICustomer } from "@/utils/types";
 import { getUserDetails } from "./users";
 import { db } from "@/db/drizzle";
-import { customers, domains } from "@/db/schema/";
 import { v4 } from "uuid";
 import { desc, eq } from "drizzle-orm";
 import { unstable_noStore } from "next/cache";
+import { customers } from "@/db/schema/customer";
+import { domains } from "@/db/schema/domain";
 
 export async function createCustomer(payload: Partial<ICustomer>) {
   const user = await getUserDetails();

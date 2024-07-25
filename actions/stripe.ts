@@ -1,7 +1,6 @@
 "use server";
 
 import { db } from "@/db/drizzle";
-import { users } from "@/db/schema/";
 import { stripeClient } from "@/lib/stripe";
 import { IStripeSubScriptionWithPlan } from "@/utils/types";
 import { clerkClient, currentUser } from "@clerk/nextjs/server";

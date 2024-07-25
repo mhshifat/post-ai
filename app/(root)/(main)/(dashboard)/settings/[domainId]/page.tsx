@@ -1,5 +1,5 @@
 import { getDomainDetails, getProducts } from "@/actions/domains";
-import { getFilterQuestions, getHelpDeskQuestions } from "@/actions/questions";
+import { getFilterQuestions, getHelpDeskQuestions } from "@/actions/faqs";
 import ChatbotForm from "@/components/modules/domain/chatbot-form";
 import CopySnippet from "@/components/modules/domain/copy-snippet";
 import CreateDomainForm from "@/components/modules/domain/create-domain-form";

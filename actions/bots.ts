@@ -1,10 +1,10 @@
 "use server";
 
 import { db } from "@/db/drizzle";
-import { bots } from "@/db/schema/";
 import { IChatBot } from "@/utils/types";
 import { v4 } from "uuid";
 import { getUserDetails } from "./users";
+import { bots } from "@/db/schema/bot";
 
 export async function upsertBot(payload: Partial<IChatBot>) {
   const user = await getUserDetails();

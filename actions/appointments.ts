@@ -1,11 +1,14 @@
+"use server";
+
 import { IAppointment } from "@/utils/types";
 import { getUserDetails } from "./users";
 import { db } from "@/db/drizzle";
-import { appointments, domains } from "@/db/schema/";
 import { v4 } from "uuid";
 import { unstable_noStore } from "next/cache";
 import { and, desc, eq, gte, lte } from "drizzle-orm";
 import { endOfDay, startOfDay } from 'date-fns';
+import { appointments } from "@/db/schema/appointment";
+import { domains } from "@/db/schema/domain";
 
 export async function createAppointment(payload: Partial<IAppointment>) {
   const user = await getUserDetails();

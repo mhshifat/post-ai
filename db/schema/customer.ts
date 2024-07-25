@@ -1,7 +1,7 @@
 import { pgTable, text, timestamp, unique } from "drizzle-orm/pg-core";
-import { campaigns, users } from "./user";
 import { relations } from "drizzle-orm";
 import { domains } from "./domain";
+import { campaigns } from "./campaign";
 
 export const customers = pgTable("customers", {
   id: text("id").primaryKey(),

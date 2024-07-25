@@ -1,10 +1,11 @@
 "use client";
 
-import { bulkCreateMessages, createCustomer, createMessage, createThread, updateCustomer } from "@/actions/domains";
-import { createSurvey, updateQuestion } from "@/actions/questions";
+import { createCustomer, updateCustomer } from "@/actions/customers";
+import { bulkCreateMessages, createMessage } from "@/actions/messages";
+import { createSurvey } from "@/actions/surveys";
+import { createThread } from "@/actions/threads";
 import { useBot } from "@/components/providers/bot-provider";
 import Spinner from "@/components/shared/spinner";
-import { pusherClient } from "@/lib/pusher";
 import { cn } from "@/lib/utils";
 import sleep from "@/utils/sleep";
 import { FormEvent, useRef, useState } from "react";
@@ -125,7 +126,7 @@ export default function ChatInput({ className }: ChatInputProps) {
         return;
       }
       if (questionId) await createSurvey({
-        questionId: questionId!,
+        surveyQuestionId: questionId!,
         domainId: domainId!,
         customerId: customerId!,
         answer: content

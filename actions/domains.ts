@@ -1,13 +1,14 @@
 "use server";
 
 import { db } from "@/db/drizzle";
-import { bots, domains } from "@/db/schema/";
 import { IDomain } from "@/utils/types";
 import { and, eq } from "drizzle-orm";
 import { unstable_noStore } from "next/cache";
 import { v4 } from 'uuid';
 import { getUserDetails } from "./users";
 import { upsertBot } from "./bots";
+import { domains } from "@/db/schema/domain";
+import { bots } from "@/db/schema/bot";
 
 export async function createDomain(payload: Pick<IDomain, "domain" | "logo">) {
   const user = await getUserDetails();

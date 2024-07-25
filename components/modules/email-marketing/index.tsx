@@ -1,13 +1,12 @@
-import { getCustomers, getDomains } from "@/actions/domains";
+import { getDomains } from "@/actions/products";
 import Campaigns from "./campaigns";
 import Customers from "./customers";
-import { getAllFilterQuestions } from "@/actions/questions";
 import { getCampaigns } from "@/actions/campaigns";
+import { getCustomers } from "@/actions/customers";
 
 export default async function EmailMarketingLayout() {
   const domains = await getDomains();
   const customers = await getCustomers();
-  const questions = await getAllFilterQuestions();
   const campaigns = await getCampaigns();
 
   return (
@@ -16,7 +15,8 @@ export default async function EmailMarketingLayout() {
         <Customers
           domains={domains}
           customers={customers}
-          questions={questions}
+          // TODO: add questions
+          questions={[]}
         />
       </div>
       <div className="basis-[40%]">

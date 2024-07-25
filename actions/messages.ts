@@ -1,11 +1,13 @@
+"use server";
+
 import { IMessage } from "@/utils/types";
 import { getUserDetails } from "./users";
 import { db } from "@/db/drizzle";
-import { messages } from "@/db/schema/";
 import { v4 } from "uuid";
 import { pusherServerClient } from "@/lib/pusher";
 import { unstable_noStore } from "next/cache";
 import { and, desc, eq } from "drizzle-orm";
+import { messages } from "@/db/schema/message";
 
 export async function bulkCreateMessages(payloads: Partial<IMessage>[]) {
   const user = await getUserDetails();

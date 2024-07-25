@@ -1,11 +1,22 @@
+import { getAppointments } from '@/actions/appointments';
 import { getConnections } from '@/actions/connections';
-import { getAppointments, getCustomers, getDomains, getProducts } from '@/actions/domains';
-import { appointments, bots, campaigns, customers, domains, messages, products, qAndAs, surveys, threads } from '@/db/schema/';
+import { getCustomers } from '@/actions/customers';
+import { getDomains, getProducts } from '@/actions/products';
+import { appointments } from '@/db/schema/appointment';
+import { bots } from '@/db/schema/bot';
+import { campaigns } from '@/db/schema/campaign';
+import { customers } from '@/db/schema/customer';
+import { domains } from '@/db/schema/domain';
+import { faqs } from '@/db/schema/faq';
+import { messages } from '@/db/schema/message';
+import { products } from '@/db/schema/product';
+import { surveys } from '@/db/schema/survey';
+import { threads } from '@/db/schema/thread';
 import { InferSelectModel } from 'drizzle-orm';
 import Stripe from 'stripe';
 
 export type IDomain = InferSelectModel<typeof domains>;
-export type IQuestion = InferSelectModel<typeof qAndAs>;
+export type IFaq = InferSelectModel<typeof faqs>;
 export type ISurvey = InferSelectModel<typeof surveys>;
 export type ICampaign = InferSelectModel<typeof campaigns>;
 export type IAppointment = InferSelectModel<typeof appointments>;

@@ -34,6 +34,10 @@ const config = {
           DEFAULT: "hsl(var(--danger))",
           foreground: "hsl(var(--danger-foreground))",
         },
+        warning: {
+          DEFAULT: "hsl(var(--warning))",
+          foreground: "hsl(var(--warning-foreground))",
+        },
         border: {
           DEFAULT: "hsl(var(--border))"
         },

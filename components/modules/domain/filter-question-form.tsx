@@ -1,6 +1,6 @@
 "use client";
 
-import { createQuestion } from "@/actions/questions";
+import { createQuestion } from "@/actions/faqs";
 import Spinner from "@/components/shared/spinner";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";

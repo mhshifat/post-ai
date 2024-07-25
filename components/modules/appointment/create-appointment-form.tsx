@@ -9,7 +9,7 @@ import { z } from "zod";
 import CreateDomainForm from "../domain/create-domain-form";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
-import { createAppointment, updateAppointment } from "@/actions/domains";
+import { createAppointment, updateAppointment } from "@/actions/appointments";
 
 export default function CreateAppointmentForm({ onComplete, domains }: { domains: Partial<IDomain>[], onComplete: () => void }) {
   const { openDialog, closeDialog } = useDialog();

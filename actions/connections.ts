@@ -1,7 +1,8 @@
 "use server";
 
 import { db } from "@/db/drizzle";
-import { connections, users } from "@/db/schema/";
+import { connections } from "@/db/schema/connection";
+import { users } from "@/db/schema/user";
 import { currentUser } from "@clerk/nextjs/server";
 import { desc, eq } from "drizzle-orm";
 import { unstable_noStore } from "next/cache";

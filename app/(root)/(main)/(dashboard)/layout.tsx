@@ -1,4 +1,4 @@
-import { getDomains } from "@/actions/domains";
+import { getDomains } from "@/actions/products";
 import { getUserDetails } from "@/actions/users";
 import DashboardInfoBar from "@/components/shared/dashboard-info-bar";
 import DashboardSidebar from "@/components/shared/dashboard-sidebar";
