@@ -3,11 +3,11 @@
 import NotFound from "@/components/shared/not-found";
 import Accordion from "@/components/ui/accordion";
 import { cn } from "@/lib/utils";
-import { IQuestion } from "@/utils/types";
+import { IFaq } from "@/utils/types";
 
 interface FilterQuestionsProps {
   className?: string;
-  questions: Partial<IQuestion>[];
+  questions: Partial<IFaq>[];
 }
 
 export default function FilterQuestions({ className, questions }: FilterQuestionsProps) {

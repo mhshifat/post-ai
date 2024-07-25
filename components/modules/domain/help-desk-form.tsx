@@ -1,8 +1,7 @@
 "use client";
 
-import { createQuestion } from "@/actions/faqs";
+import { createFaq } from "@/actions/faqs";
 import Spinner from "@/components/shared/spinner";
-import Uploader from "@/components/shared/uploader";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -36,7 +35,7 @@ export default function HelpDeskForm({ onSubmit, domainId }: { onSubmit?: () => 
   async function handleSubmit(values: HelpDeskFormSchema) {
     setLoading(true);
     try {
-      await createQuestion({
+      await createFaq({
         answer: values.answer,
         question: values.question,
         domainId

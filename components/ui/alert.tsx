@@ -7,7 +7,7 @@ interface AlertProps extends HTMLAttributes<HTMLDivElement> {
 
 export default function Alert({ children, className, variant = "warning", ...restProps }: PropsWithChildren<AlertProps>) {
   return (
-    <div {...restProps} className={cn("font-semibold text-sm rounded-md py-2 px-3", {
+    <div {...restProps} className={cn("font-semibold text-xs rounded-md py-2 px-3 leading-5", {
       "border border-warning bg-warning/10 text-warning": variant === 'warning'
     }, className)}>
       <p className="m-0">{children}</p>

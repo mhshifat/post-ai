@@ -1,6 +1,6 @@
 "use client";
 
-import { createProduct } from "@/actions/domains";
+import { createProduct } from "@/actions/products";
 import Uploader from "@/components/shared/uploader";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";

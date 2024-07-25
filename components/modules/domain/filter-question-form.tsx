@@ -1,6 +1,6 @@
 "use client";
 
-import { createQuestion } from "@/actions/faqs";
+import { createFaq } from "@/actions/faqs";
 import Spinner from "@/components/shared/spinner";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
@@ -35,11 +35,10 @@ export default function FilterQuestionForm({ onSubmit, domainId }: { onSubmit?: 
   async function handleSubmit(values: FilterQuestionFormSchema) {
     setLoading(true);
     try {
-      await createQuestion({
+      await createFaq({
         answer: values.answer,
         question: values.question,
         domainId,
-        type: "FILTERED_QUESTIONS"
       });
       form.reset();
       router.refresh();

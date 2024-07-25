@@ -1,5 +1,5 @@
-import { getDomainDetails, getProducts } from "@/actions/domains";
-import { getFilterQuestions, getHelpDeskQuestions } from "@/actions/faqs";
+import { getDomainDetails } from "@/actions/domains";
+import { getProducts } from "@/actions/products";
 import ChatbotForm from "@/components/modules/domain/chatbot-form";
 import CopySnippet from "@/components/modules/domain/copy-snippet";
 import CreateDomainForm from "@/components/modules/domain/create-domain-form";
@@ -16,13 +16,10 @@ import SettingsLayout from "@/components/shared/settings-layout";
 import { Button } from "@/components/ui/button";
 import ClientOnly from "@/components/ui/client-only";
 import Link from "next/link";
-import { redirect } from "next/navigation";
 
 export default async function Domain({ params }: { params: { domainId: string } }) {
   const domainDetails = await getDomainDetails(params.domainId);
   const products = await getProducts(params.domainId);
-  const helpDeskQuestions = await getHelpDeskQuestions(params.domainId);
-  const filterQuestions = await getFilterQuestions(params.domainId);
   
   if (!domainDetails) return <NotFound />
   return (
@@ -116,7 +113,8 @@ export default async function Domain({ params }: { params: { domainId: string } 
                   domainId={params.domainId}
                 />
                 <HelpDeskQuestions
-                  questions={helpDeskQuestions}
+                  // TODO: fetch questions
+                  questions={[]}
                 />
               </Section.Content>
             </Section>
@@ -140,7 +138,8 @@ export default async function Domain({ params }: { params: { domainId: string } 
                 />
                 <div className="mt-10">
                   <FilterQuestions
-                    questions={filterQuestions}
+                    // TODO: fetch questions
+                    questions={[]}
                   />
                 </div>
               </Section.Content>
