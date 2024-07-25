@@ -1,7 +1,7 @@
 "use server";
 
 import { db } from "@/db/drizzle";
-import { bots, domains } from "@/db/schema";
+import { bots, domains } from "@/db/schema/";
 import { IDomain } from "@/utils/types";
 import { and, eq } from "drizzle-orm";
 import { unstable_noStore } from "next/cache";

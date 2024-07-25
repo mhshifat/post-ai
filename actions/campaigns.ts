@@ -1,7 +1,7 @@
 "use server";
 
 import { db } from "@/db/drizzle";
-import { campaigns } from "@/db/schema";
+import { campaigns } from "@/db/schema/";
 import { ICampaign } from "@/utils/types";
 import { desc, eq } from "drizzle-orm";
 import { unstable_noStore } from "next/cache";

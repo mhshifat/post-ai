@@ -1,7 +1,7 @@
 import { IAppointment } from "@/utils/types";
 import { getUserDetails } from "./users";
 import { db } from "@/db/drizzle";
-import { appointments, domains } from "@/db/schema";
+import { appointments, domains } from "@/db/schema/";
 import { v4 } from "uuid";
 import { unstable_noStore } from "next/cache";
 import { and, desc, eq, gte, lte } from "drizzle-orm";

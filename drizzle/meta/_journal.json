@@ -120,6 +120,13 @@
       "when": 1721816494649,
       "tag": "0016_jittery_vermin",
       "breakpoints": true
+    },
+    {
+      "idx": 17,
+      "version": "7",
+      "when": 1721922708630,
+      "tag": "0017_closed_steel_serpent",
+      "breakpoints": true
     }
   ]
 }

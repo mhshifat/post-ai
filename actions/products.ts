@@ -1,4 +1,4 @@
-import { domains, products } from "@/db/schema";
+import { domains, products } from "@/db/schema/";
 import { unstable_noStore } from "next/cache";
 import { getUserDetails } from "./users";
 import { db } from "@/db/drizzle";

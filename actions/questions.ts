@@ -1,7 +1,7 @@
 "use server";
 
 import { db } from "@/db/drizzle";
-import { domains, qAndAs, surveys } from "@/db/schema";
+import { domains, qAndAs, surveys } from "@/db/schema/";
 import { IQuestion, ISurvey } from "@/utils/types";
 import { and, desc, eq, isNotNull, isNull, ne } from "drizzle-orm";
 import { unstable_noStore } from "next/cache";

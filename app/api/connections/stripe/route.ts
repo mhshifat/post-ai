@@ -1,5 +1,5 @@
 import { db } from "@/db/drizzle";
-import { connections, users } from "@/db/schema";
+import { connections, users } from "@/db/schema/";
 import { stripeClient } from "@/lib/stripe";
 import { currentUser } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";

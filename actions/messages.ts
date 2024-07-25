@@ -1,7 +1,7 @@
 import { IMessage } from "@/utils/types";
 import { getUserDetails } from "./users";
 import { db } from "@/db/drizzle";
-import { messages } from "@/db/schema";
+import { messages } from "@/db/schema/";
 import { v4 } from "uuid";
 import { pusherServerClient } from "@/lib/pusher";
 import { unstable_noStore } from "next/cache";

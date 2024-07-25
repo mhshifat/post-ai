@@ -1,6 +1,6 @@
 import { getConnections } from '@/actions/connections';
 import { getAppointments, getCustomers, getDomains, getProducts } from '@/actions/domains';
-import { appointments, bots, campaigns, customers, domains, messages, products, qAndAs, surveys, threads } from '@/db/schema';
+import { appointments, bots, campaigns, customers, domains, messages, products, qAndAs, surveys, threads } from '@/db/schema/';
 import { InferSelectModel } from 'drizzle-orm';
 import Stripe from 'stripe';
 

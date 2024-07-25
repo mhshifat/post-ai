@@ -1,7 +1,7 @@
 "use server";
 
 import { db } from "@/db/drizzle";
-import { bots } from "@/db/schema";
+import { bots } from "@/db/schema/";
 import { IChatBot } from "@/utils/types";
 import { v4 } from "uuid";
 import { getUserDetails } from "./users";
