@@ -36,6 +36,7 @@ export async function getConnectionByType(type: IConnectionType) {
     .select({
       id: connections.id,
       accountId: connections.accountId,
+      metadata: connections.metadata,
     })
     .from(connections)
     .leftJoin(users, eq(users.id, connections.userId))
