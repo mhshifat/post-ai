@@ -5,6 +5,7 @@ import { getDomains, getProducts } from '@/actions/products';
 import { appointments } from '@/db/schema/appointment';
 import { bots } from '@/db/schema/bot';
 import { campaigns } from '@/db/schema/campaign';
+import { connections } from '@/db/schema/connection';
 import { customers } from '@/db/schema/customer';
 import { domains } from '@/db/schema/domain';
 import { faqs } from '@/db/schema/faq';
@@ -15,6 +16,7 @@ import { threads } from '@/db/schema/thread';
 import { InferSelectModel } from 'drizzle-orm';
 import Stripe from 'stripe';
 
+export type IConnection = Omit<InferSelectModel<typeof connections>, "updatedAt"> & { updatedAt?: Date };
 export type IDomain = InferSelectModel<typeof domains>;
 export type IFaq = InferSelectModel<typeof faqs>;
 export type ISurvey = InferSelectModel<typeof surveys>;
@@ -44,3 +46,7 @@ export type IStripeSubScriptionWithPlan = Stripe.Subscription & {
   }
 };
 export type IUploaderFile = { id: string, url: string };
+export enum IConnectionType {
+  STRIPE = 'STRIPE',
+  GOOGLE_MEET = 'GOOGLE_MEET',
+}

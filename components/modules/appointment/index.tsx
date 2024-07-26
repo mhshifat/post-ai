@@ -7,6 +7,7 @@ import { getDomains } from "@/actions/products";
 import { getAppointments, getTodaysAppointments } from "@/actions/appointments";
 import Link from "next/link";
 import Alert from "@/components/ui/alert";
+import AppointmentsBanners from "./appointments-banners";
 
 export default async function AppointmentsPageLayout() {
   const domains = await getDomains();
@@ -15,8 +16,7 @@ export default async function AppointmentsPageLayout() {
 
   return (
     <div className="w-full h-full p-7 max-w-[1024px] mx-auto flex flex-col gap-10">
-      {/* TODO: get connection details */}
-      <Alert>You do not have linked with your google account, Your user will not be able to create a booking. To connect to google account, <Link href="/integrations" className="underline">Click Here</Link></Alert>
+      <AppointmentsBanners />
 
       <div className="flex items-center justify-end gap-2">
         <CreateAppointmentBtnWrapper

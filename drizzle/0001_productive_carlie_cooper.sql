@@ -1,1 +1,0 @@
-ALTER TABLE "users" ADD COLUMN "account_type" text NOT NULL;

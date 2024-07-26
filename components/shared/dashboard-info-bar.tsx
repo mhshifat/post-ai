@@ -1,14 +1,16 @@
 "use client";
 
-import { ClerkLoaded, ClerkLoading, UserButton } from "@clerk/nextjs";
-import Spinner from "./spinner";
 import { usePathname } from "next/navigation";
 import { DASHBOARD_SIDEBAR_MAIN_LINKS } from "./dashboard-sidebar";
 import { Button } from "../ui/button";
 import { Bell } from "lucide-react";
 import Avatar from "../ui/avatar";
+import { useDialog } from "../providers/dialog-provider";
+import NotificationList from "../modules/notifications/notification-list";
 
 export default function DashboardInfoBar() {
+  const { openDialog } = useDialog();
+
   const pathname = usePathname();
   const currentPage = DASHBOARD_SIDEBAR_MAIN_LINKS.find(item => item.as === 'link' ? pathname?.includes(item.path) : false)
 
@@ -20,7 +22,13 @@ export default function DashboardInfoBar() {
       </div>
 
       <div className="flex justify-center items-center gap-2">
-        <Button className="shrink-0" variant="ghost" size="icon">
+        <Button onClick={() => openDialog({
+          title: "All Notifications",
+          description: "Notification history",
+          position: "right",
+          // TODO: fetch notifications
+          content: <NotificationList />
+        })} className="shrink-0" variant="ghost" size="icon">
           <Bell className="size-5" />
         </Button>
         <Avatar

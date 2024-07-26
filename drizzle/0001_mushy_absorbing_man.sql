@@ -1,0 +1,1 @@
+ALTER TABLE "connections" ADD COLUMN "account_id" text NOT NULL;

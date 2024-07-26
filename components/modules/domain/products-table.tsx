@@ -1,7 +1,8 @@
+import useConnection from "@/components/hooks/use-connection";
 import NotFound from "@/components/shared/not-found";
 import Alert from "@/components/ui/alert";
 import Table from "@/components/ui/table";
-import { IProductsWithDomainId } from "@/utils/types";
+import { IConnectionType, IProductsWithDomainId } from "@/utils/types";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -33,10 +34,13 @@ const TABLE_HEADERS = [
 ]
 
 export default function ProductsTable({ products }: { products: IProductsWithDomainId }) {
+  const { hasConnection } = useConnection();
+
   return (
     <div>
-      {/* TODO: get connection details */}
-      <Alert className="mb-5">You do not have linked with stripe account, your customer will not be able to purchase your product. To connect to your stripe account, <Link href="/integrations" className="underline">Click Here</Link></Alert>
+      {!hasConnection(IConnectionType.STRIPE) && (
+        <Alert className="mb-5">You do not have linked with stripe account, your customer will not be able to purchase your product. To connect to your stripe account, <Link href="/integrations" className="underline">Click Here</Link></Alert>
+      )}
       <Table className="w-full border border-border rounded-xl overflow-hidden">
         <Table.Content>
           <Table.Row className="bg-background-secondary">

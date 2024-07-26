@@ -13,7 +13,7 @@ interface IntegrationsModalWrapperProps {
 export default function IntegrationsModalWrapper({ children, logo, title, description }: PropsWithChildren<IntegrationsModalWrapperProps>) {
   return (
     <div className="w-full">
-      <div className="flex flex-col justify-center items-center">
+      <div className="flex flex-col justify-center items-center py-7">
         <div className="flex items-center gap-10">
           <LogoIcon size={50} />
           <span className="flex flex-col gap-1">

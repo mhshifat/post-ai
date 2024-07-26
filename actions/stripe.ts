@@ -2,12 +2,14 @@
 
 import { db } from "@/db/drizzle";
 import { stripeClient } from "@/lib/stripe";
-import { IStripeSubScriptionWithPlan } from "@/utils/types";
+import { IConnectionType, IStripeSubScriptionWithPlan } from "@/utils/types";
 import { clerkClient, currentUser } from "@clerk/nextjs/server";
 import { eq } from "drizzle-orm";
 import { unstable_noStore } from "next/cache";
 import { redirect } from "next/navigation";
 import Stripe from "stripe";
+import { getUserDetails } from "./users";
+import { createConnection, getConnectionByType } from "./connections";
 
 // TODO: uncomment
 export async function upsertStripeSubscriptionProducts(plans: {
@@ -188,4 +190,146 @@ export async function getPurchaseOrUpgradeSubscriptionPaymentIntentSecret(args: 
   //   }
   //   return { secret: "" }
   // }
+}
+
+export async function createStripeAccount(args: {
+  email: string;
+  metadata: Record<string, string>
+}) {
+  let payload: Stripe.AccountCreateParams = {
+    business_type: "individual",
+    email: args.email,
+    metadata: args.metadata,
+  }
+  if (process.env.TEST_MODE) payload = {
+    country: 'US',
+    type: 'custom',
+    business_type: 'company',
+    capabilities: {
+      card_payments: {
+        requested: true,
+      },
+      transfers: {
+        requested: true,
+      },
+    },
+    external_account: 'btok_us',
+    tos_acceptance: {
+      date: 1547923073,
+      ip: '172.18.80.19',
+    },
+  }
+  const account = await stripeClient.accounts.create(payload);
+  if (process.env.TEST_MODE) {
+    await stripeClient.accounts.update(account.id, {
+      business_profile: {
+        mcc: '5045',
+        url: 'https://bestcookieco.com',
+      },
+      company: {
+        address: {
+          city: 'Fairfax',
+          line1: '123 State St',
+          postal_code: '22031',
+          state: 'VA',
+        },
+        tax_id: '000000000',
+        name: 'The Best Cookie Co',
+        phone: '8888675309',
+      },
+    });
+    const person = await stripeClient.accounts.createPerson(account.id, {
+      first_name: 'Jenny',
+      last_name: 'Rosen',
+      relationship: {
+        representative: true,
+        title: 'CEO',
+      },
+    });
+    await stripeClient.accounts.updatePerson(
+      account.id,
+      person.id,
+      {
+        address: {
+          city: 'victoria ',
+          line1: '123 State St',
+          postal_code: 'V8P 1A1',
+          state: 'BC',
+        },
+        dob: {
+          day: 10,
+          month: 11,
+          year: 1980,
+        },
+        ssn_last_4: '0000',
+        phone: '8888675309',
+        email: 'jenny@bestcookieco.com',
+        relationship: {
+          executive: true,
+        },
+      }
+    );
+    await stripeClient.accounts.createPerson(account.id, {
+      first_name: 'Kathleen',
+      last_name: 'Banks',
+      email: 'kathleen@bestcookieco.com',
+      address: {
+        city: 'victoria ',
+        line1: '123 State St',
+        postal_code: 'V8P 1A1',
+        state: 'BC',
+      },
+      dob: {
+        day: 10,
+        month: 11,
+        year: 1980,
+      },
+      phone: '8888675309',
+      relationship: {
+        owner: true,
+        percent_ownership: 80,
+      },
+    });
+    await stripeClient.accounts.update(account.id, {
+      company: {
+        owners_provided: true,
+      },
+    });
+  }
+  return account;
+}
+
+export async function startStripeConnection() {
+  const user = await getUserDetails();
+  if (!user) throw new Error("Invalid request");
+  const stripeConnection = await getConnectionByType(IConnectionType.STRIPE);
+  let accountId = stripeConnection?.accountId;
+  if (!accountId) {
+    const stripeAccount = await createStripeAccount({
+      email: user.email,
+      metadata: {
+        email: user.email,
+        userId: user.id,
+        name: `${user.firstName} ${user.lastName}`
+      }
+    });
+    await createConnection({
+      accountId: stripeAccount.id,
+      metadata: JSON.stringify({}),
+      type: IConnectionType.STRIPE,
+      userId: user.id,
+    });
+    accountId = stripeAccount.id;
+  }
+  const link = await stripeClient.accountLinks.create({
+    account: accountId,
+    refresh_url: `${process.env.NEXT_PUBLIC_SITE_URL}/integrations`,
+    return_url: `${process.env.NEXT_PUBLIC_SITE_URL}/integrations`,
+    type: 'account_onboarding',
+    collection_options: {
+      fields: 'eventually_due',
+    },
+  });
+
+  return redirect(link.url);
 }
