@@ -6,6 +6,7 @@ import {
 	getTimeSlots,
 	getWeekDaysShort,
 	isDateInMonth,
+	isDateSame,
 	isDateToday,
 } from "@/utils/date";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -25,13 +26,14 @@ interface DatePickerProps {
   type?: "range";
   onChange?: (date: Date) => void;
   onTimeSelect?: (date: string) => void;
+  disabledTimeSlots?: Record<string, string[]>;
 }
 
 const today = new Date();
 const slots = getTimeSlots();
 const weekdays = getWeekDaysShort();
 
-export default function DatePicker({ enableTimePicker, type, onChange, onTimeSelect }: DatePickerProps) {
+export default function DatePicker({ enableTimePicker, type, onChange, onTimeSelect, disabledTimeSlots }: DatePickerProps) {
 	const [loading, setLoading] = useState(true);
 	const [rendered, forceUpdate] = useReducer((x) => x + 1, 0);
   const [selectedTimeSlot, setSelectedTimeSlot] = useState<string | null>(null);
@@ -43,6 +45,7 @@ export default function DatePicker({ enableTimePicker, type, onChange, onTimeSel
 		month: today.getMonth() + 1,
 		day: today.getDate(),
 	});
+  
 	const { height } = datePickerRef?.getBoundingClientRect() || {};
 
 	useEffect(() => {
@@ -169,20 +172,21 @@ export default function DatePicker({ enableTimePicker, type, onChange, onTimeSel
 						{slots
 							.map((item) => ({
 								title: item,
-								disabled: false,
+								disabled: disabledTimeSlots && Object.keys(disabledTimeSlots).map(key => isDateSame(new Date(key), formatToDate(date.year, date.month, date.day)) ? disabledTimeSlots[key] : undefined)?.filter(Boolean)?.[0]?.some(time => time === item) || false,
 								selected: item === selectedTimeSlot,
 							}))
 							.map((slot) => (
 								<li
+                  key={slot.title}
 									className={cn(
 										"w-full text-sm font-medium text-foreground/50 hover:text-foreground transition",
 										{
-											"text-slate-300": slot.disabled,
+											"text-foreground/10 pointer-events-none": slot.disabled,
 											"text-primary": slot.selected,
 										}
 									)}
 								>
-									<button type="button" onClick={() => {
+									<button disabled={slot.disabled} type="button" onClick={() => {
                     setSelectedTimeSlot(slot.title);
                     onTimeSelect?.(slot.title);
                   }}>{slot.title}</button>

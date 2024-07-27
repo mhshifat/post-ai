@@ -1,4 +1,5 @@
-import { format, addMinutes, startOfDay, isBefore, endOfDay, startOfWeek, addDays, startOfMonth } from 'date-fns';
+import { format, addMinutes, startOfDay, isBefore, endOfDay, startOfWeek, addDays, startOfMonth, parse } from 'date-fns';
+import { fromZonedTime } from 'date-fns-tz';
 
 export function getTimeSlots(args?: {
   interval?: number
@@ -72,6 +73,18 @@ export function isDateToday(year: number, month: number, day: number) {
   );
 }
 
+export function isDateSame(date: Date, compareDate: Date) {
+  const today = date;
+  const inputDate = compareDate; // month is 0-indexed in JavaScript Date
+
+  // Compare year, month, and day of today's date and input date
+  return (
+      today.getFullYear() === inputDate.getFullYear() &&
+      today.getMonth() === inputDate.getMonth() &&
+      today.getDate() === inputDate.getDate()
+  );
+}
+
 const formats = {
   "MMMM yyyy": format,
 }
@@ -92,4 +105,14 @@ export function formatISODate(isoDate: Date, format: keyof typeof formats = "MMM
   const date = new Date(isoDate);
 
   return formats[format](date, format);
+}
+
+export function getDateWithTimestamp(date: Date, time: string, timezone: string): string {
+  const now = date;
+  const currentDate = format(now, 'yyyy-MM-dd');
+
+  const dateTimeString = `${currentDate} ${time}`;
+  const parsedDate = parse(dateTimeString, 'yyyy-MM-dd hh:mm a', new Date());
+  const utcDate = fromZonedTime(parsedDate, timezone);
+  return utcDate.toISOString();
 }

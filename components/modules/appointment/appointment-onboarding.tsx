@@ -5,8 +5,17 @@ import Steps from "@/components/ui/steps";
 import { cn } from "@/lib/utils";
 import AppointmentQuestionsForm from "./appointment-questions-form";
 import AppointmentBookingForm from "./appointment-booking-form";
+import { IAppointment, ISurvey, ISurveyQuestion } from "@/utils/types";
 
-export default function AppointmentOnboarding() {
+interface AppointmentOnboardingProps {
+  questions: Partial<ISurveyQuestion>[], 
+  answers: Partial<ISurvey>[], 
+  appointments: Partial<IAppointment>[], 
+  domainId: string, 
+  customerId: string
+}
+
+export default function AppointmentOnboarding({ questions, answers, appointments, domainId, customerId }: AppointmentOnboardingProps) {
   return (
     <Steps
       className="max-w-[500px] w-full flex flex-col gap-10"
@@ -17,7 +26,12 @@ export default function AppointmentOnboarding() {
         <Section>
           <Section.Header className="py-2 px-3">Filtered Questions</Section.Header>
           <Section.Content className="py-2 px-3">
-            <AppointmentQuestionsForm />
+            <AppointmentQuestionsForm
+              questions={questions}
+              answers={answers}
+              domainId={domainId}
+              customerId={customerId}
+            />
           </Section.Content>
         </Section>
       </Steps.Item>
@@ -28,7 +42,11 @@ export default function AppointmentOnboarding() {
         <Section>
           <Section.Header className="py-2 px-3">Booking Slot</Section.Header>
           <Section.Content className="py-2 px-3">
-            <AppointmentBookingForm />
+            <AppointmentBookingForm
+              domainId={domainId}
+              customerId={customerId}
+              appointments={appointments}
+            />
           </Section.Content>
         </Section>
       </Steps.Item>

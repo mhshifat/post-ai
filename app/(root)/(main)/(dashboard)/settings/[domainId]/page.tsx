@@ -1,5 +1,6 @@
 import { getDomainDetails } from "@/actions/domains";
 import { getProducts } from "@/actions/products";
+import { getSurveyQuestions } from "@/actions/survey-questions";
 import ChatbotForm from "@/components/modules/domain/chatbot-form";
 import CopySnippet from "@/components/modules/domain/copy-snippet";
 import CreateDomainForm from "@/components/modules/domain/create-domain-form";
@@ -20,6 +21,7 @@ import Link from "next/link";
 export default async function Domain({ params }: { params: { domainId: string } }) {
   const domainDetails = await getDomainDetails(params.domainId);
   const products = await getProducts(params.domainId);
+  const surveyQuestions = await getSurveyQuestions(params.domainId);
   
   if (!domainDetails) return <NotFound />
   return (
@@ -122,14 +124,14 @@ export default async function Domain({ params }: { params: { domainId: string } 
         </SettingsLayout>
         <SettingsLayout>
           <SettingsLayout.Left
-            title="Filter Questions"
+            title="Customer Survey Questions"
             description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa, repellat?"
           />
           <SettingsLayout.Right>
             <Section>
               <Section.Header className="flex items-start justify-between gap-5 px-5 py-2">
                 <div>
-                  <h3 className="text-base capitalize font-medium text-balance text-foreground">Filter Questions</h3>
+                  <h3 className="text-base capitalize font-medium text-balance text-foreground">Customer Survey Questions</h3>
                 </div>
               </Section.Header>
               <Section.Content className="p-5">
@@ -138,8 +140,7 @@ export default async function Domain({ params }: { params: { domainId: string } 
                 />
                 <div className="mt-10">
                   <FilterQuestions
-                    // TODO: fetch questions
-                    questions={[]}
+                    questions={surveyQuestions}
                   />
                 </div>
               </Section.Content>

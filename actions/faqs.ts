@@ -7,7 +7,6 @@ import { unstable_noStore } from "next/cache";
 import { v4 } from 'uuid';
 import { getUserDetails } from "./users";
 import { faqs } from "@/db/schema/faq";
-import { domains } from "@/db/schema/domain";
 
 export async function createFaq(payload: Partial<IFaq>) {
   const user = await getUserDetails();

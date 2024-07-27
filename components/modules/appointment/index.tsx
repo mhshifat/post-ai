@@ -18,11 +18,11 @@ export default async function AppointmentsPageLayout() {
     <div className="w-full h-full p-7 max-w-[1024px] mx-auto flex flex-col gap-10">
       <AppointmentsBanners />
 
-      <div className="flex items-center justify-end gap-2">
+      {/* <div className="flex items-center justify-end gap-2">
         <CreateAppointmentBtnWrapper
           domains={domains}
         />
-      </div>
+      </div> */}
 
       <ClientOnly>
         <Section>

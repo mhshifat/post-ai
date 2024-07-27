@@ -63,28 +63,26 @@ export async function scheduleMeet(args: {
       },
     },
     reminders: {
-      useDefault: false,
-      overrides: [
-        { method: 'email', minutes: 24 * 60 },
-        { method: 'popup', minutes: 10 },
-      ],
+      useDefault: true,
     },
   };
 
-  const createdLink = new Promise((res, rej) => {
+  const createdLink = await new Promise((res, rej) => {
     calendar.events.insert(
       {
         auth: googleOAuthClient,
         calendarId: 'primary',
         conferenceDataVersion: 1,
-        requestBody: event
+        requestBody: event,
+        sendUpdates: 'all',
       },
       (err: unknown, createdEvent: unknown) => {
         if (err) return rej(err);
-        res((createdEvent as { data: { htmlLink: string } }).data.htmlLink);
+        const link = (createdEvent as { data: { hangoutLink: string } }).data.hangoutLink;
+        res(link);
       }
     )
   });
 
-  return createdLink;
+  return createdLink as string;
 }

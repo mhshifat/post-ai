@@ -12,6 +12,7 @@ import { faqs } from '@/db/schema/faq';
 import { messages } from '@/db/schema/message';
 import { products } from '@/db/schema/product';
 import { surveys } from '@/db/schema/survey';
+import { surveyQuestions } from '@/db/schema/survey-question';
 import { threads } from '@/db/schema/thread';
 import { InferSelectModel } from 'drizzle-orm';
 import Stripe from 'stripe';
@@ -20,6 +21,7 @@ export type IConnection = Omit<InferSelectModel<typeof connections>, "updatedAt"
 export type IDomain = InferSelectModel<typeof domains>;
 export type IFaq = InferSelectModel<typeof faqs>;
 export type ISurvey = InferSelectModel<typeof surveys>;
+export type ISurveyQuestion = InferSelectModel<typeof surveyQuestions>;
 export type ICampaign = InferSelectModel<typeof campaigns>;
 export type IAppointment = InferSelectModel<typeof appointments>;
 export type ICustomer = InferSelectModel<typeof customers>;

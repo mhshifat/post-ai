@@ -1,11 +1,10 @@
 "use client";
 
-import { createFaq } from "@/actions/faqs";
+import { createSurveyQuestion } from "@/actions/survey-questions";
 import Spinner from "@/components/shared/spinner";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -28,21 +27,19 @@ export default function FilterQuestionForm({ onSubmit, domainId }: { onSubmit?: 
     resolver: zodResolver(formSchema),
     defaultValues: {
       question: "",
-      answer: "",
     }
   });
   
   async function handleSubmit(values: FilterQuestionFormSchema) {
     setLoading(true);
     try {
-      await createFaq({
-        answer: values.answer,
+      await createSurveyQuestion({
         question: values.question,
         domainId,
       });
       form.reset();
       router.refresh();
-      toast.success("Successfully saved filter question");
+      toast.success("Successfully saved the question");
       onSubmit?.();
     } catch (err) {
       const message = (err as Error)?.message;
@@ -67,19 +64,6 @@ export default function FilterQuestionForm({ onSubmit, domainId }: { onSubmit?: 
           )}
         />
         
-        <FormField
-          name="answer"
-          control={form.control}
-          render={({ field }) => (
-            <FormItem>
-              <FormControl>
-                <Textarea value={field.value || ""} onBlur={field.onBlur} onChange={field.onChange} placeholder="Answer" />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
         <Button disabled={loading} type="submit" className="w-full">
           {loading ? <Spinner /> : "Save"}
         </Button>
