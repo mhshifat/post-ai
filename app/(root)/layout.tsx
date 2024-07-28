@@ -9,7 +9,6 @@ export default function AppLayout({
 }>) {
   return (
     <ClerkProvider>
-      <Toaster />
       <Providers>
         <div className="bg-background text-foreground w-full h-full flex-1">
           {children}

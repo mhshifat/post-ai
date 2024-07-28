@@ -19,6 +19,9 @@ export default async function AppointmentBooking({ params, searchParams }: { par
       </span>
       <h3 className="text-2xl font-semibold mt-5">Thank You</h3>
       <p className="text-center font-medium text-foreground/50">Thank you for taking the time to fill in the form and booking an appointment.<br /> We look forward to speaking to you soon.</p>
+      <Link href="/">
+        <Button variant="link">Go to Home</Button>
+      </Link>
     </div>
   )
   return (

@@ -19,12 +19,10 @@ export default function TodaysAppointments({ appointments }: { appointments: IAp
             <div className="border-b border-border flex-1 flex items-center justify-between p-3">
               <div className="flex items-center gap-2">
                 <Avatar size={30} />
-                {/* TODO: Add customer data and meet link */}
-                <span className="text-sm text-foreground">domain@gmail.com</span>
+                <span className="text-sm text-foreground">{item.customer?.email}</span>
               </div>
               <div className="flex items-center gap-2">
-                {/* TODO: Add customer data and meet link */}
-                <a href="" target="__blank" className="text-sm text-primary underline">https://google.com</a>
+                <a href="" target="__blank" className="text-sm text-primary underline">{item.link}</a>
               </div>
             </div>
           </div>

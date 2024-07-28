@@ -2,15 +2,11 @@ import Section from "@/components/shared/section";
 import ClientOnly from "@/components/ui/client-only";
 import AppointmentsList from "./appointments-list";
 import TodaysAppointments from "./todays-appointments";
-import CreateAppointmentBtnWrapper from "./create-appointment-btn-wrapper";
-import { getDomains } from "@/actions/products";
 import { getAppointments, getTodaysAppointments } from "@/actions/appointments";
-import Link from "next/link";
-import Alert from "@/components/ui/alert";
 import AppointmentsBanners from "./appointments-banners";
+import { IAppointmentWithDomain } from "@/utils/types";
 
 export default async function AppointmentsPageLayout() {
-  const domains = await getDomains();
   const appointments = await getAppointments();
   const todaysAppointments = await getTodaysAppointments();
 
@@ -45,7 +41,7 @@ export default async function AppointmentsPageLayout() {
           </Section.Header>
           <Section.Content>
             <TodaysAppointments
-              appointments={todaysAppointments}
+              appointments={todaysAppointments as IAppointmentWithDomain}
             />
           </Section.Content>
         </Section>

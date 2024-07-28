@@ -5,6 +5,7 @@ import { upsertStripeSubscriptionProducts } from "@/actions/stripe";
 import { plans } from "@/utils/constants";
 import ThemeProvider from "@/components/providers/theme-provider";
 import LoaderProvider from "@/components/providers/loader-provider";
+import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({ subsets: ["latin"], fallback: ["sans-serif"] });
 
@@ -26,6 +27,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} h-screen bg-transparent`}>
+        <Toaster />
         <LoaderProvider>
           <ThemeProvider>
             {children}

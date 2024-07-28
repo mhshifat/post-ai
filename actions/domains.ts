@@ -14,7 +14,7 @@ export async function createDomain(payload: Pick<IDomain, "domain" | "logo">) {
   const user = await getUserDetails();
   if (!user) return;
   const result = await db.transaction(async (tx) => {
-    const [data] = await db
+    const [data] = await tx
       .insert(domains)
       .values({
         id: v4(),
@@ -35,7 +35,7 @@ export async function createDomain(payload: Pick<IDomain, "domain" | "logo">) {
       logo: payload.logo,
       domainId: data.id,
       welcomeText: "Hello there, how may i help you?"
-    });
+    }, tx);
 
     return data;
   })
@@ -79,6 +79,7 @@ export async function getDomainDetails(domainId: string) {
       id: domains.id,
       domain: domains.domain,
       logo: domains.logo,
+      userId: domains.userId,
       updatedAt: domains.updatedAt,
       bot: bots
     })

@@ -6,14 +6,14 @@ import { v4 } from "uuid";
 import { getUserDetails } from "./users";
 import { bots } from "@/db/schema/bot";
 
-export async function upsertBot(payload: Partial<IChatBot>) {
+export async function upsertBot(payload: Partial<IChatBot>, tx = db) {
   const user = await getUserDetails();
   if (!user) throw new Error("User not found");
   const payloadData = {
     logo: payload.logo!,
     welcomeText: payload.welcomeText!,
   }
-  const [data] = await db
+  const [data] = await tx
     .insert(bots)
     .values({
       id: payload.id || v4(),

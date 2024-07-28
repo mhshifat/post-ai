@@ -20,7 +20,7 @@ const TABLE_HEADERS = [
   },
   {
     title: "Customer",
-    key: "customer"
+    key: "email"
   },
 ]
 
@@ -38,10 +38,11 @@ export default function AppointmentsList({ appointments }: { appointments: IAppo
         {appointments.map(appointment => (
           <Table.Row key={appointment.id} className="bg-background border-t border-border">
             {TABLE_HEADERS.map((header, headerIdx) => {
-              const domain = appointment.domain
+              const domain = appointment.domain;
+              const customer = appointment.customer;
               return (
                 <Table.Cell key={header.title} className="py-3 px-3" align={headerIdx === TABLE_HEADERS.length - 1 ? "right" : "left"}>
-                  <span className="text-sm font-medium text-foreground/50">{(domain?.[header.key as keyof typeof domain] || appointment[header.key as keyof typeof appointment]) as ReactNode}</span>
+                  <span className="text-sm font-medium text-foreground/50">{(customer?.[header.key as keyof typeof customer] || domain?.[header.key as keyof typeof domain] || appointment[header.key as keyof typeof appointment]) as ReactNode}</span>
                 </Table.Cell>
               )
             })}

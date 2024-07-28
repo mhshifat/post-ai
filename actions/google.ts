@@ -4,7 +4,7 @@ import { google } from 'googleapis';
 import { googleOAuthClient } from "@/lib/google";
 import { redirect } from "next/navigation";
 import { getUserDetails } from "./users";
-import { getConnectionByType } from './connections';
+import { getConnectionBy } from './connections';
 import { IConnectionType } from '@/utils/types';
 import { v4 } from 'uuid';
 
@@ -34,7 +34,10 @@ export async function scheduleMeet(args: {
 }) {
   const user = await getUserDetails();
   if (!user) throw new Error("Invalid request");
-  const connection = await getConnectionByType(IConnectionType.GOOGLE_MEET);
+  const connection = await getConnectionBy({
+    type: IConnectionType.GOOGLE_MEET,
+    userId: user.id
+  });
   if (!connection) throw new Error("Invalid request");
   const credentials = JSON.parse(connection.metadata);
   googleOAuthClient.setCredentials(credentials);

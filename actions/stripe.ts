@@ -9,7 +9,8 @@ import { unstable_noStore } from "next/cache";
 import { redirect } from "next/navigation";
 import Stripe from "stripe";
 import { getUserDetails } from "./users";
-import { createConnection, getConnectionByType } from "./connections";
+import { createConnection, getConnectionBy } from "./connections";
+import { getDomainDetails } from "./domains";
 
 // TODO: uncomment
 export async function upsertStripeSubscriptionProducts(plans: {
@@ -302,7 +303,10 @@ export async function createStripeAccount(args: {
 export async function startStripeConnection() {
   const user = await getUserDetails();
   if (!user) throw new Error("Invalid request");
-  const stripeConnection = await getConnectionByType(IConnectionType.STRIPE);
+  const stripeConnection = await getConnectionBy({
+    userId: user.id,
+    type: IConnectionType.STRIPE
+  });
   let accountId = stripeConnection?.accountId;
   if (!accountId) {
     const stripeAccount = await createStripeAccount({
@@ -332,4 +336,40 @@ export async function startStripeConnection() {
   });
 
   return redirect(link.url);
+}
+
+export async function getProductPurchasePaymentIntentSecret(args: {
+  name: string;
+  price: number;
+  domainId: string;
+  customerId: string;
+}) {
+  try {
+    const domain = await getDomainDetails(args.domainId);
+    if (!domain) throw new Error("Domain not exists");
+    const connection = await getConnectionBy({
+      userId: domain.userId,
+      type: IConnectionType.STRIPE
+    });
+    const accountId = connection?.accountId;
+    if (!accountId) throw new Error("Stripe account not exists");
+    const { client_secret } = await stripeClient.paymentIntents.create({
+      amount: args.price,
+      currency: "usd"
+    }, {
+      stripeAccount: accountId
+    });
+
+    return {
+      secret: client_secret
+    }
+  } catch (err) {
+    if (err instanceof Error) {
+      return {
+        secret: "",
+        message: err?.message
+      }
+    }
+    return { secret: "" }
+  }
 }

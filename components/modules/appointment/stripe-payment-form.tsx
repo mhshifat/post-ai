@@ -10,17 +10,25 @@ import { Button } from '@/components/ui/button';
 import axios from 'axios';
 import Spinner from '@/components/shared/spinner';
 import { useTheme } from '@/components/providers/theme-provider';
+import { toast } from 'sonner';
 
 interface StripePaymentFormProps {
   amount: number;
   product: string;
   paymentIntentUrl: string;
   mode?: "subscription" | "payment";
+  state?: Record<string, string>;
+  stripeAccountId?: string;
 }
 
 export default function StripePaymentForm(props: StripePaymentFormProps) {
-  const { currentTheme } = useTheme();
-  const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
+  const { mode } = useTheme();
+  
+  const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!, {
+    ...props?.stripeAccountId?{
+      stripeAccount: props?.stripeAccountId
+    }:{}
+  });
   const options: StripeElementsOptions = {
     mode: props.mode,
     amount: props.amount * 100,
@@ -28,7 +36,7 @@ export default function StripePaymentForm(props: StripePaymentFormProps) {
     // Fully customizable with appearance API.
     appearance: {
       labels: "floating",
-      theme: currentTheme === "DARK" ? "night" : "stripe",
+      theme: mode === "DARK" ? "night" : "stripe",
       disableAnimations: true
     },
   };
@@ -41,12 +49,13 @@ export default function StripePaymentForm(props: StripePaymentFormProps) {
           name: props.product,
           price: props.amount * 100,
         }}
+        state={props.state}
       />
     </Elements>
   )
 }
 
-StripePaymentForm.Form = ({ paymentIntentUrl, product }: { paymentIntentUrl: string; product: {
+StripePaymentForm.Form = ({ paymentIntentUrl, product, state }: { paymentIntentUrl: string; state?: Record<string, string>; product: {
   price: number;
   name: string;
 } }) => {
@@ -69,10 +78,19 @@ StripePaymentForm.Form = ({ paymentIntentUrl, product }: { paymentIntentUrl: str
       return;
     }
     
-    const { data: { secret } } = await axios(paymentIntentUrl, {
+    const { data: { secret, message } } = await axios(paymentIntentUrl, {
       method: 'POST',
-      data: product
+      data: {
+        ...product,
+        ...state
+      }
     });
+
+    if (message) {
+      setLoading(false);
+      toast.error(message);
+      return;
+    }
 
     const {error} = await stripe?.confirmPayment({
       //`Elements` instance that was used to create the Payment Element

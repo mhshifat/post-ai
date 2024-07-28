@@ -4,10 +4,17 @@ import Section from "@/components/shared/section";
 import Steps from "@/components/ui/steps";
 import { cn } from "@/lib/utils";
 import AppointmentQuestionsForm from "./appointment-questions-form";
-import AppointmentBookingForm from "./appointment-booking-form";
 import PaymentForm from "./payment-form";
+import { ISurvey, ISurveyQuestion } from "@/utils/types";
 
-export default function PaymentOnboarding() {
+interface PaymentOnboardingProps {
+  questions: Partial<ISurveyQuestion>[], 
+  answers: Partial<ISurvey>[],
+  domainId: string, 
+  customerId: string
+}
+
+export default function PaymentOnboarding({ answers, questions, domainId, customerId }: PaymentOnboardingProps) {
   return (
     <Steps
       className="max-w-[800px] w-full flex flex-col gap-10"
@@ -18,7 +25,12 @@ export default function PaymentOnboarding() {
         <Section>
           <Section.Header className="py-2 px-3">Filtered Questions</Section.Header>
           <Section.Content className="py-2 px-3">
-            <AppointmentQuestionsForm />
+            <AppointmentQuestionsForm
+              answers={answers}
+              questions={questions}
+              domainId={domainId}
+              customerId={customerId}
+            />
           </Section.Content>
         </Section>
       </Steps.Item>
@@ -27,9 +39,12 @@ export default function PaymentOnboarding() {
         identifier={1}
       >
         <Section>
-          <Section.Header className="py-2 px-3">Product Payment</Section.Header>
+          <Section.Header className="py-2 px-3">Products</Section.Header>
           <Section.Content className="py-2 px-3">
-            <PaymentForm />
+            <PaymentForm
+              domainId={domainId}
+              customerId={customerId}
+            />
           </Section.Content>
         </Section>
       </Steps.Item>

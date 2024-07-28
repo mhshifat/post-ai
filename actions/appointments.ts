@@ -32,8 +32,8 @@ export async function createAppointment(payload: Partial<IAppointment>) {
       )
     );
   if (!customer) throw new Error("Invalid request");
-  const res = await db.transaction(async () => {
-    const [data] = await db
+  const res = await db.transaction(async (tx) => {
+    const [data] = await tx
       .insert(appointments)
       .values({
         id: v4(),
@@ -62,7 +62,7 @@ export async function createAppointment(payload: Partial<IAppointment>) {
       title: "Product Demo",
       description: `An appointment has been scheduled with - ${customer.email} by ${customer.domain?.domain}`
     });
-    await db
+    await tx
       .update(appointments)
       .set({
         link: hangoutLink
@@ -107,12 +107,16 @@ export async function getAppointments() {
       id: appointments.id,
       createdAt: appointments.createdAt,
       domainId: appointments.domainId,
+      link: appointments.link,
+      customerId: appointments.customerId,
+      customer: customers,
       date: appointments.date,
       time: appointments.time,
       domain: domains,
     })
     .from(appointments)
     .leftJoin(domains, eq(domains.id, appointments.domainId))
+    .leftJoin(customers, eq(customers.id, appointments.customerId))
     .where(
       eq(domains.userId, user.id)
     )
@@ -160,10 +164,14 @@ export async function getTodaysAppointments() {
       domainId: appointments.domainId,
       date: appointments.date,
       time: appointments.time,
+      link: appointments.link,
       domain: domains,
+      customerId: appointments.customerId,
+      customer: customers,
     })
     .from(appointments)
     .leftJoin(domains, eq(domains.id, appointments.domainId))
+    .leftJoin(customers, eq(customers.id, appointments.customerId))
     .where(
       and(
         eq(domains.userId, user.id),

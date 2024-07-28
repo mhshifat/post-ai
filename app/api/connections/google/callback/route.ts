@@ -1,4 +1,4 @@
-import { createConnection, getConnectionByType } from "@/actions/connections";
+import { createConnection, getConnectionBy } from "@/actions/connections";
 import { googleOAuthClient } from "@/lib/google";
 import { IConnectionType } from "@/utils/types";
 import { NextRequest, NextResponse } from "next/server";
@@ -10,7 +10,10 @@ export async function GET(req: NextRequest) {
     if (!code || !state) throw new Error("Invalid request");
     const { userId } = JSON.parse(state || "{}");
     const { tokens } = await googleOAuthClient.getToken(code);
-    const connection = await getConnectionByType(IConnectionType.GOOGLE_MEET);
+    const connection = await getConnectionBy({
+      type: IConnectionType.GOOGLE_MEET,
+      userId
+    });
     if (!connection) {
       await createConnection({
         accountId: "",

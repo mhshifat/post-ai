@@ -8,6 +8,7 @@ import { unstable_noStore } from "next/cache";
 import { getUserDetails } from "./users";
 import { IConnection, IConnectionType } from "@/utils/types";
 import { v4 } from "uuid";
+import { getDomainDetails } from "./domains";
 
 export async function getConnections() {
   unstable_noStore();
@@ -19,19 +20,46 @@ export async function getConnections() {
       id: connections.id,
       userId: connections.userId,
       metadata: connections.metadata,
+      accountId: connections.accountId,
       type: connections.type,
     })
     .from(connections)
     .leftJoin(users, eq(users.id, connections.userId))
     .where(
-      eq(connections.userId, users.id)
+      eq(connections.userId, user.id)
     )
     .orderBy(desc(connections.createdAt));
 
   return data;
 }
 
-export async function getConnectionByType(type: IConnectionType) {
+export async function getConnectionsByDomain(domainId: string) {
+  unstable_noStore();
+
+  const domain = await getDomainDetails(domainId);
+  if (!domain) return [];
+  const data = await db
+    .select({
+      id: connections.id,
+      userId: connections.userId,
+      accountId: connections.accountId,
+      metadata: connections.metadata,
+      type: connections.type,
+    })
+    .from(connections)
+    .leftJoin(users, eq(users.id, connections.userId))
+    .where(
+      eq(connections.userId, domain.userId)
+    )
+    .orderBy(desc(connections.createdAt));
+
+  return data;
+}
+
+export async function getConnectionBy(args: {
+  type: IConnectionType;
+  userId: string;
+}) {
   const [data] = await db
     .select({
       id: connections.id,
@@ -42,8 +70,8 @@ export async function getConnectionByType(type: IConnectionType) {
     .leftJoin(users, eq(users.id, connections.userId))
     .where(
       and(
-        eq(connections.userId, users.id),
-        eq(connections.type, type)
+        eq(connections.userId, args.userId),
+        eq(connections.type, args.type)
       )
     );
   
