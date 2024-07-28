@@ -1,8 +1,10 @@
-import { getAppointments, getAppointmentsByDomain } from "@/actions/appointments";
+import { getAppointmentsByDomain } from "@/actions/appointments";
 import { getSurveyQuestions } from "@/actions/survey-questions";
 import { getSurveys } from "@/actions/surveys";
 import AppointmentOnboarding from "@/components/modules/appointment/appointment-onboarding";
+import { Button } from "@/components/ui/button";
 import { CheckCheckIcon } from "lucide-react";
+import Link from "next/link";
 
 export default async function AppointmentBooking({ params, searchParams }: { params: { domainId: string, customerId: string }, searchParams: { status: string } }) {
   const questions = await getSurveyQuestions(params.domainId);
