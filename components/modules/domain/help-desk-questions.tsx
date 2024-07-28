@@ -17,10 +17,10 @@ export default function HelpDeskQuestions({ className, questions }: HelpDeskQues
       {questions.map(q => (
         <Accordion.Item key={q.id}>
           <Accordion.Trigger className="py-2">
-            <h3 className="text-lg text-foreground font-medium">{q.question}</h3>
+            <h3 className="text-base text-foreground font-medium">{q.question}</h3>
           </Accordion.Trigger>
           <Accordion.Content>
-            <p className="text-xs font-medium text-foreground/50">{q.answer}</p>
+            <p className="text-sm font-medium text-foreground/50">{q.answer}</p>
           </Accordion.Content>
         </Accordion.Item>
       ))}

@@ -15,8 +15,6 @@ export default async function EmailMarketingLayout() {
         <Customers
           domains={domains}
           customers={customers}
-          // TODO: add questions
-          questions={[]}
         />
       </div>
       <div className="basis-[40%]">

@@ -14,12 +14,6 @@ export default async function AppointmentsPageLayout() {
     <div className="w-full h-full p-7 max-w-[1024px] mx-auto flex flex-col gap-10">
       <AppointmentsBanners />
 
-      {/* <div className="flex items-center justify-end gap-2">
-        <CreateAppointmentBtnWrapper
-          domains={domains}
-        />
-      </div> */}
-
       <ClientOnly>
         <Section>
           <Section.Header className="flex items-start justify-between gap-5 px-5 py-2">

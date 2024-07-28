@@ -1,6 +1,7 @@
 "use client";
 
 import { getDomainDetails } from "@/actions/domains";
+import { getFaqs } from "@/actions/faqs";
 import { getThreadMessages } from "@/actions/messages";
 import { getThreadDetails } from "@/actions/threads";
 import { pusherClient } from "@/lib/pusher";
@@ -75,7 +76,6 @@ export default function BotProvider({ children, domainId, threadId: threadIdProp
   }, [filterQuestions]);
 
   const addingRespondingAnimation = useCallback((callback: (animationMessageId: string) => void) => {
-    // TODO: Add animation svg
     setMessages(values => {
       const newMessageId = String(values.length + 1);
       callback?.(newMessageId);
@@ -123,11 +123,11 @@ export default function BotProvider({ children, domainId, threadId: threadIdProp
           }
         ]);
       });
-    // TODO: fetch faqs
-    // getHelpDeskQuestions(domainId)
-    //   .then((data) => {
-    //     setQuestions(data as unknown as IFaq[]);
-    //   });
+    getFaqs(domainId)
+      .then((data) => {
+        setQuestions(data as unknown as IFaq[]);
+      });
+    // TODO: implement ai chat assistant 
     // getUnansweredFilterQuestions(domainId)
     //   .then((data) => {
     //     setFilterQuestions(data as unknown as IFaq[]);

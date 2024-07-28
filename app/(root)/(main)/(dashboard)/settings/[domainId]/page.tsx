@@ -1,4 +1,5 @@
 import { getDomainDetails } from "@/actions/domains";
+import { getFaqs } from "@/actions/faqs";
 import { getProducts } from "@/actions/products";
 import { getSurveyQuestions } from "@/actions/survey-questions";
 import ChatbotForm from "@/components/modules/domain/chatbot-form";
@@ -21,6 +22,7 @@ import Link from "next/link";
 export default async function Domain({ params }: { params: { domainId: string } }) {
   const domainDetails = await getDomainDetails(params.domainId);
   const products = await getProducts(params.domainId);
+  const faqs = await getFaqs(params.domainId);
   const surveyQuestions = await getSurveyQuestions(params.domainId);
   
   if (!domainDetails) return <NotFound />
@@ -115,8 +117,7 @@ export default async function Domain({ params }: { params: { domainId: string } 
                   domainId={params.domainId}
                 />
                 <HelpDeskQuestions
-                  // TODO: fetch questions
-                  questions={[]}
+                  questions={faqs}
                 />
               </Section.Content>
             </Section>

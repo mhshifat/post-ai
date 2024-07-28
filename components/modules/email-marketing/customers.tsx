@@ -9,8 +9,9 @@ import { CheckIcon, Plus } from "lucide-react";
 import FilterQuestions from "../domain/filter-questions";
 import NotFound from "@/components/shared/not-found";
 import CreateCustomerBtnWrapper from "./create-customer-btn-wrapper";
-import { ICustomer, ICustomerWithDomain, IDomain, IQuestion } from "@/utils/types";
+import { ICustomer, ICustomerWithDomain, IDomain } from "@/utils/types";
 import { ReactNode } from "react";
+import CustomerSurveyResult from "./customer-surveys-result";
 
 const TABLE_HEADERS = [
   {
@@ -30,10 +31,9 @@ const TABLE_HEADERS = [
 interface CustomersProps {
   domains: Partial<IDomain>[];
   customers: ICustomerWithDomain;
-  questions: Partial<IQuestion>[];
 }
 
-export default function Customers({ domains, customers, questions }: CustomersProps) {
+export default function Customers({ domains, customers }: CustomersProps) {
   const { openDialog } = useDialog();
 
   return (
@@ -84,9 +84,9 @@ export default function Customers({ domains, customers, questions }: CustomersPr
                   position: "right",
                   title: "Answered Questions",
                   description: "Answers of the filtered Questions",
-                  content: <FilterQuestions
-                    // TODO: Customer survey answers
-                    questions={[]}
+                  content: <CustomerSurveyResult
+                    customerId={(data as ICustomerWithDomain[0]).id}
+                    domainId={(data as ICustomerWithDomain[0]).domainId}
                   />
                 })} size="sm" className="text-foreground">View</Button>
               )}

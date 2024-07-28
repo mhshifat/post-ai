@@ -16,16 +16,16 @@ export default function useConnection(props: { domainId: string }) {
   }, [connections])
 
   useEffect(() => {
-    if (props.domainId) fetchConnectionByDomain();
+    if (props?.domainId) fetchConnectionByDomain();
     else fetchConnections();
-  }, [props.domainId]);
+  }, [props?.domainId]);
   
   async function fetchConnections() {
     const connections = await getConnections()
     setConnections(connections as IConnection[]);
   }
   async function fetchConnectionByDomain() {
-    const connections = await getConnectionsByDomain(props.domainId)
+    const connections = await getConnectionsByDomain(props?.domainId)
     setConnections(connections as IConnection[]);
   }
   async function startConnectionProcess(type: IConnectionType) {
@@ -39,7 +39,7 @@ export default function useConnection(props: { domainId: string }) {
   return {
     hasConnection,
     getConnection,
-    refetchConnections: props.domainId ? fetchConnectionByDomain : fetchConnections,
+    refetchConnections: props?.domainId ? fetchConnectionByDomain : fetchConnections,
     startConnection: startConnectionProcess
   }
 }

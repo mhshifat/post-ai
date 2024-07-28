@@ -19,10 +19,21 @@ export default function ChatLists({ className }: ChatListsProps) {
 						<span className="shrink-0 w-10 h-10 border-border flex items-center justify-center border rounded-full bg-foreground/10">
 							<BotIcon className="text-foreground/50" />
 						</span>
-						<div className="break-keep break-words transition w-full py-3 px-5 border border-border bg-foreground/10 rounded-tr-3xl rounded-br-3xl rounded-bl-3xl prose text-foreground">
-							<Markdown remarkPlugins={[remarkGfm]}>
-								{item.content}
-							</Markdown>
+						<div className={cn("break-keep break-words transition w-full py-3 px-5 border border-border bg-foreground/10 rounded-tr-3xl rounded-br-3xl rounded-bl-3xl prose text-foreground", {
+              "!w-max": item.content === "..."
+            })}>
+              {item?.content === "..." && (
+                <div className="typing-indicator">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+              )}
+							{item?.content !== "..." && (
+                <Markdown remarkPlugins={[remarkGfm]}>
+                  {item.content}
+                </Markdown>
+              )}
 						</div>
 					</li>
 				) : (
@@ -33,10 +44,21 @@ export default function ChatLists({ className }: ChatListsProps) {
 						<span className="shrink-0 w-10 h-10 border-border flex items-center justify-center border rounded-full bg-foreground/10 order-2">
 							<User2Icon className="text-foreground/50" />
 						</span>
-						<div className="break-keep break-words transition w-full py-3 px-5 border border-border bg-foreground/10 rounded-tl-3xl rounded-br-3xl rounded-bl-3xl prose text-foreground order-1">
-							<Markdown remarkPlugins={[remarkGfm]}>
-								{item.content}
-							</Markdown>
+						<div className={cn("break-keep break-words transition w-full py-3 px-5 border border-border bg-foreground/10 rounded-tl-3xl rounded-br-3xl rounded-bl-3xl prose text-foreground order-1", {
+              "!w-max": item.content === "..."
+            })}>
+              {item?.content === "..." && (
+                <div className="typing-indicator">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+              )}
+              {item?.content !== "..." && (
+                <Markdown remarkPlugins={[remarkGfm]}>
+                  {item.content}
+                </Markdown>
+              )}
 						</div>
 					</li>
 				)

@@ -20,7 +20,6 @@ export default function CreateAppointmentBtnWrapper({ domains }: { domains: Part
         />
       })}
     >
-      {/* TODO: Add Customer Support for an appointment and possibly add google meet support */}
       <Plus className="size-4" />
 
       <span>Create Appointment</span>
