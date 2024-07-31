@@ -4,18 +4,20 @@ import { IThread } from "@/utils/types";
 import { getUserDetails } from "./users";
 import { db } from "@/db/drizzle";
 import { v4 } from "uuid";
-import { and, desc, eq } from "drizzle-orm";
+import { and, desc, eq, ne } from "drizzle-orm";
 import { pusherServerClient } from "@/lib/pusher";
 import { unstable_noStore } from "next/cache";
 import { threads } from "@/db/schema/thread";
+import { messages } from "@/db/schema/message";
+import { updateLiveModeStatus } from "./pusher";
 
-export async function createThread(payload: Partial<IThread>) {
+export async function createThread(payload: Partial<IThread>, tx = db) {
   const user = await getUserDetails();
   if (!user) return null;
-  const [data] = await db
+  const [data] = await tx
     .insert(threads)
     .values({
-      id: v4(),
+      id: payload.id || v4(),
       domainId: payload.domainId!,
       title: payload.title!,
       isLive: payload.isLive!,
@@ -50,9 +52,13 @@ export async function updateThread(payload: Partial<IThread>) {
       domainId: threads.domainId,
       title: threads.title,
       isLive: threads.isLive,
-    })
-    .execute();
+    });
 
+  updateLiveModeStatus({
+    threadId: data.id,
+    domainId: data.domainId!,
+    checked: payload.isLive!
+  })
   pusherServerClient.trigger(data.id, "switch-live-mode", { checked: payload.isLive });
   return data;
 }
@@ -66,8 +72,10 @@ export async function getThreadDetails(threadId: string) {
       title: threads.title,
       isLive: threads.isLive,
       createdAt: threads.createdAt,
+      message: messages
     })
     .from(threads)
+    .leftJoin(messages, eq(messages.threadId, threadId))
     .where(eq(threads.id, threadId))
 
   return data;
@@ -89,6 +97,8 @@ export async function getThreads(domainId: string) {
     .where(
       and(
         eq(threads.domainId, domainId),
+        // TODO: uncomment
+        // ne(threads.status, "DRAFT"),
       )
     )
     .orderBy(desc(threads.createdAt));

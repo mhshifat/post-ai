@@ -1,0 +1,1 @@
+ALTER TABLE "customers" ADD COLUMN "status" text DEFAULT 'DRAFT';

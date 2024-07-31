@@ -36,6 +36,20 @@
       "when": 1722090295061,
       "tag": "0004_perpetual_dexter_bennett",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1722172138280,
+      "tag": "0005_romantic_mikhail_rasputin",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1722172667209,
+      "tag": "0006_friendly_star_brand",
+      "breakpoints": true
     }
   ]
 }

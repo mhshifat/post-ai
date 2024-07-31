@@ -8,6 +8,7 @@ export const threads = pgTable("threads", {
   domainId: text("domain_id").notNull().references(() => domains.id, { onDelete: "cascade" }),
   title: text("title").notNull(),
   isLive: boolean("is_live").default(false),
+  status: text("status").default("DRAFT"),
   createdAt: timestamp("created_at").notNull(),
   updatedAt: timestamp("updated_at"),
 });

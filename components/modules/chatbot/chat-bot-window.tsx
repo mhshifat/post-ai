@@ -32,6 +32,7 @@ export default function ChatBotWindow() {
     })}>
       <BotProvider
         domainId={domainId}
+        type="CHAT_BOT"
       >
         {botOpened && <ChatMessenger />}
         <BotFloatingIcon

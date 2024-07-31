@@ -1,6 +1,7 @@
 "use client";
 
 import { getThreadDetails, updateThread } from "@/actions/threads";
+import { useBot } from "@/components/providers/bot-provider";
 import Spinner from "@/components/shared/spinner";
 import Avatar from "@/components/ui/avatar";
 import Switch from "@/components/ui/switch";
@@ -14,6 +15,7 @@ export default function ChatInfo() {
   const threadId = searchParams.get("thread");
   const [threadDetails, setThreadDetails] = useState<Partial<IThread> | null>(null);
   const [loading, setLoading] = useState(true);
+  const { isLive } = useBot();
 
   useEffect(() => {
     if (!threadId) return setLoading(false);
@@ -25,18 +27,18 @@ export default function ChatInfo() {
   }, [threadId])
 
   async function switchLiveMode(checked: boolean) {
-    // try {
-    //   await updateThread({
-    //     id: threadId!,
-    //     isLive: checked
-    //   });
-    //   toast.success("Switched to live mode");
-    // } catch (err) {
-    //   if (err instanceof Error) {
-    //     return toast.error(err.message);
-    //   }
-    //   toast.error("Something went wrong");
-    // }
+    try {
+      await updateThread({
+        id: threadId!,
+        isLive: checked
+      });
+      toast.success(checked ? "Switched to live mode" : "Switched off live mode");
+    } catch (err) {
+      if (err instanceof Error) {
+        return toast.error(err.message);
+      }
+      toast.error("Something went wrong");
+    }
   }
 
   return (
@@ -50,11 +52,11 @@ export default function ChatInfo() {
             <span className="text-lg font-medium text-foreground">{threadDetails?.title}</span>
             <span className="flex items-center gap-2 ml-auto">
               <Switch
-                checked={threadDetails?.isLive || false}
+                checked={isLive || false}
                 onChange={(checked) => switchLiveMode(checked)}
               />
               <p className="text-sm text-foreground/50 m-0 leading-tight flex items-center gap-2">
-              {threadDetails?.isLive && (
+              {isLive && (
                 <>
                   <span className="w-2 h-2 rounded-full bg-primary flex" />
                   <span className="text-sm font-semibold text-primary">Live</span>

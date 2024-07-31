@@ -8,6 +8,7 @@ export const customers = pgTable("customers", {
   id: text("id").primaryKey(),
   domainId: text("domain_id").notNull().references(() => domains.id, { onDelete: "cascade" }),
   email: text("email").notNull(),
+  status: text("status").default("DRAFT"),
   createdAt: timestamp("created_at").notNull(),
   updatedAt: timestamp("updated_at"),
 });
