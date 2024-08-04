@@ -18,7 +18,7 @@ export default function useSurvey(props: {
       domainId: item.domainId,
       question: item.question,
       answer: surveys.find(s => s.surveyQuestionId === item.id)?.answer || "",
-    }))
+    }))?.filter(s => s.answer);
   }, [surveyQuestions, surveys]);
 
   useEffect(() => {

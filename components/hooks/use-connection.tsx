@@ -1,10 +1,10 @@
-import { getConnectionBy, getConnections, getConnectionsByDomain } from "@/actions/connections";
+import { getConnections, getConnectionsByDomain } from "@/actions/connections";
 import { startGoogleMeetConnection } from "@/actions/google";
 import { startStripeConnection } from "@/actions/stripe";
 import { IConnection, IConnectionType } from "@/utils/types";
 import { useCallback, useEffect, useState } from "react";
 
-export default function useConnection(props: { domainId: string }) {
+export default function useConnection(props: { domainId?: string }) {
   const [connections, setConnections] = useState<IConnection[]>([]);
 
   const hasConnection = useCallback((type: IConnectionType) => {
@@ -16,7 +16,7 @@ export default function useConnection(props: { domainId: string }) {
   }, [connections])
 
   useEffect(() => {
-    if (props?.domainId) fetchConnectionByDomain();
+    if (props?.domainId) fetchConnectionByDomain(props?.domainId);
     else fetchConnections();
   }, [props?.domainId]);
   
@@ -24,8 +24,8 @@ export default function useConnection(props: { domainId: string }) {
     const connections = await getConnections()
     setConnections(connections as IConnection[]);
   }
-  async function fetchConnectionByDomain() {
-    const connections = await getConnectionsByDomain(props?.domainId)
+  async function fetchConnectionByDomain(domain: string) {
+    const connections = await getConnectionsByDomain(domain)
     setConnections(connections as IConnection[]);
   }
   async function startConnectionProcess(type: IConnectionType) {

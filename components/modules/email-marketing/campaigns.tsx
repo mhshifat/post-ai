@@ -1,29 +1,31 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { CalendarIcon, Plus, User2Icon } from "lucide-react";
+import { CalendarIcon, User2Icon } from "lucide-react";
 import EditEmailBtnWrapper from "./edit-email-btn-wrapper";
 import CreateCampaignBtnWrapper from "./create-campaign-btn-wrapper";
-import { ICampaign } from "@/utils/types";
-import { formatDate, formatISODate } from "@/utils/date";
+import { ICampaignsWithCustomers } from "@/utils/types";
+import { formatISODate } from "@/utils/date";
 import NotFound from "@/components/shared/not-found";
 import { cn } from "@/lib/utils";
 import DeleteCampaignBtnWrapper from "./delete-campaign-btn-wrapper";
+import AddToCampaignBtn from "./add-to-campaign-btn";
+import { useState } from "react";
+import { useCampaignStore } from "@/components/hooks/use-campaign-store";
+import Alert from "@/components/ui/alert";
+import SendCampaignEmailsBtn from "./send-campaign-emails-btn";
 
 interface CampaignsProps {
-  campaigns: Partial<ICampaign>[];
+  campaigns: ICampaignsWithCustomers;
 }
 
 export default function Campaigns({ campaigns }: CampaignsProps) {
+  const { selectedCampaign, setSelectedCampaign, selectedCustomers } = useCampaignStore();
+
   return (
     <div className="w-full">
       <div className="flex items-center justify-end gap-2">
-        {/* TODO: Make it functional */}
-        <Button variant="outline" size="sm" className="flex items-center gap-2">
-          <Plus className="size-4" />
-
-          <span>Add to Campaign</span>
-        </Button>
+        <AddToCampaignBtn />
         <CreateCampaignBtnWrapper />
         {/* TODO: Make it functional */}
         <Button variant="outline" size="sm" className="flex items-center gap-2">
@@ -31,11 +33,13 @@ export default function Campaigns({ campaigns }: CampaignsProps) {
         </Button>
       </div>
 
+      {(!selectedCampaign && !!selectedCustomers.length) && <Alert className="mt-5">Please select a campaign to add the selected customers</Alert>}
       <div className="w-full pt-5">
         {campaigns.map((campaign, idx) => (
-          <div key={campaign.id} className={cn("border border-border p-5 cursor-pointer", {
+          <div key={campaign.id} onClick={() => setSelectedCampaign(campaign.id!)} className={cn("border border-border p-5 cursor-pointer", {
             "rounded-tl-xl rounded-tr-xl": idx === 0,
             "rounded-bl-xl rounded-br-xl": idx === (campaigns.length - 1),
+            "border-primary": campaign.id === selectedCampaign,
           })}>
             <div className="flex items-center gap-5 justify-between">
               <div className="flex items-center gap-2">
@@ -44,8 +48,7 @@ export default function Campaigns({ campaigns }: CampaignsProps) {
               </div>
               <div className="flex items-center gap-2">
                 <User2Icon className="size-4 text-foreground/50" />
-                {/* TODO: make it dynamic */}
-                <span className="text-sm font-normal text-foreground/50">0 Customers Added</span>
+                <span className="text-sm font-normal text-foreground/50">{campaign.customersToCampaigns.length} Customers Added</span>
               </div>
             </div>
 
@@ -57,8 +60,9 @@ export default function Campaigns({ campaigns }: CampaignsProps) {
                   key={String(campaign.updatedAt)}
                   campaign={campaign}
                 />
-                {/* TODO: Make it functional */}
-                <Button variant="outline" size="sm">Send</Button>
+                <SendCampaignEmailsBtn
+                  campaignId={campaign.id!}
+                />
                 <DeleteCampaignBtnWrapper campaignId={campaign.id!} />
               </div>
             </div>

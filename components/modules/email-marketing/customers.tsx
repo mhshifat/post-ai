@@ -12,6 +12,7 @@ import CreateCustomerBtnWrapper from "./create-customer-btn-wrapper";
 import { ICustomer, ICustomerWithDomain, IDomain } from "@/utils/types";
 import { ReactNode } from "react";
 import CustomerSurveyResult from "./customer-surveys-result";
+import { useCampaignStore } from "@/components/hooks/use-campaign-store";
 
 const TABLE_HEADERS = [
   {
@@ -35,7 +36,11 @@ interface CustomersProps {
 
 export default function Customers({ domains, customers }: CustomersProps) {
   const { openDialog } = useDialog();
+  const { setSelectedCustomers, reset } = useCampaignStore();
 
+  function handleCustomersSelected(customers: ICustomerWithDomain) {
+    setSelectedCustomers(customers.map(c => c.id));
+  }
   return (
     <div className="flex-1 w-full h-full">
       <div className="flex items-center justify-end gap-2">
@@ -43,39 +48,21 @@ export default function Customers({ domains, customers }: CustomersProps) {
       </div>
 
       <Table
-        className="w-full border border-border rounded-xl overflow-hidden mt-5"
-        renderPrefix={({ type }) => (
-          <>
-            {type !== "extra" && (
-              <Table.Cell className="py-2 px-3 w-0" align="left">
-                {/* TODO: Make it functional */}
-                <Checkbox
-                  type="checkbox"
-                  className="w-full h-full flex items-center"
-                  renderItem={({ title, metadata, isChecked }) => (
-                    <div className={cn("w-full h-full relative border border-border rounded-sm shadow-inner flex items-center gap-5", {
-                      "border-primary": isChecked
-                    })}>
-                      {isChecked && <span className="w-full h-full rounded bg-primary flex items-center justify-center">
-                        <CheckIcon className="size-4 text-background" />
-                      </span>}
-                    </div>
-                  )}
-                  onChange={({ checked, item }) => {}}
-                >
-                  <Checkbox.Item
-                    title="I own a business"
-                    value="business"
-                    className="w-5 h-5 flex"
-                    metadata={{
-                      description: "Setting up my account for my company",
-                    }}
-                  />
-                </Checkbox>
-              </Table.Cell>
-            )}
-          </>
+        key={`Customers_${reset}`}
+        selectable
+        onSelected={(values) => handleCustomersSelected(
+          values.includes("*") ? customers : values.map(id => customers.find(c => c.id === id)).filter(Boolean) as ICustomerWithDomain
         )}
+        selectableDisabled={!customers.length}
+        selectableCheckedContent={(
+          <span className="w-5 h-5 border border-primary rounded bg-primary flex items-center justify-center">
+            <CheckIcon className="size-4 text-foreground/80" />
+          </span>
+        )}
+        selectableUncheckedContent={(
+          <span className="w-5 h-5 border border-border rounded bg-transparent flex items-center justify-center" />
+        )}
+        className="w-full border border-border rounded-xl overflow-hidden mt-5"
         renderSuffix={({ type, data }) => (
           <Table.Cell className="py-2 px-3 w-0" align="right">
             <div className="p-0">

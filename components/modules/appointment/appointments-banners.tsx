@@ -6,7 +6,7 @@ import { IConnectionType } from "@/utils/types";
 import Link from "next/link";
 
 export default function AppointmentsBanners() {
-  const { hasConnection } = useConnection();
+  const { hasConnection } = useConnection({});
 
   return (
     <>

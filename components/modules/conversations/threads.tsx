@@ -20,7 +20,6 @@ export default function Threads({}) {
 
   useEffect(() => {
     if (!domainId) return setLoading(false);
-    // TODO: get threads not draft
     getThreads(domainId)
       .then((data) => {
         setThreads(data as IThread[]);

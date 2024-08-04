@@ -6,7 +6,6 @@ import { getCustomers } from "@/actions/customers";
 
 export default async function EmailMarketingLayout() {
   const domains = await getDomains();
-  // TODO: Get customers not in draft
   const customers = await getCustomers();
   const campaigns = await getCampaigns();
 

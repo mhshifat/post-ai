@@ -97,8 +97,7 @@ export async function getThreads(domainId: string) {
     .where(
       and(
         eq(threads.domainId, domainId),
-        // TODO: uncomment
-        // ne(threads.status, "DRAFT"),
+        ne(threads.status, "DRAFT"),
       )
     )
     .orderBy(desc(threads.createdAt));
