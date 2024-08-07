@@ -30,7 +30,7 @@ const INTEGRATIONS = [
 
 export default function IntegrationsList({ connections }: { connections: IConnectionsWithUserId }) {
   const { openDialog } = useDialog();
-  const { hasConnection } = useConnection();
+  const { hasConnection } = useConnection({});
 
   return (
     <div className="w-full grid gap-8 grid-cols-[repeat(auto-fill,minmax(320px,1fr))]">

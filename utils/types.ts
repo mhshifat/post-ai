@@ -1,9 +1,11 @@
 import { getAppointments } from '@/actions/appointments';
+import { getBlogs } from '@/actions/blogs';
 import { getCampaigns } from '@/actions/campaigns';
 import { getConnections } from '@/actions/connections';
 import { getCustomers } from '@/actions/customers';
 import { getDomains, getProducts } from '@/actions/products';
 import { appointments } from '@/db/schema/appointment';
+import { blogs } from '@/db/schema/blog';
 import { bots } from '@/db/schema/bot';
 import { campaigns } from '@/db/schema/campaign';
 import { connections } from '@/db/schema/connection';
@@ -27,6 +29,7 @@ export type ISurveyQuestion = InferSelectModel<typeof surveyQuestions>;
 export type ICampaign = InferSelectModel<typeof campaigns>;
 export type ICustomerToCampaign = InferSelectModel<typeof customersToCampaigns>;
 export type IAppointment = InferSelectModel<typeof appointments>;
+export type IBlog = InferSelectModel<typeof blogs>;
 export type ICustomer = InferSelectModel<typeof customers>;
 export type IThread = InferSelectModel<typeof threads>;
 export type IChatBot = InferSelectModel<typeof bots>;
@@ -38,6 +41,7 @@ export type IProductsWithDomainId = Awaited<ReturnType<typeof getProducts>>;
 export type ICustomerWithDomain = Awaited<ReturnType<typeof getCustomers>>;
 export type IAppointmentWithDomain = Awaited<ReturnType<typeof getAppointments>>;
 export type ICampaignsWithCustomers = Awaited<ReturnType<typeof getCampaigns>>;
+export type IBlogsWithUser = Awaited<ReturnType<typeof getBlogs>>;
 export type IPlans = "STANDARD" | "PRO" | "ULTIMATE";
 export type IThemes = "SYSTEM" | "DARK" | "LIGHT";
 export type IStripeSubScriptionWithPlan = Stripe.Subscription & {

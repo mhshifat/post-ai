@@ -6,6 +6,7 @@ import { plans } from "@/utils/constants";
 import ThemeProvider from "@/components/providers/theme-provider";
 import LoaderProvider from "@/components/providers/loader-provider";
 import { Toaster } from "@/components/ui/sonner";
+import ConfigProvider from "@/components/providers/config-provider";
 
 const inter = Inter({ subsets: ["latin"], fallback: ["sans-serif"] });
 
@@ -24,15 +25,23 @@ export default async function RootLayout({
     price: plan.price,
   })));
 
+  const envs = {
+    TEST_MODE: process.env.TEST_MODE === "true"
+  }
+
   return (
     <html lang="en">
       <body className={`${inter.className} h-screen bg-transparent`}>
         <Toaster />
-        <LoaderProvider>
-          <ThemeProvider>
-            {children}
-          </ThemeProvider>
-        </LoaderProvider>
+        <ConfigProvider
+          envs={envs}
+        >
+          <LoaderProvider>
+            <ThemeProvider>
+              {children}
+            </ThemeProvider>
+          </LoaderProvider>
+        </ConfigProvider>
       </body>
     </html>
   );
