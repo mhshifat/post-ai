@@ -14,6 +14,8 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 import { endOfDay } from 'date-fns';
+import { createNotification } from "@/actions/notifications";
+import useDomain from "@/components/hooks/use-domain";
 
 const formSchema = z.object({
   date: z.string(),
@@ -34,6 +36,7 @@ export default function AppointmentBookingForm({ customerId, domainId, appointme
   const router = useRouter();
   const pathname = usePathname();
   const [loading, setLoading] = useState(false);
+  const { domainDetails } = useDomain({ domainId });
   const form = useForm<AppointmentBookingFormSchema>({
     defaultValues: {
       domainId: domainId,
@@ -53,6 +56,10 @@ export default function AppointmentBookingForm({ customerId, domainId, appointme
     setLoading(true);
     try {
       await createAppointment(values);
+      createNotification({
+        domainId: domainDetails?.id,
+        content: `<span class="text-primary cursor-pointer">@Anonymous</span> has booked an appointment from <span  class="text-primary cursor-pointer">${domainDetails?.domain}</span>.`
+      });
       toast.success("An appointment has been created, please check your email");
       router.push(`${pathname}?status=success`);
     } catch (err) {

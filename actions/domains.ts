@@ -94,6 +94,24 @@ export async function getDomainDetails(domainId: string) {
   return data;
 }
 
+export async function getUnsafeDomainDetails(domainId: string) {
+  unstable_noStore();
+
+  const [data] = await db
+    .select({
+      id: domains.id,
+      domain: domains.domain,
+      logo: domains.logo,
+    })
+    .from(domains)
+    .where(
+      and(
+        eq(domains.id, domainId),
+      )
+    );
+  return data;
+}
+
 export async function deleteDomain(domainId: string) {
   const user = await getUserDetails();
   if (!user) return;

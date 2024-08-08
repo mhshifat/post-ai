@@ -4,6 +4,7 @@ import { createCustomer, upsertCustomer } from "@/actions/customers";
 import { getDomainDetails } from "@/actions/domains";
 import { getFaqs } from "@/actions/faqs";
 import { createMessage, getThreadMessages } from "@/actions/messages";
+import { createNotification } from "@/actions/notifications";
 import { getThreadDetails } from "@/actions/threads";
 import { pusherClient } from "@/lib/pusher";
 import { IDomain, IMessage, IFaq } from "@/utils/types";
@@ -96,6 +97,12 @@ export default function BotProvider({ children, type, domainId: domainIdProp, th
       ...createMessagePayload,
     });
     localStorage.setItem("THREAD_ID", createdMessage.threadId);
+    if (type === "CHAT_BOT") {
+      createNotification({
+        domainId: domainDetails?.id,
+        content: `<span class="text-primary cursor-pointer">@Anonymous</span> has sent a message from <span  class="text-primary cursor-pointer">${domainDetails?.domain}</span>.`
+      });
+    }
     // TODO: send typing message to owner if isLive is true
     // Test the message and show the messages and confirm messages shows up on both side
     console.log({ chatConfig, content, isLive });
@@ -103,7 +110,8 @@ export default function BotProvider({ children, type, domainId: domainIdProp, th
     chatConfig,
     isLive,
     type,
-    messages.length
+    messages.length,
+    domainDetails
   ]);
 
   const updateMessage = useCallback((id: string, message: Partial<IMessage>) => {
@@ -144,66 +152,6 @@ export default function BotProvider({ children, type, domainId: domainIdProp, th
       ]
     });
   }, []);
-
-  // useEffect(() => {
-  //   if (!domainIdProp) return;
-  //   const threadId = threadIdProp || localStorage.getItem("THREAD_ID");
-  //   if (threadId) {
-  //     getThreadDetails(threadId)
-  //       .then((data) => {
-  //         setIsLive(data?.isLive || false);
-  //       })
-  //     getThreadMessages(threadId)
-  //       .then((data) => {
-  //         if (!data?.length && !threadIdProp) {
-  //           localStorage.removeItem("CUSTOMER_EMAIL");
-  //           localStorage.removeItem("THREAD_ID");
-  //           localStorage.removeItem("CUSTOMER_ID");
-  //           return;
-  //         }
-  //         setMessages(data as IMessage[]);
-  //       })
-  //   }
-  //   getDomainDetails(domainIdProp)
-  //     .then((data) => {
-  //       setDomainDetails(data as unknown as IDomain);
-  //       if (!threadId && !threadIdProp) setMessages([
-  //         {
-  //           id: "1",
-  //           senderId: "bot",
-  //           recipientId: domainIdProp,
-  //           content: data?.bot?.welcomeText || "Hello, How may I help you?",
-  //           createdAt: new Date()
-  //         }
-  //       ]);
-  //     });
-  //   getFaqs(domainIdProp)
-  //     .then((data) => {
-  //       setQuestions(data as unknown as IFaq[]);
-  //     });
-  //   // TODO: implement ai chat assistant 
-  //   // getUnansweredFilterQuestions(domainId)
-  //   //   .then((data) => {
-  //   //     setFilterQuestions(data as unknown as IFaq[]);
-  //   //   });
-  // }, [domainIdProp, threadIdProp])
-
-  // useEffect(() => {
-  //   const threadId = threadIdProp || localStorage.getItem("THREAD_ID");
-  //   if (!threadId) return;
-  //   const channel = pusherClient.subscribe(threadId!);
-  //   channel.unbind("switch-live-mode");
-  //   channel.bind("switch-live-mode", ({ checked }: { checked: boolean }) => {
-  //     setIsLive(checked);
-  //   })
-  //   channel.unbind("new-message");
-  //   channel.bind("new-message", ({ data }: { data: IMessage }) => {
-  //     setMessages((values) => [data, ...values]);
-  //   })
-  //   return () => {
-  //     channel.unsubscribe();
-  //   }
-  // }, [threadIdProp]);
 
   // Initiate new thread
   useEffect(() => {

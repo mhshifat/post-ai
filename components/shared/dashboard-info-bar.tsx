@@ -26,7 +26,6 @@ export default function DashboardInfoBar() {
           title: "All Notifications",
           description: "Notification history",
           position: "right",
-          // TODO: fetch notifications
           content: <NotificationList />
         })} className="shrink-0" variant="ghost" size="icon">
           <Bell className="size-5" />

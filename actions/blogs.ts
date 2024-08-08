@@ -8,7 +8,6 @@ import { unstable_noStore } from "next/cache";
 import { v4 } from 'uuid';
 import { getUserDetails } from "./users";
 import { blogs } from "@/db/schema/blog";
-import { title } from 'process';
 import { users } from '@/db/schema/user';
 
 export async function createBlog(payload: Partial<IBlog>) {

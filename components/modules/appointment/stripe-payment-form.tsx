@@ -19,6 +19,7 @@ interface StripePaymentFormProps {
   mode?: "subscription" | "payment";
   state?: Record<string, string>;
   stripeAccountId?: string;
+  onComplete?: () => void;
 }
 
 export default function StripePaymentForm(props: StripePaymentFormProps) {
@@ -50,12 +51,13 @@ export default function StripePaymentForm(props: StripePaymentFormProps) {
           price: props.amount * 100,
         }}
         state={props.state}
+        onComplete={props?.onComplete}
       />
     </Elements>
   )
 }
 
-StripePaymentForm.Form = ({ paymentIntentUrl, product, state }: { paymentIntentUrl: string; state?: Record<string, string>; product: {
+StripePaymentForm.Form = ({ paymentIntentUrl, product, state, onComplete }: { onComplete?: () => void, paymentIntentUrl: string; state?: Record<string, string>; product: {
   price: number;
   name: string;
 } }) => {
@@ -110,6 +112,7 @@ StripePaymentForm.Form = ({ paymentIntentUrl, product, state }: { paymentIntentU
       // Your customer will be redirected to your `return_url`. For some payment
       // methods like iDEAL, your customer will be redirected to an intermediate
       // site first to authorize the payment, then redirected to the `return_url`.
+      onComplete?.();
     }
     setLoading(false);
   };
