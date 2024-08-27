@@ -7,6 +7,8 @@ import { Bell } from "lucide-react";
 import Avatar from "../ui/avatar";
 import { useDialog } from "../providers/dialog-provider";
 import NotificationList from "../modules/notifications/notification-list";
+import { ClerkLoaded, ClerkLoading, UserButton } from "@clerk/nextjs";
+import Spinner from "./spinner";
 
 export default function DashboardInfoBar() {
   const { openDialog } = useDialog();
@@ -30,17 +32,16 @@ export default function DashboardInfoBar() {
         })} className="shrink-0" variant="ghost" size="icon">
           <Bell className="size-5" />
         </Button>
-        <Avatar
+        {/* <Avatar
           className="shrink-0"
           size={35}
-        />
-        {/* TODO: Uncomment */}
-        {/* <ClerkLoaded>
+        /> */}
+        <ClerkLoaded>
           <UserButton signInUrl="/" />
         </ClerkLoaded>
         <ClerkLoading>
           <Spinner />
-        </ClerkLoading> */}
+        </ClerkLoading>
       </div>
     </div>
   )

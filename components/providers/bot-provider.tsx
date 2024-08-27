@@ -6,6 +6,7 @@ import { getFaqs } from "@/actions/faqs";
 import { createMessage, getThreadMessages } from "@/actions/messages";
 import { createNotification } from "@/actions/notifications";
 import { getThreadDetails } from "@/actions/threads";
+import { aiService } from "@/infra/ai";
 import { pusherClient } from "@/lib/pusher";
 import { IDomain, IMessage, IFaq } from "@/utils/types";
 import { createContext, PropsWithChildren, useCallback, useContext, useEffect, useState } from "react"
@@ -59,53 +60,56 @@ export default function BotProvider({ children, type, domainId: domainIdProp, th
   });
 
   const addMessage = useCallback(async (content: string) => {
-    if (!chatConfig.senderId || !chatConfig.recipientId) return setMessages(values => [
-      {
-        id: v4(),
-        content: "Something went wrong, please try again later",
-        recipientId: "bot",
-        senderId: "customer"
-      },
-      ...values
-    ]);
-    const createMessagePayload = {
-      content,
-      threadId: chatConfig.threadId as string,
-      senderId: chatConfig.senderId,
-      recipientId: chatConfig.recipientId,
-      domainId: chatConfig.domainId as string,
+    // if (!chatConfig.senderId || !chatConfig.recipientId) return setMessages(values => [
+    //   {
+    //     id: v4(),
+    //     content: "Something went wrong, please try again later",
+    //     recipientId: "bot",
+    //     senderId: "customer"
+    //   },
+    //   ...values
+    // ]);
+    // const createMessagePayload = {
+    //   content,
+    //   threadId: chatConfig.threadId as string,
+    //   senderId: chatConfig.senderId,
+    //   recipientId: chatConfig.recipientId,
+    //   domainId: chatConfig.domainId as string,
+    // }
+    // setMessages((values) => [
+    //   {
+    //     ...createMessagePayload,
+    //     id: v4()
+    //   },
+    //   ...values,
+    // ]);
+    // if (type === "CHAT_BOT") {
+    //   const createdCustomer = await upsertCustomer({
+    //     email: "",
+    //     id: chatConfig.customerId as string,
+    //     domainId: chatConfig.domainId as string
+    //   });
+    //   localStorage.setItem("CUSTOMER", JSON.stringify({
+    //     email: createdCustomer?.email,
+    //     id: createdCustomer?.id,
+    //   }));
+    // }
+    // const createdMessage = await createMessage({
+    //   ...createMessagePayload,
+    // });
+    // localStorage.setItem("THREAD_ID", createdMessage.threadId);
+    // if (type === "CHAT_BOT") {
+    //   createNotification({
+    //     domainId: domainDetails?.id,
+    //     content: `<span class="text-primary cursor-pointer">@Anonymous</span> has sent a message from <span  class="text-primary cursor-pointer">${domainDetails?.domain}</span>.`
+    //   });
+    // }
+    // // TODO: send typing message to owner if isLive is true
+    // // Test the message and show the messages and confirm messages shows up on both side
+    // console.log({ chatConfig, content, isLive });
+    if (!isLive) {
+      aiService.instance.generateResponse(content);
     }
-    setMessages((values) => [
-      {
-        ...createMessagePayload,
-        id: v4()
-      },
-      ...values,
-    ]);
-    if (type === "CHAT_BOT") {
-      const createdCustomer = await upsertCustomer({
-        email: "",
-        id: chatConfig.customerId as string,
-        domainId: chatConfig.domainId as string
-      });
-      localStorage.setItem("CUSTOMER", JSON.stringify({
-        email: createdCustomer?.email,
-        id: createdCustomer?.id,
-      }));
-    }
-    const createdMessage = await createMessage({
-      ...createMessagePayload,
-    });
-    localStorage.setItem("THREAD_ID", createdMessage.threadId);
-    if (type === "CHAT_BOT") {
-      createNotification({
-        domainId: domainDetails?.id,
-        content: `<span class="text-primary cursor-pointer">@Anonymous</span> has sent a message from <span  class="text-primary cursor-pointer">${domainDetails?.domain}</span>.`
-      });
-    }
-    // TODO: send typing message to owner if isLive is true
-    // Test the message and show the messages and confirm messages shows up on both side
-    console.log({ chatConfig, content, isLive });
   }, [
     chatConfig,
     isLive,

@@ -47,6 +47,7 @@ export default function CreateCustomerForm({ onSubmit, domains }: { onSubmit: (f
       await createCustomer({
         domainId: values.domain,
         email: values.email,
+        status: "ACTIVE"
       });
       toast.success("Successfully created a new customer");
       router.refresh();

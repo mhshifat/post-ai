@@ -1,11 +1,13 @@
 import { getBlogDetailsWithSlug } from "@/actions/blogs"
 import Editor from "@/components/shared/editor";
+import NotFound from "@/components/shared/not-found";
 import { formatISODate } from "@/utils/date";
 import Image from "next/image";
 
 export default async function BlogPage({ params }: { params: { slug: string } }) {
   const blog = await getBlogDetailsWithSlug(params.slug);
 
+  if (!blog) return <NotFound />;
   return (
     <div className="container py-10 text-foreground">
       <h1 className="text-5xl font-medium">{blog?.title}</h1>
@@ -23,6 +25,7 @@ export default async function BlogPage({ params }: { params: { slug: string } })
       <div className="relative mt-8 w-full rounded-lg overflow-hidden">
         <Editor
           value={blog?.content}
+          disabled
         />
       </div>
     </div>

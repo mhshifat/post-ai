@@ -23,14 +23,14 @@ export default function SelectPlan() {
           })}>
             {isChecked && <span className="absolute top-3 right-3 w-2 h-2 rounded-full bg-primary" />}
 
-            <span className={cn("h-full flex justify-center items-center p-3 text-2xl font-semibold", {
+            <span className={cn("h-full flex justify-center items-center p-3 text-2xl font-semibold text-foreground", {
               "border-primary": isChecked
             })}>
               ${(metadata?.price || "0") as ReactNode}
             </span>
 
             <span className="flex flex-col justify-center">
-              <h3 className="text-base font-semibold">{title}</h3>
+              <h3 className="text-base font-semibold text-foreground">{title}</h3>
               {metadata && <p className="text-sm mt-1 text-foreground/50">{metadata?.description as ReactNode}</p>}
             </span>
           </div>

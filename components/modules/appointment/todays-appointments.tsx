@@ -22,7 +22,7 @@ export default function TodaysAppointments({ appointments }: { appointments: IAp
                 <span className="text-sm text-foreground">{item.customer?.email}</span>
               </div>
               <div className="flex items-center gap-2">
-                <a href="" target="__blank" className="text-sm text-primary underline">{item.link}</a>
+                <a href={item.link!} target="__blank" className="text-sm text-primary underline">{item.link}</a>
               </div>
             </div>
           </div>

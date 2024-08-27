@@ -99,6 +99,13 @@
       "when": 1723141871550,
       "tag": "0013_equal_blizzard",
       "breakpoints": true
+    },
+    {
+      "idx": 14,
+      "version": "7",
+      "when": 1724744964145,
+      "tag": "0014_daily_darkstar",
+      "breakpoints": true
     }
   ]
 }

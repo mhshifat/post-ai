@@ -18,6 +18,7 @@ export async function createCustomer(payload: Partial<ICustomer>) {
       id: v4(),
       domainId: payload.domainId!,
       email: payload.email!,
+      status: payload.status!,
       createdAt: new Date(),
     })
     .returning({

@@ -4,11 +4,11 @@ import { IBlogsWithUser } from "@/utils/types"
 import Image from "next/image";
 import Link from "next/link";
 
-interface ProductCardProps {
+interface BlogCardProps {
   blog: IBlogsWithUser[0];
 }
 
-export default function ProductCard({ blog }: ProductCardProps) {
+export default function BlogCard({ blog }: BlogCardProps) {
   return (
     <Link href={`/blogs/${blog.slug}`} className="text-foreground border border-border p-5 rounded-lg overflow-hidden w-full flex flex-col gap-5">
       <div className="border border-border rounded-md overflow-hidden relative aspect-[2/1.4]">
@@ -28,7 +28,11 @@ export default function ProductCard({ blog }: ProductCardProps) {
         <div className="flex-1 flex flex-col justify-end">
           <Divider className="my-5" />
           <div className="flex items-center gap-5 justify-between text-foreground/50 text-sm font-medium">
-            <span>{blog?.user?.firstName} {blog?.user?.lastName}</span>
+            {!blog?.user?.firstName ? (
+              <span>System</span>
+            ) : (
+              <span>{blog?.user?.firstName} {blog?.user?.lastName}</span>
+            )}
             <span>{formatISODate(blog?.createdAt)}</span>
           </div>
         </div>

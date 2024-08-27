@@ -27,7 +27,6 @@ export default function Campaigns({ campaigns }: CampaignsProps) {
       <div className="flex items-center justify-end gap-2">
         <AddToCampaignBtn />
         <CreateCampaignBtnWrapper />
-        {/* TODO: Make it functional */}
         <Button variant="outline" size="sm" className="flex items-center gap-2">
           <span>10 Credits</span>
         </Button>

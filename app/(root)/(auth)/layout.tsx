@@ -1,12 +1,12 @@
+import { getUserDetails } from "@/actions/users";
 import AuthBannerImage from "@/components/modules/auth/auth-banner-image";
 import Logo from "@/components/shared/logo";
 import ClientOnly from "@/components/ui/client-only";
-import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { PropsWithChildren } from "react";
 
 export default async function Layout({ children }: PropsWithChildren) {
-  const user = await currentUser();
+  const user = await getUserDetails();
   if (user) return redirect("/dashboard");
 
   return (

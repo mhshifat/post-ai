@@ -83,14 +83,14 @@ export async function getCampaigns() {
     .orderBy(desc(campaigns.createdAt));
   
   return data.reduce<(Partial<ICampaign> & { customersToCampaigns: ICustomerToCampaign[] })[]>((acc, val) => {
-    if (!acc.some(item => (item as { id: string }).id)) acc.push({
+    if (!acc.some(item => (item as { id: string }).id === val.id)) acc.push({
       ...val,
-      customersToCampaigns: [val.customersToCampaigns as unknown as ICustomerToCampaign],
+      customersToCampaigns: [val.customersToCampaigns as unknown as ICustomerToCampaign]?.filter(Boolean),
     });
     else {
       const idx = acc.findIndex(item => item.id === val.id);
       const record = acc[idx];
-      record.customersToCampaigns.push(val.customersToCampaigns as unknown as ICustomerToCampaign)
+      record?.customersToCampaigns?.push(val.customersToCampaigns as unknown as ICustomerToCampaign)
     }
     return acc;
   }, []);
@@ -152,7 +152,7 @@ export async function getCampaignWithCustomersById(campaignId: string) {
     else {
       const idx = acc.findIndex(item => item.id === val.id);
       const record = acc[idx];
-      record.customersToCampaigns.push(val.customersToCampaigns as unknown as ICustomerToCampaign)
+      record?.customersToCampaigns?.push(val.customersToCampaigns as unknown as ICustomerToCampaign)
       record.customers.push(val.customer!)
     }
     return acc;

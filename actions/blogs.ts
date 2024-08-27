@@ -113,9 +113,9 @@ export async function getBlogDetailsWithSlug(slug: string) {
     .where(
       and(
         eq(blogs.slug, slug),
-        eq(blogs.userId, user.id)
       )
     );
+  
   return data;
 }
 
@@ -124,6 +124,27 @@ export async function getBlogs() {
 
   const user = await getUserDetails();
   if (!user) return [];
+  const data = await db
+    .select({
+      id: blogs.id,
+      createdAt: blogs.createdAt,
+      title: blogs.title,
+      slug: blogs.slug,
+      thumbnail: blogs.thumbnail,
+      excerpt: blogs.excerpt,
+      content: blogs.content,
+      user: users,
+    })
+    .from(blogs)
+    .leftJoin(users, eq(users.id, blogs.userId))
+    .orderBy(desc(blogs.createdAt));
+
+  return data;
+}
+
+export async function getAllBlogs() {
+  unstable_noStore();
+
   const data = await db
     .select({
       id: blogs.id,

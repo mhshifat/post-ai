@@ -97,7 +97,7 @@ export default function Customers({ domains, customers }: CustomersProps) {
                   const data = (d?.[header.key as keyof typeof d] || c?.[header.key as keyof typeof c]) as ReactNode;
                   return (
                     <Table.Cell key={header.title} className="py-3 px-3">
-                      <span className="text-sm font-medium text-foreground/50">{data}</span>
+                      <span className="text-sm font-medium text-foreground/50">{header.key === 'id' ? c?.[header.key] : data}</span>
                     </Table.Cell>
                   )
                 })}

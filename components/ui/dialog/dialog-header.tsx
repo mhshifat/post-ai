@@ -8,7 +8,7 @@ interface DialogHeaderProps {
 
 export default function DialogHeader({ children, onClose }: PropsWithChildren<DialogHeaderProps>) {
   return (
-    <div className="w-full py-2 px-3 flex items-start gap-5 sticky top-0 left-0">
+    <div className="w-full py-2 px-3 flex items-start gap-5 sticky top-0 left-0 z-50 bg-background-secondary">
       <div className="flex-1">
         {children}
       </div>

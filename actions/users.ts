@@ -51,7 +51,7 @@ export async function changeClerkUserPassword(password: string) {
 }
 
 export async function getUserDetails() {
-  if (process.env.TEST_MODE) {
+  if (process.env.TEST_MODE === 'true') {
     let [userDetails] = await db
       .select({
         id: users.id,
@@ -87,6 +87,14 @@ export async function getUserDetails() {
   }
   const clerkUser = await currentUser();
   if (!clerkUser) return null;
+  const emailAddress = clerkUser?.emailAddresses?.[0].emailAddress;
+  if (emailAddress === process.env.ADMIN_EMAIL) return {
+    id: clerkUser.id,
+    clerkId: clerkUser.id,
+    firstName: "Admin",
+    lastName: "",
+    email: emailAddress,
+  }
   let [userDetails] = await db
     .select({
       id: users.id,

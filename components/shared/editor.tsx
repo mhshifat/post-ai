@@ -307,9 +307,10 @@ export const uploadFn = createImageUpload({
 interface EditorProps {
   value?: string;
   onChange?: (value: string) => void;
+  disabled?: boolean;
 }
 
-const Editor = ({ onChange, value }: EditorProps) => {
+const Editor = ({ onChange, value, disabled }: EditorProps) => {
   const parsedVal = JSON.parse(value || "{}");
 	const debouncedUpdates = useDebouncedCallback(
 		async (editor: EditorInstance) => {
@@ -334,7 +335,7 @@ const Editor = ({ onChange, value }: EditorProps) => {
           attributes: {
             class: `prose prose-lg text-foreground prose-headings:font-title font-default focus:outline-none max-w-full`,
           },
-          editable: () => false
+          editable: () => !disabled
 				}}
 				onUpdate={({ editor }) => debouncedUpdates(editor)}
 			>

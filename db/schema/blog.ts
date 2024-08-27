@@ -4,7 +4,8 @@ import { users } from "./user";
 
 export const blogs = pgTable("blogs", {
   id: text("id").primaryKey(),
-  userId: text("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+  // userId: text("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+  userId: text("user_id").notNull(),
   title: text("title").notNull(),
   slug: text("slug").notNull(),
   thumbnail: text("thumbnail").notNull(),

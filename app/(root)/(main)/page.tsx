@@ -1,23 +1,17 @@
-import { getBlogs } from "@/actions/blogs";
-import ProductCard from "@/components/modules/blogs/product-card";
+import { getAllBlogs } from "@/actions/blogs";
+import Header from "@/components/layouts/header";
+import ProductCard from "@/components/modules/blogs/blog-card";
 import BgImage from "@/components/modules/home/bg-image";
 import GetStartedPlanBtn from "@/components/modules/settings/get-started-plan-btn";
-import Logo from "@/components/shared/logo";
-import { Button } from "@/components/ui/button";
 import { plans } from "@/utils/constants";
 import { CheckIcon } from "lucide-react";
-import Link from "next/link";
 
 export default async function Home() {
-  const blogs = await getBlogs();
+  const blogs = await getAllBlogs();
 
   return (
     <main className="w-full min-h-screen flex flex-col pb-40 bg-background text-foreground">
-      <div className="w-full flex items-center gap-5 justify-between p-5">
-        <Logo className="h-7 w-max" />
-
-        <Link href="/sign-up"><Button className="bg-primary rounded-md text-primary-foreground" size="sm">Get Started</Button></Link>
-      </div>
+      <Header />
 
       <div className="mt-20 flex justify-center items-center flex-col p-5">
         <p className="border border-primary bg-primary/10 py-1 px-4 rounded-3xl text-sm font-semibold text-primary">An Ai Powered Sales Assistant</p>
@@ -60,19 +54,21 @@ export default async function Home() {
         </div>
       </div>
 
-      <div className="mt-20 flex justify-center items-center flex-col max-w-[1200px] mx-auto">
-        <h3 className="text-2xl font-semibold text-foreground">Recent Blog Posts</h3>
-        <p className="mt-2 text-foreground/70 font-semibold text-base max-w-[600px] text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi culpa doloremque officiis corporis inventore omnis.</p>
+      {!!blogs.length && (
+        <div className="mt-20 flex justify-center items-center flex-col max-w-[1200px] mx-auto">
+          <h3 className="text-2xl font-semibold text-foreground">Recent Blog Posts</h3>
+          <p className="mt-2 text-foreground/70 font-semibold text-base max-w-[600px] text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi culpa doloremque officiis corporis inventore omnis.</p>
 
-        <div className="py-10 gap-7 flex-wrap grid grid-cols-[repeat(auto-fill,minmax(310px,1fr))] content-center">
-          {blogs.map(b => (
-            <ProductCard
-              key={b.id}
-              blog={b}
-            />
-          ))}
+          <div className="py-10 gap-7 flex-wrap grid grid-cols-[repeat(auto-fill,minmax(310px,1fr))] content-center">
+            {blogs.map(b => (
+              <ProductCard
+                key={b.id}
+                blog={b}
+              />
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </main>
   )
 }

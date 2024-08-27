@@ -91,7 +91,6 @@ const formats = {
 
 export function formatDate(year: number, month: number, day: number, format: keyof typeof formats = "MMMM yyyy") {
   const date = new Date(year, month - 1, day);
-
   return formats[format](date, format);
 }
 
@@ -102,6 +101,7 @@ export function formatToDate(year: number, month: number, day: number) {
 }
 
 export function formatISODate(isoDate: Date, format: keyof typeof formats = "MMMM yyyy") {
+  if (!isoDate) return null;
   const date = new Date(isoDate);
 
   return formats[format](date, format);
